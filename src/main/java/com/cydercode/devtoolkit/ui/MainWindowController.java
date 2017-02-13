@@ -4,6 +4,7 @@ import com.cydercode.devtoolkit.CommandBuilder;
 import com.cydercode.devtoolkit.CommandExecutor;
 import com.cydercode.devtoolkit.Configuration;
 import com.google.gson.Gson;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -34,6 +35,9 @@ public class MainWindowController {
 
     @FXML
     VBox presetsBox;
+
+    @FXML
+    TabPane runTabs;
 
     Configuration configuration;
 
@@ -97,10 +101,20 @@ public class MainWindowController {
 
         String command = commandBuilder.buildCommand(configuration, presetName, parameters);
 
+        TextArea logsArea = new TextArea();
+        Tab tab = new Tab();
+        tab.setText("Run: " + presetName);
+        tab.setContent(logsArea);
+        runTabs.getTabs().add(tab);
+        runTabs.getSelectionModel().select(tab);
+
         new Thread(() -> {
             try {
                 executor.execute(command, output -> {
-                    // ignore output
+                    Platform.runLater(() -> {
+                        logsArea.appendText(output);
+                        logsArea.appendText(System.lineSeparator());
+                    });
                 });
             } catch (IOException e) {
                 LOGGER.error("Error during command execution", e);
