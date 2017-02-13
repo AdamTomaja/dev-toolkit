@@ -38,11 +38,6 @@ public class MainWindowController {
     Configuration configuration;
 
     @FXML
-    protected void initialize() {
-
-    }
-
-    @FXML
     protected void openLoadConfigurationDialog() throws FileNotFoundException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select configuration json file");
@@ -60,32 +55,7 @@ public class MainWindowController {
             Button presetButton = new Button();
             presetButton.setText(presetName);
             presetButton.setOnAction(ev -> {
-                LOGGER.info("Executing preset: {}", presetName);
-                Map<String, Object> parameters = new HashMap<>();
-                parameterTextFields.forEach((p, tf) -> {
-                    String value;
-
-                    if (tf instanceof TextField) {
-                        value = ((TextField) tf).getText();
-                    } else if (tf instanceof ComboBox) {
-                        value = ((ComboBox) tf).getValue().toString();
-                    } else {
-                        throw new RuntimeException("Unknown control type: " + tf.getClass());
-                    }
-                    parameters.put(p, value);
-                });
-
-                String command = commandBuilder.buildCommand(configuration, presetName, parameters);
-
-                new Thread(() -> {
-                    try {
-                        executor.execute(command, output -> {
-                            // ignore output
-                        });
-                    } catch (IOException e) {
-                        LOGGER.error("Error during command execution", e);
-                    }
-                }).start();
+                runPreset(presetName);
             });
             presetsBox.getChildren().add(presetButton);
         }
@@ -119,5 +89,39 @@ public class MainWindowController {
 
             parameterTextFields.put(parameterName, control);
         }
+    }
+
+    private void runPreset(String presetName) {
+        LOGGER.info("Executing preset: {}", presetName);
+        Map<String, Object> parameters = collectParameters();
+
+        String command = commandBuilder.buildCommand(configuration, presetName, parameters);
+
+        new Thread(() -> {
+            try {
+                executor.execute(command, output -> {
+                    // ignore output
+                });
+            } catch (IOException e) {
+                LOGGER.error("Error during command execution", e);
+            }
+        }).start();
+    }
+
+    private Map<String, Object> collectParameters() {
+        Map<String, Object> parameters = new HashMap<>();
+        parameterTextFields.forEach((p, tf) -> {
+            String value;
+
+            if (tf instanceof TextField) {
+                value = ((TextField) tf).getText();
+            } else if (tf instanceof ComboBox) {
+                value = ((ComboBox) tf).getValue().toString();
+            } else {
+                throw new RuntimeException("Unknown control type: " + tf.getClass());
+            }
+            parameters.put(p, value);
+        });
+        return parameters;
     }
 }
