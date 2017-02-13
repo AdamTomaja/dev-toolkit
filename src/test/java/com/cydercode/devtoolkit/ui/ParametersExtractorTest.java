@@ -1,0 +1,38 @@
+package com.cydercode.devtoolkit.ui;
+
+import com.google.common.collect.ImmutableMap;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
+import javafx.scene.control.TextField;
+import org.assertj.core.api.Assertions;
+import org.junit.Test;
+
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.entry;
+
+public class ParametersExtractorTest extends JavaFXComponentsTest {
+
+    @Test
+    public void shouldExtractParameters() {
+        // given
+        ParametersExtractor extractor = new ParametersExtractor();
+
+        TextField textField = new TextField();
+        textField.setText("textFieldValue");
+
+        ComboBox comboBox = new ComboBox();
+        comboBox.setValue("comboBoxValue");
+
+        Map<String, Control> controls = ImmutableMap.of("text-field", textField,
+                "combo-box", comboBox);
+
+        // when
+        Map<String, Object> parameters = extractor.extractParameters(controls);
+
+        // then
+        Assertions.assertThat(parameters).containsOnly(entry("text-field", "textFieldValue"),
+                entry("combo-box", "comboBoxValue"));
+
+    }
+}

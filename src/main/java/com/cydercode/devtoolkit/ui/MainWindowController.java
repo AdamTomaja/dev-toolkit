@@ -5,7 +5,6 @@ import com.cydercode.devtoolkit.CommandExecutor;
 import com.cydercode.devtoolkit.Configuration;
 import com.google.gson.Gson;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -18,7 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainWindowController {
@@ -27,8 +25,9 @@ public class MainWindowController {
 
     CommandBuilder commandBuilder = new CommandBuilder();
     CommandExecutor executor = new CommandExecutor();
-
-    Map<String, Control> parameterTextFields = new HashMap<>();
+    ParameterControlFactory parameterControlFactory = new ParameterControlFactory();
+    ParametersExtractor parametersExtractor = new ParametersExtractor();
+    Map<String, Control> parametersControls = new HashMap<>();
 
     @FXML
     VBox parametersBox;
@@ -65,39 +64,21 @@ public class MainWindowController {
         }
 
         parametersBox.getChildren().clear();
-        parameterTextFields.clear();
+        parametersControls.clear();
         for (String parameterName : configuration.getParameters().keySet()) {
             Label label = new Label();
             label.setText(parameterName);
-
-
             Map<String, Object> parameter = configuration.getParameters().get(parameterName);
-
-            Object defaultValue = parameter.get("default");
-
-            Control control;
-            List<String> values = (List<String>) parameter.get("values");
-            if (values != null) {
-                control = new ComboBox(FXCollections.observableArrayList(values));
-                ((ComboBox) control).setValue(defaultValue);
-            } else {
-                control = new TextField();
-                if (defaultValue != null) {
-                    ((TextField) control).setText(defaultValue.toString());
-                }
-            }
-
-
+            Control control = parameterControlFactory.produceControl(parameter);
             parametersBox.getChildren().add(label);
             parametersBox.getChildren().add(control);
-
-            parameterTextFields.put(parameterName, control);
+            parametersControls.put(parameterName, control);
         }
     }
 
     private void runPreset(String presetName) {
         LOGGER.info("Executing preset: {}", presetName);
-        Map<String, Object> parameters = collectParameters();
+        Map<String, Object> parameters = parametersExtractor.extractParameters(parametersControls);
 
         String command = commandBuilder.buildCommand(configuration, presetName, parameters);
 
@@ -120,22 +101,5 @@ public class MainWindowController {
                 LOGGER.error("Error during command execution", e);
             }
         }).start();
-    }
-
-    private Map<String, Object> collectParameters() {
-        Map<String, Object> parameters = new HashMap<>();
-        parameterTextFields.forEach((p, tf) -> {
-            String value;
-
-            if (tf instanceof TextField) {
-                value = ((TextField) tf).getText();
-            } else if (tf instanceof ComboBox) {
-                value = ((ComboBox) tf).getValue().toString();
-            } else {
-                throw new RuntimeException("Unknown control type: " + tf.getClass());
-            }
-            parameters.put(p, value);
-        });
-        return parameters;
     }
 }
