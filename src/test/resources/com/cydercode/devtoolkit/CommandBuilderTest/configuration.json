@@ -1,0 +1,27 @@
+{
+  "applications": {
+    "Maven": {
+      "path": "mvn"
+    }
+  },
+  "parameters": {
+    "distribution": {
+      "type": "enum",
+      "values": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "profile": {
+      "type": "string"
+    }
+  },
+  "presets": {
+    "build": {
+      "name": "build",
+      "application": "Maven",
+      "cmd": "clean install -d ${distribution} -p ${profile}"
+    }
+  }
+}
