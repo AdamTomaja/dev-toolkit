@@ -16,9 +16,9 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("main_window.fxml"));
 
-        Scene scene = new Scene(root, 300, 275);
+        Scene scene = new Scene(root, 600, 800);
 
-        stage.setTitle("FXML Welcome");
+        stage.setTitle("CyderCode dev-toolkit");
         stage.setScene(scene);
         stage.show();
     }

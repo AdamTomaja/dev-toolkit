@@ -19,10 +19,11 @@ public class CommandBuilder {
             throw new IllegalArgumentException("Cannot find application with name: " + applicationName);
         }
 
-        StrBuilder strBuilder = new StrBuilder(presetConfiguration.get("cmd"));
+        StrBuilder strBuilder = new StrBuilder(String.format("%s %s", applicationConfiguration.get("path"), presetConfiguration.get("cmd")));
         parameters.forEach((k, v) -> {
             strBuilder.replaceAll(String.format("${%s}", k), v.toString());
         });
-        return String.format("%s %s", applicationConfiguration.get("path"), strBuilder.toString());
+
+        return strBuilder.toString();
     }
 }

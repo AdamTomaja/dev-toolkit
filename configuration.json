@@ -5,6 +5,10 @@
     }
   },
   "parameters": {
+    "project-home": {
+      "type": "string",
+      "default": "/home/mint/work/git/dev-toolkit/"
+    },
     "distribution": {
       "type": "string",
       "default": "C",
@@ -27,11 +31,11 @@
   "presets": {
     "build": {
       "application": "Maven",
-      "cmd": "clean install -d ${distribution} -p ${profile}"
+      "cmd": "-f ${project-home} clean install"
     },
     "clean": {
       "application": "Maven",
-      "cmd": "clean"
+      "cmd": "-f ${project-home} clean"
     }
   }
 }
