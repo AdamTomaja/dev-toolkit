@@ -1,5 +1,7 @@
 package com.cydercode.devtoolkit;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.Map;
 
 public class Configuration {
@@ -30,5 +32,14 @@ public class Configuration {
 
     public void setPresets(Map<String, Map<String, String>> presets) {
         this.presets = presets;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("applications", applications)
+                .add("parameters", parameters)
+                .add("presets", presets)
+                .toString();
     }
 }

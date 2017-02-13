@@ -13,12 +13,14 @@ public class CommandExecutor {
     static final Logger LOGGER = LoggerFactory.getLogger(CommandExecutor.class);
 
     public void execute(String commandLine, Consumer<String> outputConsumer) throws IOException {
+        LOGGER.info("Executing command: {}", commandLine);
+
         Process process = Runtime.getRuntime().exec(commandLine);
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
 
         while ((line = reader.readLine()) != null) {
-            LOGGER.info(line);
+            LOGGER.info("P-OUT: {}", line); // Process out
             outputConsumer.accept(line);
         }
     }
