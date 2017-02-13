@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.slf4j.Logger;
@@ -30,10 +31,10 @@ public class MainWindowController {
     Map<String, Control> parametersControls = new HashMap<>();
 
     @FXML
-    VBox parametersBox;
+    Pane parametersBox;
 
     @FXML
-    VBox presetsBox;
+    Pane presetsBox;
 
     @FXML
     TabPane runTabs;
@@ -66,12 +67,14 @@ public class MainWindowController {
         parametersBox.getChildren().clear();
         parametersControls.clear();
         for (String parameterName : configuration.getParameters().keySet()) {
+            VBox vBox = new VBox();
             Label label = new Label();
             label.setText(parameterName);
             Map<String, Object> parameter = configuration.getParameters().get(parameterName);
             Control control = parameterControlFactory.produceControl(parameter);
-            parametersBox.getChildren().add(label);
-            parametersBox.getChildren().add(control);
+            vBox.getChildren().add(label);
+            vBox.getChildren().add(control);
+            parametersBox.getChildren().add(vBox);
             parametersControls.put(parameterName, control);
         }
     }
