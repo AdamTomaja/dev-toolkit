@@ -18,7 +18,7 @@ You can use parameter by using ${parameter-name} syntax
 * default - default value of parameter
 * values - optional, list of strings. If defined, combobox will be used as input control in UI
 
-# Preset
+## Preset
 Preset defines an application connected with command line and parameters. Each preset uses one application.
 * application - must be existing name of one of configured applications
 * cmd - arguments for applications, ${parameter-name} can be used here. 
