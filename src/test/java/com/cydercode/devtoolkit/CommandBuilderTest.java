@@ -23,10 +23,11 @@ public class CommandBuilderTest {
         // when
         String command = new CommandBuilder()
                 .buildCommand(configuration, "build", of("distribution", "A",
+                        "maven-path", "/bin/mvn",
                         "profile", "dev"));
 
 
         // then
-        Assertions.assertThat(command).isEqualTo("mvn clean install -d A -p dev");
+        Assertions.assertThat(command).isEqualTo("/bin/mvn/mvn clean install -d A -p dev");
     }
 }

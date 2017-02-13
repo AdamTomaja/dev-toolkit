@@ -1,7 +1,7 @@
 {
   "applications": {
     "Maven": {
-      "path": "mvn"
+      "path": "${maven-path}/mvn"
     }
   },
   "parameters": {
