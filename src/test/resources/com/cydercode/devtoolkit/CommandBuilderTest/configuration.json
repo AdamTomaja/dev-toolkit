@@ -6,7 +6,7 @@
   },
   "parameters": {
     "distribution": {
-      "type": "enum",
+      "type": "string",
       "values": [
         "A",
         "B",
@@ -14,7 +14,12 @@
       ]
     },
     "profile": {
-      "type": "string"
+      "type": "string",
+      "values": [
+        "local",
+        "dev",
+        "test"
+      ]
     }
   },
   "presets": {
