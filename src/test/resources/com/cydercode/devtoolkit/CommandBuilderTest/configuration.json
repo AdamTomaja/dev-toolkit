@@ -29,6 +29,10 @@
       "application": "Maven",
       "cmd": "clean install -d ${distribution} -p ${profile}"
     },
+    "application-error": {
+      "application": "dummy-application",
+      "cmd": "clean install -d ${distribution} -p ${profile}"
+    },
     "clean": {
       "application": "Maven",
       "cmd": "clean"

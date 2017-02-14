@@ -3,6 +3,7 @@ package com.cydercode.devtoolkit.ui;
 import com.google.common.collect.ImmutableMap;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -34,5 +35,15 @@ public class ParametersExtractorTest extends JavaFXComponentsTest {
         Assertions.assertThat(parameters).containsOnly(entry("text-field", "textFieldValue"),
                 entry("combo-box", "comboBoxValue"));
 
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldThrowExceptionWhenUnknownControlType() {
+        // given
+        Map<String, Control> controls = ImmutableMap.of("c", new Label());
+        ParametersExtractor extractor = new ParametersExtractor();
+
+        // when
+        extractor.extractParameters(controls);
     }
 }
