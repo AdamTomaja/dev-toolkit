@@ -7,6 +7,8 @@ In dev-toolkit You can create presets to easily execute commands from UI.
 The configuration file contains three sections: applications, parameters and presets.
 Each one is a map of name of item and its properties.
 
+**Important !** Configuration examples are ready to download and testing up in examples/ directory  
+
 ## Application
 Application defines a binary file on Your computer. 
 * path - path to binary file localized on Your hdd, You can also use ${parameter-name} syntax here
