@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.prefs.BackingStoreException;
 
@@ -60,7 +61,7 @@ public class MainWindowController {
             return;
         }
 
-         loadConfiguration(configurationHolder.loadConfiguration(file).get());
+        loadConfiguration(configurationHolder.loadConfiguration(file).get());
     }
 
     private void loadConfiguration(Configuration configuration) {
@@ -77,15 +78,19 @@ public class MainWindowController {
         parametersBox.getChildren().clear();
         parametersControls.clear();
         for (String parameterName : configuration.getParameters().keySet()) {
-            VBox vBox = new VBox();
-            Label label = new Label();
-            label.setText(parameterName);
             Map<String, Object> parameter = configuration.getParameters().get(parameterName);
             Control control = parameterControlFactory.produceControl(parameter);
-            vBox.getChildren().add(label);
-            vBox.getChildren().add(control);
-            parametersBox.getChildren().add(vBox);
+
             parametersControls.put(parameterName, control);
+
+            if(!parameterControlFactory.isHidden(parameter)){
+                VBox vBox = new VBox();
+                Label label = new Label();
+                label.setText(parameterName);
+                vBox.getChildren().add(label);
+                vBox.getChildren().add(control);
+                parametersBox.getChildren().add(vBox);
+            }
         }
     }
 

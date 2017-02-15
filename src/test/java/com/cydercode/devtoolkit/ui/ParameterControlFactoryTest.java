@@ -50,4 +50,33 @@ public class ParameterControlFactoryTest extends JavaFXComponentsTest {
         assertThat(control).isInstanceOf(ComboBox.class);
         assertThat(((ComboBox) control).getValue()).isEqualTo(defaultValue);
     }
+
+    @Test
+    public void shouldBeHidden() {
+        // given
+        ParameterControlFactory factory = new ParameterControlFactory();
+        Map<String, Object> parameter = ImmutableMap.<String, Object>builder()
+                .put("hidden", "true")
+                .build();
+
+        // when
+        boolean isHidden = factory.isHidden(parameter);
+
+        // then
+        assertThat(isHidden).isTrue();
+    }
+
+    @Test
+    public void shouldBeVisible() {
+        // given
+        ParameterControlFactory factory = new ParameterControlFactory();
+        Map<String, Object> parameter = ImmutableMap.<String, Object>builder()
+                .build();
+
+        // when
+        boolean isHidden = factory.isHidden(parameter);
+
+        // then
+        assertThat(isHidden).isFalse();
+    }
 }

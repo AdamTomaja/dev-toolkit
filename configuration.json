@@ -26,6 +26,11 @@
         "local",
         "test"
       ]
+    },
+    "hidden-parameter": {
+      "type": "string",
+      "hidden": "true",
+      "default": "hello"
     }
   },
   "presets": {
@@ -36,6 +41,10 @@
     "clean": {
       "application": "Maven",
       "cmd": "-f ${project-home} clean"
+    },
+    "preset-with-hidden-parameter": {
+      "application": "Maven",
+      "cmd":"-f ${project-home} -D${hidden-parameter}"
     }
   }
 }

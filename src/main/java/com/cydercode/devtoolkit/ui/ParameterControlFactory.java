@@ -28,4 +28,8 @@ public class ParameterControlFactory {
 
         return control;
     }
+
+    public boolean isHidden(Map<String, Object> parameter) {
+        return "true".equals(parameter.get("hidden"));
+    }
 }
