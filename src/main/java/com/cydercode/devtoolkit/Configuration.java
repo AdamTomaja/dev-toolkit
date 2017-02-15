@@ -1,6 +1,7 @@
 package com.cydercode.devtoolkit;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 import java.util.Map;
 
@@ -32,6 +33,21 @@ public class Configuration {
 
     public void setPresets(Map<String, Map<String, String>> presets) {
         this.presets = presets;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Configuration that = (Configuration) o;
+        return Objects.equal(applications, that.applications) &&
+                Objects.equal(parameters, that.parameters) &&
+                Objects.equal(presets, that.presets);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(applications, parameters, presets);
     }
 
     @Override

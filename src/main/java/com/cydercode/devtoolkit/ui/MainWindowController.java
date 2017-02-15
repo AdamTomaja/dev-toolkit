@@ -3,7 +3,6 @@ package com.cydercode.devtoolkit.ui;
 import com.cydercode.devtoolkit.CommandBuilder;
 import com.cydercode.devtoolkit.CommandExecutor;
 import com.cydercode.devtoolkit.Configuration;
-import com.google.gson.Gson;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -15,14 +14,17 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.prefs.BackingStoreException;
 
 public class MainWindowController {
 
     static final Logger LOGGER = LoggerFactory.getLogger(MainWindowController.class);
+
+    ConfigurationHolder configurationHolder = new ConfigurationHolder(MainWindowController.class.getName());
 
     CommandBuilder commandBuilder = new CommandBuilder();
     CommandExecutor executor = new CommandExecutor();
@@ -39,10 +41,16 @@ public class MainWindowController {
     @FXML
     TabPane runTabs;
 
-    Configuration configuration;
+    @FXML
+    protected void initialize() throws FileNotFoundException {
+        Optional<Configuration> configuration = configurationHolder.loadLastConfiguration();
+        if (configuration.isPresent()) {
+            loadConfiguration(configuration.get());
+        }
+    }
 
     @FXML
-    protected void openLoadConfigurationDialog() throws FileNotFoundException {
+    protected void openLoadConfigurationDialog() throws FileNotFoundException, BackingStoreException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select configuration json file");
         File file = fileChooser.showOpenDialog(null);
@@ -52,8 +60,10 @@ public class MainWindowController {
             return;
         }
 
-        configuration = new Gson().fromJson(new FileReader(file), Configuration.class);
-        LOGGER.info("Loaded configuration: {}", configuration);
+         loadConfiguration(configurationHolder.loadConfiguration(file).get());
+    }
+
+    private void loadConfiguration(Configuration configuration) {
         presetsBox.getChildren().clear();
         for (String presetName : configuration.getPresets().keySet()) {
             Button presetButton = new Button();
@@ -83,7 +93,7 @@ public class MainWindowController {
         LOGGER.info("Executing preset: {}", presetName);
         Map<String, Object> parameters = parametersExtractor.extractParameters(parametersControls);
 
-        String command = commandBuilder.buildCommand(configuration, presetName, parameters);
+        String command = commandBuilder.buildCommand(configurationHolder.getCurrentConfiguration().get(), presetName, parameters);
 
         TextArea logsArea = new TextArea();
         Tab tab = new Tab();
