@@ -72,5 +72,5 @@ Preset defines an application connected with command line and parameters. Each p
 # Screenshots
 ![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/git-example.png)
 ![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/maven-example.png)
-![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/main-window.png)
+![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/main-window.png)
 
