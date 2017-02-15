@@ -18,9 +18,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.prefs.BackingStoreException;
-
-import static java.lang.String.format;
 
 public class MainWindowController {
 
@@ -32,6 +29,8 @@ public class MainWindowController {
     CommandExecutor executor = new CommandExecutor();
     ParameterControlFactory parameterControlFactory = new ParameterControlFactory();
     ParametersExtractor parametersExtractor = new ParametersExtractor();
+    DialogHelper dialogHelper = new DialogHelper();
+
     Map<String, Control> parametersControls = new HashMap<>();
 
     @FXML
@@ -52,7 +51,7 @@ public class MainWindowController {
     }
 
     @FXML
-    protected void openLoadConfigurationDialog() throws FileNotFoundException, BackingStoreException {
+    protected void openLoadConfigurationDialog() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select configuration json file");
         File file = fileChooser.showOpenDialog(null);
@@ -62,7 +61,13 @@ public class MainWindowController {
             return;
         }
 
-        loadConfiguration(configurationHolder.loadConfiguration(file).get());
+        try {
+            loadConfiguration(configurationHolder.loadConfiguration(file).get());
+        } catch (Exception e) {
+            LOGGER.error("Unable to load configuration", e);
+            dialogHelper.createExceptionAlert("Error when loading configuration", e)
+                    .showAndWait();
+        }
     }
 
     private void loadConfiguration(Configuration configuration) {
@@ -104,7 +109,9 @@ public class MainWindowController {
         LOGGER.info("Executing preset: {}", presetName);
         Map<String, Object> parameters = parametersExtractor.extractParameters(parametersControls);
 
-        String command = commandBuilder.buildCommand(configurationHolder.getCurrentConfiguration().get(), presetName, parameters);
+        String command = commandBuilder.buildCommand(configurationHolder.getCurrentConfiguration().get(),
+                presetName,
+                parameters);
 
         TextArea logsArea = new TextArea();
         Tab tab = new Tab();
@@ -123,6 +130,8 @@ public class MainWindowController {
                 });
             } catch (InterruptedException | IOException e) {
                 LOGGER.error("Error during command execution", e);
+                dialogHelper.createExceptionAlert("Error during command execution", e)
+                        .showAndWait();
             }
         }).start();
     }
