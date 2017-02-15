@@ -1,0 +1,41 @@
+{
+  "applications": {
+    "Git": {
+      "path": "git"
+    }
+  },
+
+  "parameters": {
+    "repo-dir": {
+      "type": "string",
+      "default": "/home/mint/work/git/dev-toolkit/"
+    },
+    "branch": {
+      "type": "string",
+      "default": "master"
+    }
+  },
+
+  "presets": {
+    "Pull": {
+      "application": "Git",
+      "cmd": "-C ${repo-dir} pull"
+    },
+    "Push": {
+      "application": "Git",
+      "cmd": "-C ${repo-dir} push"
+    },
+    "Show remotes": {
+      "application": "Git",
+      "cmd": "-C ${repo-dir}  remote -v"
+    },
+    "Checkout": {
+      "application": "Git",
+      "cmd": "-C ${repo-dir}  checkout ${branch}"
+    },
+    "Status": {
+      "application": "Git",
+      "cmd": "-C ${repo-dir} status"
+    }
+  }
+}
