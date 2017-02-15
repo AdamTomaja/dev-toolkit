@@ -21,6 +21,7 @@ public class CommandExecutorTest {
         executor.execute("echo " + text, outputConsumer);
 
         // then
+        verify(outputConsumer).accept("Running command: echo " + text);
         verify(outputConsumer).accept(text);
         verify(outputConsumer).accept("Process completed with status code: 0");
     }

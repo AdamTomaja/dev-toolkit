@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.prefs.BackingStoreException;
 
+import static java.lang.String.format;
+
 public class MainWindowController {
 
     static final Logger LOGGER = LoggerFactory.getLogger(MainWindowController.class);

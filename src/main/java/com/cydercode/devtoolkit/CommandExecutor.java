@@ -8,12 +8,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.function.Consumer;
 
+import static java.lang.String.format;
+
 public class CommandExecutor {
 
     static final Logger LOGGER = LoggerFactory.getLogger(CommandExecutor.class);
 
     public void execute(String commandLine, Consumer<String> outputConsumer) throws IOException, InterruptedException {
-        LOGGER.info("Executing command: {}", commandLine);
+        String runningCommandMessage = format("Running command: %s", commandLine);
+        
+        LOGGER.info(runningCommandMessage);
+        outputConsumer.accept(runningCommandMessage);
 
         Process process = Runtime.getRuntime().exec(commandLine);
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
