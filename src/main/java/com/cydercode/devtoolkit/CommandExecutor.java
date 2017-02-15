@@ -12,7 +12,7 @@ public class CommandExecutor {
 
     static final Logger LOGGER = LoggerFactory.getLogger(CommandExecutor.class);
 
-    public void execute(String commandLine, Consumer<String> outputConsumer) throws IOException {
+    public void execute(String commandLine, Consumer<String> outputConsumer) throws IOException, InterruptedException {
         LOGGER.info("Executing command: {}", commandLine);
 
         Process process = Runtime.getRuntime().exec(commandLine);
@@ -23,5 +23,11 @@ public class CommandExecutor {
             LOGGER.info("P-OUT: {}", line); // Process out
             outputConsumer.accept(line);
         }
+
+        process.waitFor();
+
+        int exitValue = process.exitValue();
+        LOGGER.info("Process exited with code: {}", exitValue);
+        outputConsumer.accept("Process completed with status code: " + exitValue);
     }
 }

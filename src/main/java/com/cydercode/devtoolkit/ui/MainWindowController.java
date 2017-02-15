@@ -94,12 +94,16 @@ public class MainWindowController {
 
         new Thread(() -> {
             try {
-                executor.execute(command, output -> {
-                    Platform.runLater(() -> {
-                        logsArea.appendText(output);
-                        logsArea.appendText(System.lineSeparator());
+                try {
+                    executor.execute(command, output -> {
+                        Platform.runLater(() -> {
+                            logsArea.appendText(output);
+                            logsArea.appendText(System.lineSeparator());
+                        });
                     });
-                });
+                } catch (InterruptedException e) {
+                    LOGGER.error("Error when executing command", e);
+                }
             } catch (IOException e) {
                 LOGGER.error("Error during command execution", e);
             }

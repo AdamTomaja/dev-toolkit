@@ -11,7 +11,7 @@ import static org.mockito.Mockito.verify;
 public class CommandExecutorTest {
 
     @Test
-    public void shouldExecuteCommand() throws IOException {
+    public void shouldExecuteCommand() throws IOException, InterruptedException {
         // given
         Consumer outputConsumer = mock(Consumer.class);
         CommandExecutor executor = new CommandExecutor();
@@ -22,5 +22,6 @@ public class CommandExecutorTest {
 
         // then
         verify(outputConsumer).accept(text);
+        verify(outputConsumer).accept("Process completed with status code: 0");
     }
 }
