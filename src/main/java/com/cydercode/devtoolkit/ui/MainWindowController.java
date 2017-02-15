@@ -130,8 +130,10 @@ public class MainWindowController {
                 });
             } catch (InterruptedException | IOException e) {
                 LOGGER.error("Error during command execution", e);
-                dialogHelper.createExceptionAlert("Error during command execution", e)
-                        .showAndWait();
+                Platform.runLater(() -> {
+                    dialogHelper.createExceptionAlert("Error during command execution", e)
+                            .showAndWait();
+                });
             }
         }).start();
     }
