@@ -17,7 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.prefs.BackingStoreException;
 
@@ -65,7 +64,8 @@ public class MainWindowController {
     }
 
     private void loadConfiguration(Configuration configuration) {
-        presetsBox.getChildren().clear();
+        clearConfiguration();
+
         for (String presetName : configuration.getPresets().keySet()) {
             Button presetButton = new Button();
             presetButton.setText(presetName);
@@ -75,15 +75,13 @@ public class MainWindowController {
             presetsBox.getChildren().add(presetButton);
         }
 
-        parametersBox.getChildren().clear();
-        parametersControls.clear();
         for (String parameterName : configuration.getParameters().keySet()) {
             Map<String, Object> parameter = configuration.getParameters().get(parameterName);
             Control control = parameterControlFactory.produceControl(parameter);
 
             parametersControls.put(parameterName, control);
 
-            if(!parameterControlFactory.isHidden(parameter)){
+            if (!parameterControlFactory.isHidden(parameter)) {
                 VBox vBox = new VBox();
                 Label label = new Label();
                 label.setText(parameterName);
@@ -92,6 +90,12 @@ public class MainWindowController {
                 parametersBox.getChildren().add(vBox);
             }
         }
+    }
+
+    private void clearConfiguration() {
+        presetsBox.getChildren().clear();
+        parametersBox.getChildren().clear();
+        parametersControls.clear();
     }
 
     private void runPreset(String presetName) {
@@ -109,17 +113,13 @@ public class MainWindowController {
 
         new Thread(() -> {
             try {
-                try {
-                    executor.execute(command, output -> {
-                        Platform.runLater(() -> {
-                            logsArea.appendText(output);
-                            logsArea.appendText(System.lineSeparator());
-                        });
+                executor.execute(command, output -> {
+                    Platform.runLater(() -> {
+                        logsArea.appendText(output);
+                        logsArea.appendText(System.lineSeparator());
                     });
-                } catch (InterruptedException e) {
-                    LOGGER.error("Error when executing command", e);
-                }
-            } catch (IOException e) {
+                });
+            } catch (InterruptedException | IOException e) {
                 LOGGER.error("Error during command execution", e);
             }
         }).start();
