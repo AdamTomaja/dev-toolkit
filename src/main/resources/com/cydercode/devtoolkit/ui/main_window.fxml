@@ -51,7 +51,7 @@
                   </VBox>
                </items>
             </SplitPane>
-            <TabPane fx:id="runTabs" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="runTabs" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS">
             </TabPane>
          </items>
       </SplitPane>
