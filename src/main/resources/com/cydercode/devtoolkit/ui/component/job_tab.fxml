@@ -5,17 +5,17 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<fx:root spacing="5.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8.0.112"
-         xmlns:fx="http://javafx.com/fxml/1">
+
+<fx:root spacing="5.0" stylesheets="@group.css" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox>
             <children>
-                <Button fx:id="killButton" disable="true" mnemonicParsing="false" text="Kill job"/>
+                <Button fx:id="killButton" disable="true" mnemonicParsing="false" text="Kill job" />
             </children>
         </VBox>
-        <TextArea fx:id="logsArea" HBox.hgrow="ALWAYS"/>
+        <TextArea id="logs-area" fx:id="logsArea" HBox.hgrow="ALWAYS" />
     </children>
     <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
 </fx:root>

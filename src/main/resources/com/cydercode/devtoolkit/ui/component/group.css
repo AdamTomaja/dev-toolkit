@@ -1,0 +1,11 @@
+#logs-area {
+    -fx-border-width: 3px;
+}
+
+#logs-area.error {
+    -fx-border-color: red;
+}
+
+#logs-area.success {
+    -fx-border-color: green;
+}

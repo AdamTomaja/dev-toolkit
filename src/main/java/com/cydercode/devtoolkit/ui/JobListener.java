@@ -5,6 +5,7 @@ import com.cydercode.devtoolkit.ui.component.JobTab;
 import javafx.scene.control.TextArea;
 
 import static java.lang.String.format;
+import static javafx.application.Platform.exit;
 import static javafx.application.Platform.runLater;
 
 public class JobListener implements CommandExecutorListener {
@@ -34,7 +35,14 @@ public class JobListener implements CommandExecutorListener {
                 format("Job %s finished with status: %d",
                         jobName,
                         exitValue)));
+
         jobTab.setKillDisabled(true);
+
+        if(exitValue != 0) {
+            jobTab.showError();
+        } else {
+            jobTab.showSuccess();
+        }
     }
 
     @Override
