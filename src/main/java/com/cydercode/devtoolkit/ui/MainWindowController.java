@@ -48,6 +48,11 @@ public class MainWindowController {
     TabPane runTabs;
 
     @FXML
+    protected void reloadConfiguration() throws FileNotFoundException {
+        initialize();
+    }
+
+    @FXML
     protected void initialize() throws FileNotFoundException {
         Optional<Configuration> configuration = configurationHolder.loadLastConfiguration();
         if (configuration.isPresent()) {
