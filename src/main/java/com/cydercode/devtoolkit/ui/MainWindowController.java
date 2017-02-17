@@ -2,8 +2,8 @@ package com.cydercode.devtoolkit.ui;
 
 import com.cydercode.devtoolkit.CommandBuilder;
 import com.cydercode.devtoolkit.Configuration;
+import com.cydercode.devtoolkit.ConfigurationTraverser;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
-import eu.hansolo.enzo.notification.Notification;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.cydercode.devtoolkit.Configuration.DEFAULT_GROUP;
 
 public class MainWindowController {
 
@@ -33,19 +33,17 @@ public class MainWindowController {
     ParameterControlFactory parameterControlFactory = new ParameterControlFactory();
     ParametersExtractor parametersExtractor = new ParametersExtractor();
     DialogHelper dialogHelper = new DialogHelper();
+    ConfigurationTraverser configurationTraverser = new ConfigurationTraverser();
 
     Map<String, Control> parametersControls = new HashMap<>();
 
     AtomicInteger jobsCounter = new AtomicInteger(0);
 
     @FXML
-    Pane parametersBox;
-
-    @FXML
-    Pane presetsBox;
-
-    @FXML
     TabPane runTabs;
+
+    @FXML
+    Pane groupsBox;
 
     @FXML
     protected void reloadConfiguration() throws FileNotFoundException {
@@ -83,35 +81,43 @@ public class MainWindowController {
     private void loadConfiguration(Configuration configuration) {
         clearConfiguration();
 
-        for (String presetName : configuration.getPresets().keySet()) {
-            Button presetButton = new Button();
-            presetButton.setText(presetName);
-            presetButton.setOnAction(ev -> {
-                runPreset(presetName);
-            });
-            presetsBox.getChildren().add(presetButton);
-        }
+        Set<String> groups = configurationTraverser.getGroups(configuration);
+        groups.add(DEFAULT_GROUP); // default group
 
-        for (String parameterName : configuration.getParameters().keySet()) {
-            Map<String, Object> parameter = configuration.getParameters().get(parameterName);
-            Control control = parameterControlFactory.produceControl(parameter);
+        for (String groupName : groups) {
+            Group group = new Group();
+            group.setText(Objects.equals(groupName, DEFAULT_GROUP) ? "Default group" : groupName);
+            groupsBox.getChildren().add(group);
 
-            parametersControls.put(parameterName, control);
+            for (String presetName : configurationTraverser.findObjectsWithGroup(groupName, configuration.getPresets()).keySet()) {
+                Button presetButton = new Button();
+                presetButton.setText(presetName);
+                presetButton.setOnAction(ev -> {
+                    runPreset(presetName);
+                });
+                group.addPreset(presetButton);
+            }
 
-            if (!parameterControlFactory.isHidden(parameter)) {
-                VBox vBox = new VBox();
-                Label label = new Label();
-                label.setText(parameterName);
-                vBox.getChildren().add(label);
-                vBox.getChildren().add(control);
-                parametersBox.getChildren().add(vBox);
+            for (String parameterName : configurationTraverser.findObjectsWithGroup(groupName, configuration.getParameters()).keySet()) {
+                Map<String, Object> parameter = configuration.getParameters().get(parameterName);
+                Control control = parameterControlFactory.produceControl(parameter);
+
+                parametersControls.put(parameterName, control);
+
+                if (!parameterControlFactory.isHidden(parameter)) {
+                    VBox vBox = new VBox();
+                    Label label = new Label();
+                    label.setText(parameterName);
+                    vBox.getChildren().add(label);
+                    vBox.getChildren().add(control);
+                    group.addParameter(vBox);
+                }
             }
         }
     }
 
     private void clearConfiguration() {
-        presetsBox.getChildren().clear();
-        parametersBox.getChildren().clear();
+        groupsBox.getChildren().clear();
         parametersControls.clear();
     }
 

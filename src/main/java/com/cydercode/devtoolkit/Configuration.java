@@ -7,9 +7,18 @@ import java.util.Map;
 
 public class Configuration {
 
+    public static final String GROUP = "group",
+            DEFAULT = "default",
+            VALUES = "values",
+            APPLICATION = "application",
+            HIDDEN = "hidden",
+            TRUE = "true",
+            DEFAULT_GROUP = null;
+
+
     Map<String, Map<String, String>> applications;
     Map<String, Map<String, Object>> parameters;
-    Map<String, Map<String, String>> presets;
+    Map<String, Map<String, Object>> presets;
 
     public Map<String, Map<String, String>> getApplications() {
         return applications;
@@ -27,11 +36,11 @@ public class Configuration {
         this.parameters = parameters;
     }
 
-    public Map<String, Map<String, String>> getPresets() {
+    public Map<String, Map<String, Object>> getPresets() {
         return presets;
     }
 
-    public void setPresets(Map<String, Map<String, String>> presets) {
+    public void setPresets(Map<String, Map<String, Object>> presets) {
         this.presets = presets;
     }
 

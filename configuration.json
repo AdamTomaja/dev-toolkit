@@ -36,15 +36,18 @@
   "presets": {
     "build": {
       "application": "Maven",
-      "cmd": "-f ${project-home} clean install"
+      "cmd": "-f ${project-home} clean install",
+      "group": "Maven"
     },
     "clean": {
       "application": "Maven",
-      "cmd": "-f ${project-home} clean"
+      "cmd": "-f ${project-home} clean",
+      "group": "Maven"
     },
     "preset-with-hidden-parameter": {
       "application": "Maven",
-      "cmd":"-f ${project-home} -D${hidden-parameter}"
+      "cmd":"-f ${project-home} -D${hidden-parameter}",
+      "group": "Maven2"
     }
   }
 }
