@@ -1,0 +1,80 @@
+package com.cydercode.devtoolkit.ui;
+
+import com.cydercode.devtoolkit.ui.component.JobTab;
+import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Test;
+
+import static java.lang.String.format;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
+public class JobListenerTest extends JavaFXComponentsTest {
+
+    @Test
+    public void shouldAppendTextToLogsAreaAndCreateNotification() throws InterruptedException {
+        // given
+        String jobName = "JobName";
+        String output = "TestOutput";
+
+        JobTab jobTab = mock(JobTab.class);
+        NotificationFacade notificationFacade = mock(NotificationFacade.class);
+        JobListener listener = new JobListener(jobName, jobTab, notificationFacade);
+
+        // when
+        listener.onProcessFinished(0);
+        listener.onProcessOutput(output);
+
+
+        // then
+        Thread.sleep(1000); // wait for Platform.runLater execution
+        verify(jobTab).appendText(output);
+        verify(notificationFacade).showInformation("Dev-toolkit", format("Job %s finished with status: %d", jobName, 0));
+    }
+
+    @Test
+    public void shouldDestroyForcibly() {
+        // given
+        JobTab jobTab = mock(JobTab.class);
+        NotificationFacade notificationFacade = mock(NotificationFacade.class);
+        JobListener listener = new JobListener(RandomStringUtils.randomAlphabetic(10), jobTab, notificationFacade);
+        Process process = mock(Process.class);
+
+        // when
+        listener.onProcessCreated(process);
+        listener.kill();
+
+        // then
+        verify(process).destroyForcibly();
+    }
+
+    @Test
+    public void shouldEnableKillButton() {
+        // given
+        JobTab jobTab = mock(JobTab.class);
+        NotificationFacade notificationFacade = mock(NotificationFacade.class);
+        JobListener listener = new JobListener(RandomStringUtils.randomAlphabetic(10), jobTab, notificationFacade);
+        Process process = mock(Process.class);
+
+        // when
+        listener.onProcessCreated(process);
+
+        // then
+        verify(jobTab).setKillDisabled(false);
+    }
+
+    @Test
+    public void shouldDisableKillButton() {
+        // given
+        JobTab jobTab = mock(JobTab.class);
+        NotificationFacade notificationFacade = mock(NotificationFacade.class);
+        JobListener listener = new JobListener(RandomStringUtils.randomAlphabetic(10), jobTab, notificationFacade);
+        Process process = mock(Process.class);
+
+        // when
+        listener.onProcessCreated(process);
+        listener.onProcessFinished(0);
+
+        // then
+        verify(jobTab).setKillDisabled(true);
+    }
+}
