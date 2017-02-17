@@ -38,7 +38,7 @@ public class ConfigurationTest {
     @Test
     public void shouldSetPresets() {
         // Given
-        Map<String, Map<String, String>> map = ImmutableMap.of();
+        Map<String, Map<String, Object>> map = ImmutableMap.of();
         Configuration configuration = new Configuration();
 
         // when
