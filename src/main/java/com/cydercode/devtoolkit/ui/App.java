@@ -4,7 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import static com.google.common.io.Resources.getResource;
 
 public class App extends Application {
 
@@ -16,6 +19,7 @@ public class App extends Application {
 
         stage.setTitle("CyderCode dev-toolkit");
         stage.setScene(scene);
+        stage.getIcons().add(new Image(getResource("com/cydercode/devtoolkit/ui/icon.png").openStream()));
         stage.show();
     }
 
