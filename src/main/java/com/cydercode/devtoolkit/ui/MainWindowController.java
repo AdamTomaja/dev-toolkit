@@ -4,6 +4,8 @@ import com.cydercode.devtoolkit.CommandBuilder;
 import com.cydercode.devtoolkit.Configuration;
 import com.cydercode.devtoolkit.ConfigurationTraverser;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
+import com.cydercode.devtoolkit.ui.component.Group;
+import com.cydercode.devtoolkit.ui.component.JobTab;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -131,16 +133,24 @@ public class MainWindowController {
                 presetName,
                 parameters);
 
-        TextArea logsArea = new TextArea();
+        JobTab jobTab = new JobTab();
         Tab tab = new Tab();
         tab.setText(jobName);
-        tab.setContent(logsArea);
+        tab.setContent(jobTab);
+
+        JobListener outputConsumer = new JobListener(jobName, jobTab, notificationFacade);
+
+        jobTab.setOnKillAction(ev -> {
+            System.out.println("KKill!");
+            outputConsumer.kill();
+        });
+
         runTabs.getTabs().add(tab);
         runTabs.getSelectionModel().select(tab);
 
         new Thread(() -> {
             try {
-                executor.execute(command, new UiCommandExecutorListener(jobName, logsArea, notificationFacade));
+                executor.execute(command, outputConsumer);
             } catch (InterruptedException | IOException e) {
                 LOGGER.error("Error during command execution", e);
                 Platform.runLater(() -> {

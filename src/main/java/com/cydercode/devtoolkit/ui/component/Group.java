@@ -1,4 +1,4 @@
-package com.cydercode.devtoolkit.ui;
+package com.cydercode.devtoolkit.ui.component;
 
 
 import javafx.fxml.FXML;
@@ -24,7 +24,7 @@ public class Group extends VBox {
     private Label groupNameLabel;
 
     public Group() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getResource("com/cydercode/devtoolkit/ui/group.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getResource("com/cydercode/devtoolkit/ui/component/group.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

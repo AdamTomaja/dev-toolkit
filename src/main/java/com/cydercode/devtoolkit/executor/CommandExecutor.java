@@ -20,6 +20,9 @@ public class CommandExecutor {
         outputConsumer.onProcessOutput(runningCommandMessage);
 
         Process process = Runtime.getRuntime().exec(commandLine);
+
+        outputConsumer.onProcessCreated(process);
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
 
