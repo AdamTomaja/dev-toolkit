@@ -77,4 +77,32 @@ public class JobListenerTest extends JavaFXComponentsTest {
         // then
         verify(jobTab).setKillDisabled(true);
     }
+
+    @Test
+    public void shouldShowSuccess() {
+        // given
+        JobTab jobTab = mock(JobTab.class);
+        NotificationFacade notificationFacade = mock(NotificationFacade.class);
+        JobListener listener = new JobListener(RandomStringUtils.randomAlphabetic(10), jobTab, notificationFacade);
+
+        // when
+        listener.onProcessFinished(0);
+
+        // then
+        verify(jobTab).showSuccess();
+    }
+
+    @Test
+    public void shouldShowErrorWhenExitValueDifferentThanZero() {
+        // given
+        JobTab jobTab = mock(JobTab.class);
+        NotificationFacade notificationFacade = mock(NotificationFacade.class);
+        JobListener listener = new JobListener(RandomStringUtils.randomAlphabetic(10), jobTab, notificationFacade);
+
+        // when
+        listener.onProcessFinished(123);
+
+        // then
+        verify(jobTab).showError();
+    }
 }

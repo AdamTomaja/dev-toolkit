@@ -25,12 +25,19 @@ public class JobTab extends HBox {
         FXMLLoader fxmlLoader = new FXMLLoader(getResource("com/cydercode/devtoolkit/ui/component/job_tab.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
         try {
             fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void showError() {
+        logsArea.getStyleClass().add("error");
+    }
+
+    public void showSuccess() {
+        logsArea.getStyleClass().add("success");
     }
 
     public void setOnKillAction(EventHandler<ActionEvent> eventHandler) {
