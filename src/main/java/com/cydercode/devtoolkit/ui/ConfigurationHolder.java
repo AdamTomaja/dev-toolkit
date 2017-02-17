@@ -9,6 +9,7 @@ import sun.awt.X11.XAtom;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -28,8 +29,13 @@ public class ConfigurationHolder {
 
     public Optional<Configuration> loadLastConfiguration() throws FileNotFoundException {
         String file = preferences.get(FILE_PREF_KEY, null);
-        if (file != null) {
-            load(new File(file));
+
+        try {
+            if (file != null) {
+                load(new File(file));
+            }
+        } catch (IOException e) {
+            LOGGER.warn("It was impossible to load last configuration", e);
         }
 
         return Optional.ofNullable(configuration);
