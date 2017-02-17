@@ -3,6 +3,11 @@ Application to make developer life a little bit easier.
 
 # What is it ?
 In dev-toolkit You can create presets to easily execute commands from UI. 
+
+# Screenshot
+![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/groups.png)
+
+
 # Configuration file
 The configuration file contains three sections: applications, parameters and presets.
 Each one is a map of name of item and its properties.
@@ -69,7 +74,7 @@ Preset defines an application connected with command line and parameters. Each p
   }
 }
 ```
-# Screenshots
+# Examples
 ![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/git-example.png)
 ![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/maven-example.png)
 ![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/main-window.png)
