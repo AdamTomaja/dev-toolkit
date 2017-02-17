@@ -24,7 +24,7 @@ public class UiCommandExecutorListenerTest extends JavaFXComponentsTest {
 
 
         // then
-        Thread.sleep(200); // wait for Platform.runLater execution
+        Thread.sleep(1000); // wait for Platform.runLater execution
         Mockito.verify(logsArea).appendText(output);
         Mockito.verify(notificationFacade).showInformation("Dev-toolkit", format("Job %s finished with status: %d", jobName, 0));
     }
