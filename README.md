@@ -25,11 +25,13 @@ You can use parameter by using ${parameter-name} syntax
 * default - default value of parameter
 * values - optional, list of strings. If defined, combobox will be used as input control in UI
 * hidden - if set to true, parameter will not be visible in UI, but will be accessible via ${parameter-name} syntax
+* group - string - if set, the parameter will be displayed in group, can be any string
 
 ## Preset
 Preset defines an application connected with command line and parameters. Each preset uses one application.
 * application - must be existing name of one of configured applications
 * cmd - arguments for applications, ${parameter-name} can be used here. 
+* group - string - if set, the preset will be displayed in group, can be any string
 
 ```javascript
 {
