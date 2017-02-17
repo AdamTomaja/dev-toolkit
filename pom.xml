@@ -21,6 +21,7 @@
         <slf4j-simple.version>1.7.22</slf4j-simple.version>
         <mockito-all.version>1.10.19</mockito-all.version>
         <commons-io.version>2.5</commons-io.version>
+        <Enzo.version>0.3.6</Enzo.version>
     </properties>
 
     <dependencies>
@@ -72,7 +73,7 @@
         <dependency>
             <groupId>eu.hansolo.enzo</groupId>
             <artifactId>Enzo</artifactId>
-            <version>0.3.6</version>
+            <version>${Enzo.version}</version>
         </dependency>
     </dependencies>
 
