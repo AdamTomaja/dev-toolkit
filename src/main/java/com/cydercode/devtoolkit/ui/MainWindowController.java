@@ -1,8 +1,9 @@
 package com.cydercode.devtoolkit.ui;
 
 import com.cydercode.devtoolkit.CommandBuilder;
-import com.cydercode.devtoolkit.CommandExecutor;
 import com.cydercode.devtoolkit.Configuration;
+import com.cydercode.devtoolkit.executor.CommandExecutor;
+import eu.hansolo.enzo.notification.Notification;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainWindowController {
 
@@ -25,6 +27,7 @@ public class MainWindowController {
 
     ConfigurationHolder configurationHolder = new ConfigurationHolder(MainWindowController.class.getName());
 
+    NotificationFacade notificationFacade = new NotificationFacade();
     CommandBuilder commandBuilder = new CommandBuilder();
     CommandExecutor executor = new CommandExecutor();
     ParameterControlFactory parameterControlFactory = new ParameterControlFactory();
@@ -32,6 +35,8 @@ public class MainWindowController {
     DialogHelper dialogHelper = new DialogHelper();
 
     Map<String, Control> parametersControls = new HashMap<>();
+
+    AtomicInteger jobsCounter = new AtomicInteger(0);
 
     @FXML
     Pane parametersBox;
@@ -107,6 +112,8 @@ public class MainWindowController {
 
     private void runPreset(String presetName) {
         LOGGER.info("Executing preset: {}", presetName);
+        String jobName = String.format("#%d - %s", jobsCounter.incrementAndGet(), presetName);
+
         Map<String, Object> parameters = parametersExtractor.extractParameters(parametersControls);
 
         String command = commandBuilder.buildCommand(configurationHolder.getCurrentConfiguration().get(),
@@ -115,19 +122,14 @@ public class MainWindowController {
 
         TextArea logsArea = new TextArea();
         Tab tab = new Tab();
-        tab.setText("Run: " + presetName);
+        tab.setText(jobName);
         tab.setContent(logsArea);
         runTabs.getTabs().add(tab);
         runTabs.getSelectionModel().select(tab);
 
         new Thread(() -> {
             try {
-                executor.execute(command, output -> {
-                    Platform.runLater(() -> {
-                        logsArea.appendText(output);
-                        logsArea.appendText(System.lineSeparator());
-                    });
-                });
+                executor.execute(command, new UiCommandExecutorListener(jobName, logsArea, notificationFacade));
             } catch (InterruptedException | IOException e) {
                 LOGGER.error("Error during command execution", e);
                 Platform.runLater(() -> {
