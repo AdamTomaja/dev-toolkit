@@ -5,6 +5,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
 
 import static java.lang.String.format;
+import static java.lang.Thread.sleep;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -26,7 +27,7 @@ public class JobListenerTest extends JavaFXComponentsTest {
 
 
         // then
-        Thread.sleep(1000); // wait for Platform.runLater execution
+        sleep(1000); // wait for Platform.runLater execution
         verify(jobTab).appendText(output);
         verify(notificationFacade).showInformation("Dev-toolkit", format("Job %s finished with status: %d", jobName, 0));
     }
@@ -104,5 +105,21 @@ public class JobListenerTest extends JavaFXComponentsTest {
 
         // then
         verify(jobTab).showError();
+    }
+
+    @Test
+    public void shouldShowCommand() throws InterruptedException {
+        // given
+        String command = "some-command";
+        JobTab jobTab = mock(JobTab.class);
+        NotificationFacade notificationFacade = mock(NotificationFacade.class);
+        JobListener jobListener = new JobListener(RandomStringUtils.randomAlphabetic(10), jobTab, notificationFacade);
+
+        // when
+        jobListener.onCommand(command);
+
+        // then
+        sleep(1000); // wait for Platform.runLater execution
+        verify(jobTab).appendText("Running command: " + command);
     }
 }

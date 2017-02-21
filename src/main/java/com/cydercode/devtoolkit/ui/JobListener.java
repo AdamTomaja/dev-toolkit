@@ -2,10 +2,8 @@ package com.cydercode.devtoolkit.ui;
 
 import com.cydercode.devtoolkit.executor.CommandExecutorListener;
 import com.cydercode.devtoolkit.ui.component.JobTab;
-import javafx.scene.control.TextArea;
 
 import static java.lang.String.format;
-import static javafx.application.Platform.exit;
 import static javafx.application.Platform.runLater;
 
 public class JobListener implements CommandExecutorListener {
@@ -19,6 +17,11 @@ public class JobListener implements CommandExecutorListener {
         this.jobTab = jobTab;
         this.jobName = jobName;
         this.notificationFacade = notificationFacade;
+    }
+
+    @Override
+    public void onCommand(String commandLine) {
+        onProcessOutput(String.format("Running command: %s", commandLine));
     }
 
     @Override
@@ -38,7 +41,7 @@ public class JobListener implements CommandExecutorListener {
 
         jobTab.setKillDisabled(true);
 
-        if(exitValue != 0) {
+        if (exitValue != 0) {
             jobTab.showError();
         } else {
             jobTab.showSuccess();

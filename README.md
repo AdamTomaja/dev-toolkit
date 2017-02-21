@@ -3,9 +3,19 @@ Application to make developer life a little bit easier.
 
 # What is it ?
 In dev-toolkit You can create presets to easily execute commands from UI. 
+
+# Latest release download link
+[V1.3 Download](https://github.com/AdamTomaja/dev-toolkit/releases/download/v1.3/dev-toolkit-1.3-jar-with-dependencies.jar)
+
+# Screenshot
+![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/groups.png)
+
+
 # Configuration file
 The configuration file contains three sections: applications, parameters and presets.
 Each one is a map of name of item and its properties.
+
+**Important !** Configuration examples are ready to download and testing up in examples/ directory  
 
 ## Application
 Application defines a binary file on Your computer. 
@@ -18,11 +28,15 @@ You can use parameter by using ${parameter-name} syntax
 * default - default value of parameter
 * values - optional, list of strings. If defined, combobox will be used as input control in UI
 * hidden - if set to true, parameter will not be visible in UI, but will be accessible via ${parameter-name} syntax
+* group - string - if set, the parameter will be displayed in group, can be any string
 
 ## Preset
 Preset defines an application connected with command line and parameters. Each preset uses one application.
 * application - must be existing name of one of configured applications
 * cmd - arguments for applications, ${parameter-name} can be used here. 
+* group - string - if set, the preset will be displayed in group, can be any string
+* presets - list of preset names - if set, preset will be interpreted as compound. That means all presets from the list 
+will be executed
 
 ```javascript
 {
@@ -63,10 +77,15 @@ Preset defines an application connected with command line and parameters. Each p
     "clean": {
       "application": "Maven",
       "cmd": "-f ${project-home} clean"
+    },
+    "Build and clean": {
+        "presets": ["clean", "build"]
     }
   }
 }
 ```
-# Screenshot
-![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/main-window.png)
+# Examples
+![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/git-example.png)
+![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/maven-example.png)
+![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/main-window.png)
 
