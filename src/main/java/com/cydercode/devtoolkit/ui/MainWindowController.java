@@ -3,6 +3,7 @@ package com.cydercode.devtoolkit.ui;
 import com.cydercode.devtoolkit.CommandBuilder;
 import com.cydercode.devtoolkit.Configuration;
 import com.cydercode.devtoolkit.ConfigurationTraverser;
+import com.cydercode.devtoolkit.PresetRunner;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
 import com.cydercode.devtoolkit.ui.component.Group;
 import com.cydercode.devtoolkit.ui.component.JobTab;
@@ -30,12 +31,11 @@ public class MainWindowController {
     ConfigurationHolder configurationHolder = new ConfigurationHolder(MainWindowController.class.getName());
 
     NotificationFacade notificationFacade = new NotificationFacade();
-    CommandBuilder commandBuilder = new CommandBuilder();
-    CommandExecutor executor = new CommandExecutor();
     ParameterControlFactory parameterControlFactory = new ParameterControlFactory();
     ParametersExtractor parametersExtractor = new ParametersExtractor();
     DialogHelper dialogHelper = new DialogHelper();
     ConfigurationTraverser configurationTraverser = new ConfigurationTraverser();
+    PresetRunner presetRunner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
 
     Map<String, Control> parametersControls = new HashMap<>();
 
@@ -127,22 +127,16 @@ public class MainWindowController {
         LOGGER.info("Executing preset: {}", presetName);
         String jobName = String.format("#%d - %s", jobsCounter.incrementAndGet(), presetName);
 
-        Map<String, Object> parameters = parametersExtractor.extractParameters(parametersControls);
-
-        String command = commandBuilder.buildCommand(configurationHolder.getCurrentConfiguration().get(),
-                presetName,
-                parameters);
 
         JobTab jobTab = new JobTab();
         Tab tab = new Tab();
         tab.setText(jobName);
         tab.setContent(jobTab);
 
-        JobListener outputConsumer = new JobListener(jobName, jobTab, notificationFacade);
+        JobListener jobListener = new JobListener(jobName, jobTab, notificationFacade);
 
         jobTab.setOnKillAction(ev -> {
-            System.out.println("KKill!");
-            outputConsumer.kill();
+            jobListener.kill();
         });
 
         runTabs.getTabs().add(tab);
@@ -150,7 +144,9 @@ public class MainWindowController {
 
         new Thread(() -> {
             try {
-                executor.execute(command, outputConsumer);
+                presetRunner.run(presetName, configurationHolder.getCurrentConfiguration().get(),
+                        parametersExtractor.extractParameters(parametersControls),
+                        jobListener);
             } catch (InterruptedException | IOException e) {
                 LOGGER.error("Error during command execution", e);
                 Platform.runLater(() -> {

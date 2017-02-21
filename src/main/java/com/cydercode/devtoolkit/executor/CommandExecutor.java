@@ -13,11 +13,9 @@ public class CommandExecutor {
 
     static final Logger LOGGER = LoggerFactory.getLogger(CommandExecutor.class);
 
-    public void execute(String commandLine, CommandExecutorListener outputConsumer) throws IOException, InterruptedException {
-        String runningCommandMessage = format("Running command: %s", commandLine);
-        
-        LOGGER.info(runningCommandMessage);
-        outputConsumer.onProcessOutput(runningCommandMessage);
+    public int execute(String commandLine, CommandExecutorListener outputConsumer) throws IOException, InterruptedException {
+        LOGGER.info(format("Running command: %s", commandLine));
+        outputConsumer.onCommand(commandLine);
 
         Process process = Runtime.getRuntime().exec(commandLine);
 
@@ -37,5 +35,6 @@ public class CommandExecutor {
         LOGGER.info("Process exited with code: {}", exitValue);
         outputConsumer.onProcessOutput("Process completed with status code: " + exitValue);
         outputConsumer.onProcessFinished(exitValue);
+        return exitValue;
     }
 }

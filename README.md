@@ -35,6 +35,8 @@ Preset defines an application connected with command line and parameters. Each p
 * application - must be existing name of one of configured applications
 * cmd - arguments for applications, ${parameter-name} can be used here. 
 * group - string - if set, the preset will be displayed in group, can be any string
+* presets - list of preset names - if set, preset will be interpreted as compound. That means all presets from the list 
+will be executed
 
 ```javascript
 {
@@ -75,6 +77,9 @@ Preset defines an application connected with command line and parameters. Each p
     "clean": {
       "application": "Maven",
       "cmd": "-f ${project-home} clean"
+    },
+    "Build and clean": {
+        "presets": ["clean", "build"]
     }
   }
 }

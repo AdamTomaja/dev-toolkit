@@ -12,6 +12,7 @@ public class Configuration {
             VALUES = "values",
             APPLICATION = "application",
             HIDDEN = "hidden",
+            PRESETS = "presets",
             TRUE = "true",
             DEFAULT_GROUP = null;
 

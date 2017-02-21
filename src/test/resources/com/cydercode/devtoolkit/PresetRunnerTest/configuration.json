@@ -1,0 +1,38 @@
+{
+  "applications": {
+    "echo": {
+      "path": "echo"
+    },
+    "mvn": {
+      "path": "mvn"
+    }
+  },
+  "parameters": {
+  },
+  "presets": {
+    "first-preset": {
+      "application": "echo",
+      "cmd": "1test1"
+    },
+    "second-preset": {
+      "application": "echo",
+      "cmd": "2test2"
+    },
+    "error-preset": {
+      "application": "mvn",
+      "cmd": "error-command"
+    },
+    "compound-preset": {
+      "presets": [
+        "first-preset",
+        "second-preset"
+      ]
+    },
+    "error-compound-preset": {
+      "presets": [
+        "error-preset",
+        "first-preset"
+      ]
+    }
+  }
+}

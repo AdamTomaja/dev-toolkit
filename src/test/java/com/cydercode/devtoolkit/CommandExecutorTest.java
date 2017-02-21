@@ -3,10 +3,10 @@ package com.cydercode.devtoolkit;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
 import com.cydercode.devtoolkit.executor.CommandExecutorListener;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.io.IOException;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -21,10 +21,11 @@ public class CommandExecutorTest {
 
         // when
         String text = "dev-toolkit-test";
-        executor.execute("echo " + text, executorListener);
+        int result = executor.execute("echo " + text, executorListener);
 
         // then
-        verify(executorListener).onProcessOutput("Running command: echo " + text);
+        assertThat(result).isEqualTo(0);
+        verify(executorListener).onCommand("echo " + text);
         verify(executorListener).onProcessOutput(text);
         verify(executorListener).onProcessOutput("Process completed with status code: 0");
         verify(executorListener).onProcessFinished(0);
