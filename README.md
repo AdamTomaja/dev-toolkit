@@ -38,9 +38,9 @@ Preset defines an application connected with command line and parameters. Each p
 * group - string - if set, the preset will be displayed in group, can be any string
 * presets - list of preset names or maps of compound presets - if set, preset will be interpreted as compound. That means all presets from the list.
 
-## Child preset
+## Child preset in compound one
 * preset - string - name of preset
-* ignorable - boolean - if set to true, this preset can exit with status different than 0 and compound preset will be continued
+* ignorable - boolean - if set to true, this preset can exit with status different than 0 and compound preset will be continued. Example in examples/compound.json
 
 will be executed
 
