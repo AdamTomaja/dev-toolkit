@@ -85,7 +85,13 @@ will be executed
       "cmd": "-f ${project-home} clean"
     },
     "Build and clean": {
-        "presets": ["clean", "build"]
+        "presets": [
+          {
+            "preset":"clean", 
+            "ignorable": true
+            }, 
+          "build"
+        ]
     }
   }
 }
