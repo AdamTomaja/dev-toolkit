@@ -34,6 +34,8 @@ public class JobListener implements CommandExecutorListener {
 
     @Override
     public void onProcessFinished(int exitValue) {
+        notificationFacade.beep();
+
         runLater(() -> notificationFacade.showInformation("Dev-toolkit",
                 format("Job %s finished with status: %d",
                         jobName,
