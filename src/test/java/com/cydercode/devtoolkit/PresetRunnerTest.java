@@ -85,4 +85,43 @@ public class PresetRunnerTest {
         verify(jobListener, times(1)).onProcessCreated(any(Process.class));
         verify(jobListener, times(1)).onCommand(any());
     }
+
+    @Test
+    public void shouldIgnoreErrorPronePreset() throws IOException, InterruptedException {
+        // given
+        // given
+        PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
+
+        Map<String, Object> parameters = ImmutableMap.of();
+        Configuration configuration = new Gson().fromJson(
+                new InputStreamReader(getResource(
+                        "com/cydercode/devtoolkit/PresetRunnerTest/configuration.json").openStream()), Configuration.class);
+        JobListener jobListener = mock(JobListener.class);
+
+        // when
+        int exitValue = runner.run("ignorable-preset", configuration, parameters, jobListener);
+
+        // then
+        Assertions.assertThat(exitValue).isEqualTo(0);
+        verify(jobListener).onCommand("echo 1test1");
+        verify(jobListener).onCommand("echo 2test2");
+        verify(jobListener).onCommand("mvn error-command");
+        verify(jobListener, times(1)).onProcessFinished(1);
+        verify(jobListener, times(2)).onProcessFinished(0);
+        verify(jobListener).onProcessOutput("2test2");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionWhenInvalidPreset() throws IOException, InterruptedException {
+        PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
+
+        Map<String, Object> parameters = ImmutableMap.of();
+        Configuration configuration = new Gson().fromJson(
+                new InputStreamReader(getResource(
+                        "com/cydercode/devtoolkit/PresetRunnerTest/configuration.json").openStream()), Configuration.class);
+        JobListener jobListener = mock(JobListener.class);
+
+        // when
+        int exitValue = runner.run("invalid-preset", configuration, parameters, jobListener);
+    }
 }
