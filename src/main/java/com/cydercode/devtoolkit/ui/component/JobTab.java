@@ -15,11 +15,25 @@ import static com.google.common.io.Resources.getResource;
 
 public class JobTab extends HBox {
 
+    public static final int LIMIT = 2 * 1000;
+
     @FXML
     TextArea logsArea;
 
     @FXML
     Button killButton;
+
+    @FXML
+    public void initialize() {
+        logsArea.lengthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() > oldValue.intValue()) {
+                int length = logsArea.getText().length();
+                if (length >= LIMIT) {
+                    logsArea.setText(logsArea.getText().substring(length - LIMIT, length));
+                }
+            }
+        });
+    }
 
     public JobTab() {
         FXMLLoader fxmlLoader = new FXMLLoader(getResource("com/cydercode/devtoolkit/ui/component/job_tab.fxml"));
@@ -50,5 +64,13 @@ public class JobTab extends HBox {
 
     public void setKillDisabled(boolean killDisabled) {
         killButton.setDisable(killDisabled);
+    }
+
+    public int getTextLength() {
+        return logsArea.getLength();
+    }
+
+    public String getText() {
+        return logsArea.getText();
     }
 }
