@@ -33,6 +33,22 @@
         "error-preset",
         "first-preset"
       ]
+    },
+    "ignorable-preset": {
+      "presets": [
+        "first-preset",
+        {
+          "preset": "error-preset",
+          "ignorable": true
+        },
+        "second-preset"
+      ]
+    },
+    "invalid-preset": {
+      "presets": [
+        "first-preset",
+        12356
+      ]
     }
   }
 }

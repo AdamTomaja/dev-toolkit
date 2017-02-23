@@ -13,7 +13,9 @@ public class Configuration {
             APPLICATION = "application",
             HIDDEN = "hidden",
             PRESETS = "presets",
+            PRESET = "preset",
             TRUE = "true",
+            IGNORABLE = "ignorable",
             DEFAULT_GROUP = null;
 
 
