@@ -122,4 +122,17 @@ public class JobListenerTest extends JavaFXComponentsTest {
         sleep(1000); // wait for Platform.runLater execution
         verify(jobTab).appendText("Running command: " + command);
     }
+
+    @Test
+    public void shouldBeepWhenProcessFinished() {
+        // given
+        NotificationFacade notificationFacade = mock(NotificationFacade.class);
+        JobListener jobListener = new JobListener(RandomStringUtils.randomAlphabetic(10), mock(JobTab.class), notificationFacade);
+
+        // when
+        jobListener.onProcessFinished(0);
+
+        // then
+        verify(notificationFacade).beep();
+    }
 }
