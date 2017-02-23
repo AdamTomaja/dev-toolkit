@@ -5,6 +5,7 @@ Application to make developer life a little bit easier.
 In dev-toolkit You can create presets to easily execute commands from UI. 
 
 # Latest release download link
+[V1.5 Download](https://github.com/AdamTomaja/dev-toolkit/releases/download/v1.5/dev-toolkit-1.5-jar-with-dependencies.jar)
 [V1.3 Download](https://github.com/AdamTomaja/dev-toolkit/releases/download/v1.3/dev-toolkit-1.3-jar-with-dependencies.jar)
 
 # Screenshot
@@ -35,7 +36,12 @@ Preset defines an application connected with command line and parameters. Each p
 * application - must be existing name of one of configured applications
 * cmd - arguments for applications, ${parameter-name} can be used here. 
 * group - string - if set, the preset will be displayed in group, can be any string
-* presets - list of preset names - if set, preset will be interpreted as compound. That means all presets from the list 
+* presets - list of preset names or maps of compound presets - if set, preset will be interpreted as compound. That means all presets from the list.
+
+## Child preset
+* preset - string - name of preset
+* ignorable - boolean - if set to true, this preset can exit with status different than 0 and compound preset will be continued
+
 will be executed
 
 ```javascript
