@@ -11,8 +11,9 @@
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button mnemonicParsing="false" onAction="#openLoadConfigurationDialog" text="Load configuration" />
+            <Button mnemonicParsing="false" onAction="#openLoadConfigurationDialog" text="Load configuration" />
             <Button fx:id="reloadConfiguration" mnemonicParsing="false" onAction="#reloadConfiguration" text="Reload configuration" />
+            <Button fx:id="openToolWindow" mnemonicParsing="false" onAction="#openToolWindow" text="Tools" />
         </items>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -20,7 +21,7 @@
       </ToolBar>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES">
          <items>
-            <VBox prefHeight="200.0" prefWidth="100.0" fx:id="groupsBox"/>
+            <VBox fx:id="groupsBox" prefHeight="200.0" prefWidth="100.0" />
             <TabPane fx:id="runTabs" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS">
             </TabPane>
          </items>
