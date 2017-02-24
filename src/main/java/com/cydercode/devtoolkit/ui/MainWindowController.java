@@ -8,11 +8,17 @@ import com.cydercode.devtoolkit.executor.CommandExecutor;
 import com.cydercode.devtoolkit.ui.component.Group;
 import com.cydercode.devtoolkit.ui.component.JobTab;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +29,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.cydercode.devtoolkit.Configuration.DEFAULT_GROUP;
+import static com.google.common.io.Resources.getResource;
 
 public class MainWindowController {
 
@@ -50,6 +57,17 @@ public class MainWindowController {
     @FXML
     protected void reloadConfiguration() throws FileNotFoundException {
         initialize();
+    }
+
+    @FXML
+    public void openToolWindow(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("tool_window.fxml"));
+        Parent root = (Parent) loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+        stage.getIcons().add(new Image(getResource("com/cydercode/devtoolkit/ui/icon.png").openStream()));
+        stage.setTitle("Dev-toolkit tools");
     }
 
     @FXML
