@@ -1,5 +1,6 @@
 package com.cydercode.devtoolkit.ui;
 
+import com.cydercode.devtoolkit.category.UiTest;
 import com.google.common.collect.ImmutableMap;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
@@ -7,11 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.entry;
 
+@Category(UiTest.class)
 public class ParametersExtractorTest extends JavaFXComponentsTest {
 
     @Test
