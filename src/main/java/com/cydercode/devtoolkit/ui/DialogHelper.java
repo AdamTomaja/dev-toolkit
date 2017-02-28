@@ -1,7 +1,6 @@
 package com.cydercode.devtoolkit.ui;
 
 import javafx.scene.control.Alert;
-import org.apache.commons.lang.exception.ExceptionUtils;
 
 import static javafx.scene.control.Alert.AlertType.ERROR;
 import static org.apache.commons.lang.exception.ExceptionUtils.getStackTrace;

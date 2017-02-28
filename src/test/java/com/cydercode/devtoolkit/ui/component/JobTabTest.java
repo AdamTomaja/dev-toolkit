@@ -1,12 +1,15 @@
 package com.cydercode.devtoolkit.ui.component;
 
+import com.cydercode.devtoolkit.category.UiTest;
 import com.cydercode.devtoolkit.ui.JavaFXComponentsTest;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static com.cydercode.devtoolkit.ui.component.JobTab.LIMIT;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Category(UiTest.class)
 public class JobTabTest extends JavaFXComponentsTest {
 
     @Test

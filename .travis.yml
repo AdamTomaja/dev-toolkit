@@ -1,0 +1,12 @@
+language: java
+jdk:
+  - oraclejdk8
+
+sudo: required
+
+script: mvn test -PNoUi
+
+addons:
+  apt:
+    packages:
+    - oracle-java8-installer
