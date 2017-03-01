@@ -22,7 +22,6 @@
         <mockito-all.version>1.10.19</mockito-all.version>
         <commons-io.version>2.5</commons-io.version>
         <Enzo.version>0.3.6</Enzo.version>
-        <controlsfx.version>8.40.12</controlsfx.version>
     </properties>
 
     <dependencies>
@@ -75,11 +74,6 @@
             <groupId>eu.hansolo.enzo</groupId>
             <artifactId>Enzo</artifactId>
             <version>${Enzo.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.controlsfx</groupId>
-            <artifactId>controlsfx</artifactId>
-            <version>${controlsfx.version}</version>
         </dependency>
     </dependencies>
 
