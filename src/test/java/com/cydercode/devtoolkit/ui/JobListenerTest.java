@@ -2,6 +2,7 @@ package com.cydercode.devtoolkit.ui;
 
 import com.cydercode.devtoolkit.ui.component.JobTab;
 import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static java.lang.String.format;
@@ -9,6 +10,7 @@ import static java.lang.Thread.sleep;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+@Ignore
 public class JobListenerTest extends JavaFXComponentsTest {
 
     @Test

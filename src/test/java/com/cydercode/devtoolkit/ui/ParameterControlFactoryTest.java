@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Ignore
 public class ParameterControlFactoryTest extends JavaFXComponentsTest {
 
     @Test

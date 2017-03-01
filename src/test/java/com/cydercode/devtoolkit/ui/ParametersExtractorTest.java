@@ -6,12 +6,14 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.assertj.core.api.Assertions;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.entry;
 
+@Ignore
 public class ParametersExtractorTest extends JavaFXComponentsTest {
 
     @Test

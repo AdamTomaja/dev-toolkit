@@ -2,6 +2,7 @@ package com.cydercode.devtoolkit.ui;
 
 import com.cydercode.devtoolkit.Base64Helper;
 import javafx.scene.control.TextArea;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -10,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class ToolWindowControllerTest extends JavaFXComponentsTest {
 
