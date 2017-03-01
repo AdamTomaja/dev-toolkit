@@ -5,6 +5,6 @@ jdk:
 sudo: required
 
 addons:
-    apt:
+  apt:
     packages:
     - oracle-java8-installer
