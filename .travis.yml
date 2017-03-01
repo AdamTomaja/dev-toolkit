@@ -4,6 +4,8 @@ jdk:
 
 sudo: required
 
+script: mvn test -PNoUi
+
 addons:
   apt:
     packages:

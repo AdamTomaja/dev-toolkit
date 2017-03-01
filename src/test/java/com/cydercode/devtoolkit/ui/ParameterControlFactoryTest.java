@@ -1,18 +1,19 @@
 package com.cydercode.devtoolkit.ui;
 
+import com.cydercode.devtoolkit.category.UiTest;
 import com.google.common.collect.ImmutableMap;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.Arrays;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Ignore
+@Category(UiTest.class)
 public class ParameterControlFactoryTest extends JavaFXComponentsTest {
 
     @Test
