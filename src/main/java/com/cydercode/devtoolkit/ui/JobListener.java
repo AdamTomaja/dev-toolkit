@@ -21,6 +21,10 @@ public class JobListener implements CommandExecutorListener {
 
     @Override
     public void onCommand(String commandLine) {
+        runLater(() -> {
+            jobTab.setCommandLineText(commandLine);
+        });
+
         onProcessOutput(String.format("Running command: %s", commandLine));
     }
 
