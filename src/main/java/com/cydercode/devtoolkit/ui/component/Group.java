@@ -35,8 +35,16 @@ public class Group extends VBox {
         }
     }
 
+    public boolean isEmpty() {
+        return parametersBox.getChildren().isEmpty() && presetsBox.getChildren().isEmpty();
+    }
+
     public void setText(String name) {
         groupNameLabel.setText(name);
+    }
+
+    public String getText() {
+        return groupNameLabel.getText();
     }
 
     public void addParameter(Node parameter) {
