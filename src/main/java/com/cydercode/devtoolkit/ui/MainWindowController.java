@@ -98,7 +98,7 @@ public class MainWindowController {
         }
     }
 
-    private void loadConfiguration(Configuration configuration) {
+    void loadConfiguration(Configuration configuration) {
         clearConfiguration();
 
         Set<String> groups = configurationTraverser.getGroups(configuration);
@@ -107,33 +107,45 @@ public class MainWindowController {
         for (String groupName : groups) {
             Group group = new Group();
             group.setText(Objects.equals(groupName, DEFAULT_GROUP) ? "Default group" : groupName);
-            groupsBox.getChildren().add(group);
 
-            for (String presetName : configurationTraverser.findObjectsWithGroup(groupName, configuration.getPresets()).keySet()) {
-                Button presetButton = new Button();
-                presetButton.setText(presetName);
-                presetButton.setOnAction(ev -> {
-                    runPreset(presetName);
-                });
-                group.addPreset(presetButton);
+            Set<String> presets = configurationTraverser.findObjectsWithGroup(groupName, configuration.getPresets()).keySet();
+
+            for (String presetName : presets) {
+                group.addPreset(createPresetButton(presetName));
             }
 
-            for (String parameterName : configurationTraverser.findObjectsWithGroup(groupName, configuration.getParameters()).keySet()) {
-                Map<String, Object> parameter = configuration.getParameters().get(parameterName);
-                Control control = parameterControlFactory.produceControl(parameter);
-
+            Set<String> parameters = configurationTraverser.findObjectsWithGroup(groupName, configuration.getParameters()).keySet();
+            for (String parameterName : parameters) {
+                Map<String, Object> parameterConfiguration = configuration.getParameters().get(parameterName);
+                Control control = parameterControlFactory.produceControl(parameterConfiguration);
                 parametersControls.put(parameterName, control);
-
-                if (!parameterControlFactory.isHidden(parameter)) {
-                    VBox vBox = new VBox();
-                    Label label = new Label();
-                    label.setText(parameterName);
-                    vBox.getChildren().add(label);
-                    vBox.getChildren().add(control);
-                    group.addParameter(vBox);
+                if (!parameterControlFactory.isHidden(parameterConfiguration)) {
+                    group.addParameter(buildParameter(parameterName, control));
                 }
             }
+
+            if (!group.isEmpty()) {
+                groupsBox.getChildren().add(group);
+            }
         }
+    }
+
+    private VBox buildParameter(String parameterName, Control control) {
+        VBox vBox = new VBox();
+        Label label = new Label();
+        label.setText(parameterName);
+        vBox.getChildren().add(label);
+        vBox.getChildren().add(control);
+        return vBox;
+    }
+
+    private Button createPresetButton(String presetName) {
+        Button presetButton = new Button();
+        presetButton.setText(presetName);
+        presetButton.setOnAction(ev -> {
+            runPreset(presetName);
+        });
+        return presetButton;
     }
 
     private void clearConfiguration() {
