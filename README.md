@@ -5,8 +5,8 @@ Application to make developer life a little bit easier.
 In dev-toolkit You can create presets to easily execute commands from UI. 
 
 # Latest release download link
+* [![Build Status](https://travis-ci.org/AdamTomaja/dev-toolkit.svg?branch=master)](https://travis-ci.org/AdamTomaja/dev-toolkit)
 * [V1.5 Download](https://github.com/AdamTomaja/dev-toolkit/releases/download/v1.5/dev-toolkit-1.5-jar-with-dependencies.jar)
-* [V1.3 Download](https://github.com/AdamTomaja/dev-toolkit/releases/download/v1.3/dev-toolkit-1.3-jar-with-dependencies.jar)
 
 # Screenshot
 ![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/groups.png)
