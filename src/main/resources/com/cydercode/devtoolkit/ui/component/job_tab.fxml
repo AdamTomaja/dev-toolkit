@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -13,7 +14,12 @@
                 <Button fx:id="killButton" disable="true" mnemonicParsing="false" text="Kill job" />
             </children>
         </VBox>
-        <TextArea id="logs-area" fx:id="logsArea" HBox.hgrow="ALWAYS" />
+      <VBox HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="commandLineLabel" text="Command line" />
+              <TextArea id="logs-area" fx:id="logsArea" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
     </children>
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

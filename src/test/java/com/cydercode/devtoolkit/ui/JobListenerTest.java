@@ -139,4 +139,19 @@ public class JobListenerTest extends JavaFXComponentsTest {
         // then
         verify(notificationFacade).beep();
     }
+
+    @Test
+    public void shouldSetCommandLine() throws InterruptedException {
+        // given
+        JobTab jobTab = mock(JobTab.class);
+        JobListener jobListener = new JobListener(RandomStringUtils.randomAlphabetic(10), jobTab, mock(NotificationFacade.class));
+        String commandLine = "command-line";
+
+        // when
+        jobListener.onCommand(commandLine);
+
+        // then
+        sleep(1000); // wait for Platform.runLater execution
+        verify(jobTab).setCommandLineText(commandLine);
+    }
 }

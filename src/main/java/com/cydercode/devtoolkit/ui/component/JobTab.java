@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 
@@ -22,6 +23,9 @@ public class JobTab extends HBox {
 
     @FXML
     Button killButton;
+
+    @FXML
+    Label commandLineLabel;
 
     @FXML
     public void initialize() {
@@ -72,5 +76,9 @@ public class JobTab extends HBox {
 
     public String getText() {
         return logsArea.getText();
+    }
+
+    public void setCommandLineText(String commandLine) {
+        commandLineLabel.setText(commandLine);
     }
 }
