@@ -6,7 +6,7 @@ In dev-toolkit You can create presets to easily execute commands from UI.
 
 # Latest release download link
 * [![Build Status](https://travis-ci.org/AdamTomaja/dev-toolkit.svg?branch=master)](https://travis-ci.org/AdamTomaja/dev-toolkit)
-* [V1.5 Download](https://github.com/AdamTomaja/dev-toolkit/releases/download/v1.5/dev-toolkit-1.5-jar-with-dependencies.jar)
+* [Download](https://github.com/AdamTomaja/dev-toolkit/releases/latest)
 
 # Screenshot
 ![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/groups.png)
