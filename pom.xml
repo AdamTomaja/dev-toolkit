@@ -78,6 +78,7 @@
     </dependencies>
 
     <build>
+        <finalName>dev-toolkit</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
