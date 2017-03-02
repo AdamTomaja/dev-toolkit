@@ -17,10 +17,15 @@ public class App extends Application {
 
         Scene scene = new Scene(root, 600, 800);
 
-        stage.setTitle("CyderCode dev-toolkit");
+        stage.setTitle("CyderCode dev-toolkit " + getVersion());
         stage.setScene(scene);
         stage.getIcons().add(new Image(getResource("com/cydercode/devtoolkit/ui/icon.png").openStream()));
         stage.show();
+    }
+
+    private String getVersion() {
+        String version = App.class.getPackage().getImplementationVersion();
+        return version == null ? "V?" : version;
     }
 
     public static void main(String[] args) {
