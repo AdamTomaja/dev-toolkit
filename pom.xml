@@ -93,6 +93,9 @@
                     <archive>
                         <manifest>
                             <mainClass>com.cydercode.devtoolkit.ui.App</mainClass>
+                            <addDefaultImplementationEntries>
+                                true
+                            </addDefaultImplementationEntries>
                         </manifest>
                     </archive>
                     <descriptorRefs>
