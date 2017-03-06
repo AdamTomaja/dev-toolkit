@@ -62,4 +62,38 @@ public class ConfigurationTraverserTest {
         // then
         assertThat(objects).containsOnlyKeys("clean", "build");
     }
+
+    @Test
+    public void shouldFindObjectWithAttribute() throws IOException {
+        // given
+        Configuration configuration = new Gson().fromJson(new InputStreamReader(
+                        getResource("com/cydercode/devtoolkit/ConfigurationTraverserTest/shouldFindWithAttribute.json")
+                                .openStream()),
+                Configuration.class);
+
+        ConfigurationTraverser traverser = new ConfigurationTraverser();
+
+        // when
+        Set<String> presets = traverser.getWithAttribute(configuration.getPresets(), "booleanAttribute", true);
+
+        // then
+        assertThat(presets).containsOnly("application-error");
+    }
+
+    @Test
+    public void shouldFindObjectsWithAttribute() throws IOException {
+        // given
+        Configuration configuration = new Gson().fromJson(new InputStreamReader(
+                        getResource("com/cydercode/devtoolkit/ConfigurationTraverserTest/shouldFindWithAttribute.json")
+                                .openStream()),
+                Configuration.class);
+
+        ConfigurationTraverser traverser = new ConfigurationTraverser();
+
+        // when
+        Set<String> presets = traverser.getWithAttribute(configuration.getPresets(), "attr", "attrValue");
+
+        // then
+        assertThat(presets).containsOnly("clean-2", "clean-3");
+    }
 }

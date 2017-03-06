@@ -16,6 +16,8 @@ public class Configuration {
             PRESET = "preset",
             TRUE = "true",
             IGNORABLE = "ignorable",
+            Q_TOOLBOX = "qtoolbox",
+            DESCRIPTION = "description",
             DEFAULT_GROUP = null;
 
 
