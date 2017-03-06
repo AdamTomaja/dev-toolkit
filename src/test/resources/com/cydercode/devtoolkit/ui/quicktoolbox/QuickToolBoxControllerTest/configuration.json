@@ -1,0 +1,19 @@
+{
+  "presets": {
+    "build": {
+      "application": "Maven",
+      "cmd": "clean install -d ${distribution} -p ${profile}",
+      "qtoolbox": true
+    },
+    "application-error": {
+      "group": "group2",
+      "application": "dummy-application",
+      "cmd": "clean install -d ${distribution} -p ${profile}"
+    },
+    "clean": {
+      "application": "Maven",
+      "cmd": "clean",
+      "qtoolbox": true
+    }
+  }
+}

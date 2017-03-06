@@ -14,6 +14,7 @@
             <Button mnemonicParsing="false" onAction="#openLoadConfigurationDialog" text="Load configuration" />
             <Button fx:id="reloadConfiguration" mnemonicParsing="false" onAction="#reloadConfiguration" text="Reload configuration" />
             <Button fx:id="openToolWindow" mnemonicParsing="false" onAction="#openToolWindow" text="Tools" />
+            <Button mnemonicParsing="false" onAction="#openQuickToolBox" text="QToolBox" />
         </items>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

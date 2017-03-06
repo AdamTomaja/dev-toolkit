@@ -36,7 +36,8 @@
     "Install": {
       "application": "Maven",
       "cmd": "-f ${project-dir} install",
-      "group": "Maven"
+      "group": "Maven",
+      "qtoolbox": true
     },
     "Package": {
       "application": "Maven",
@@ -76,7 +77,8 @@
     "Status": {
       "application": "Git",
       "cmd": "-C ${repo-dir} status",
-      "group": "Git"
+      "group": "Git",
+      "qtoolbox": true
     }
   }
 }
