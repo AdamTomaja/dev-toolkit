@@ -53,4 +53,26 @@ public class QuickToolBoxControllerTest extends JavaFXComponentsTest {
         assertThat(nodeList.stream().map(b -> ((Button) b).getText()).collect(Collectors.toSet()))
                 .containsOnly("build", "clean");
     }
+
+    @Test
+    public void shouldAddTooltip() throws IOException {
+        // given
+        ObservableList<Node> nodeList = FXCollections.observableArrayList();
+
+        Configuration configuration = new Gson().fromJson(new InputStreamReader(
+                        getResource("com/cydercode/devtoolkit/ui/quicktoolbox/QuickToolBoxControllerTest/configuration.json")
+                                .openStream()),
+                Configuration.class);
+
+        doReturn(nodeList).when(presetsBox).getChildren();
+
+        // when
+        controller.loadConfiguration(configuration);
+
+        // then
+        Button cleanButton = (Button) nodeList.stream().filter(b -> ((Button)b).getText().equals("clean"))
+                .findFirst().get();
+
+        assertThat(cleanButton.getTooltip().getText()).isEqualTo("Clean working directory");
+    }
 }

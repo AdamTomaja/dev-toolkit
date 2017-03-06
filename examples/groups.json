@@ -78,7 +78,8 @@
       "application": "Git",
       "cmd": "-C ${repo-dir} status",
       "group": "Git",
-      "qtoolbox": true
+      "qtoolbox": true,
+      "description": "Display status of GIT repository"
     }
   }
 }

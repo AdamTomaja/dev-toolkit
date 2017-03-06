@@ -45,7 +45,7 @@ public class MainWindowController {
     ConfigurationTraverser configurationTraverser = new ConfigurationTraverser();
     PresetRunner presetRunner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
     QuickToolBoxFacade quickToolBoxFacade = new QuickToolBoxFacade();
-
+    PresetButtonFactory presetButtonFactory = new PresetButtonFactory();
     Map<String, Control> parametersControls = new HashMap<>();
 
     AtomicInteger jobsCounter = new AtomicInteger(0);
@@ -127,7 +127,7 @@ public class MainWindowController {
             Set<String> presets = configurationTraverser.findObjectsWithGroup(groupName, configuration.getPresets()).keySet();
 
             for (String presetName : presets) {
-                group.addPreset(createPresetButton(presetName));
+                group.addPreset(createPresetButton(presetName, configuration.getPresets().get(presetName)));
             }
 
             Set<String> parameters = configurationTraverser.findObjectsWithGroup(groupName, configuration.getParameters()).keySet();
@@ -157,9 +157,8 @@ public class MainWindowController {
         return vBox;
     }
 
-    private Button createPresetButton(String presetName) {
-        Button presetButton = new Button();
-        presetButton.setText(presetName);
+    private Button createPresetButton(String presetName, Map<String, Object> preset) {
+        Button presetButton = presetButtonFactory.produce(presetName, preset);
         presetButton.setOnAction(ev -> {
             runPreset(presetName);
         });
