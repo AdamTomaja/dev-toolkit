@@ -13,7 +13,8 @@
     "clean": {
       "application": "Maven",
       "cmd": "clean",
-      "qtoolbox": true
+      "qtoolbox": true,
+      "description": "Clean working directory"
     }
   }
 }
