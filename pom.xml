@@ -4,7 +4,7 @@
 
     <groupId>com.cydercode.devtoolkit</groupId>
     <artifactId>dev-toolkit</artifactId>
-    <version>1.7</version>
+    <version>1.7.1</version>
     <packaging>jar</packaging>
 
     <name>dev-toolkit</name>
