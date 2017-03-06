@@ -84,7 +84,9 @@ will be executed
     },
     "clean": {
       "application": "Maven",
-      "cmd": "-f ${project-home} clean"
+      "cmd": "-f ${project-home} clean",
+      "description": "Clean maven working directory",
+      "qtoolbox": true
     },
     "Build and clean": {
         "presets": [
