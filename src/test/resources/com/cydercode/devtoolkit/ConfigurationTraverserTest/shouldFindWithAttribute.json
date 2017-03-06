@@ -1,0 +1,27 @@
+{
+  "presets": {
+    "build": {
+      "attr1": "value"
+    },
+    "application-error": {
+      "group": "group2",
+      "application": "dummy-application",
+      "cmd": "clean install -d ${distribution} -p ${profile}",
+      "booleanAttribute": true
+    },
+    "clean": {
+      "application": "Maven",
+      "cmd": "clean"
+    },
+    "clean-2": {
+      "application": "Maven",
+      "cmd": "clean",
+      "attr": "attrValue"
+    },
+    "clean-3": {
+      "application": "Maven",
+      "cmd": "clean",
+      "attr": "attrValue"
+    }
+  }
+}

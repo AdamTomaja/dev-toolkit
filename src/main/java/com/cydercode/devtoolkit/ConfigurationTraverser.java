@@ -23,6 +23,16 @@ public class ConfigurationTraverser {
         return groups;
     }
 
+    public Set<String> getWithAttribute(Map<String, Map<String, Object>> objects, String key, Object value) {
+        Set<String> result = new HashSet<>();
+        objects.forEach((k, v) -> {
+            if(Objects.equals(v.get(key), value)) {
+                result.add(k);
+            }
+        });
+        return result;
+    }
+
     private void searchForGroups(Set<String> groups, Map<String, Map<String, Object>> objects) {
         objects.forEach((n, p) -> {
             if (p.containsKey(GROUP)) {

@@ -7,6 +7,8 @@ import com.cydercode.devtoolkit.PresetRunner;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
 import com.cydercode.devtoolkit.ui.component.Group;
 import com.cydercode.devtoolkit.ui.component.JobTab;
+import com.cydercode.devtoolkit.ui.quicktoolbox.QuickToolBox;
+import com.cydercode.devtoolkit.ui.quicktoolbox.QuickToolBoxFacade;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -43,6 +44,7 @@ public class MainWindowController {
     DialogHelper dialogHelper = new DialogHelper();
     ConfigurationTraverser configurationTraverser = new ConfigurationTraverser();
     PresetRunner presetRunner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
+    QuickToolBoxFacade quickToolBoxFacade = new QuickToolBoxFacade();
 
     Map<String, Control> parametersControls = new HashMap<>();
 
@@ -55,7 +57,7 @@ public class MainWindowController {
     Pane groupsBox;
 
     @FXML
-    protected void reloadConfiguration() throws FileNotFoundException {
+    protected void reloadConfiguration() throws IOException {
         initialize();
     }
 
@@ -71,11 +73,25 @@ public class MainWindowController {
     }
 
     @FXML
-    protected void initialize() throws FileNotFoundException {
+    public void openQuickToolBox() throws IOException {
+        QuickToolBox quickToolBox = quickToolBoxFacade.get();
+        if (quickToolBox.isShowing()) {
+            quickToolBox.hide();
+        } else {
+            quickToolBox.show();
+        }
+    }
+
+    @FXML
+    protected void initialize() throws IOException {
         Optional<Configuration> configuration = configurationHolder.loadLastConfiguration();
         if (configuration.isPresent()) {
             loadConfiguration(configuration.get());
         }
+
+        quickToolBoxFacade.get().setOnAction((presetName) -> {
+            runPreset(presetName);
+        });
     }
 
     @FXML
@@ -98,7 +114,7 @@ public class MainWindowController {
         }
     }
 
-    void loadConfiguration(Configuration configuration) {
+    void loadConfiguration(Configuration configuration) throws IOException {
         clearConfiguration();
 
         Set<String> groups = configurationTraverser.getGroups(configuration);
@@ -128,6 +144,8 @@ public class MainWindowController {
                 groupsBox.getChildren().add(group);
             }
         }
+
+        quickToolBoxFacade.get().loadConfiguration(configuration);
     }
 
     private VBox buildParameter(String parameterName, Control control) {
