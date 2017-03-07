@@ -42,7 +42,7 @@ public class Group extends VBox {
     }
 
     public void setText(String name) {
-        setId(name.replaceAll(" ", "_") + "-group");
+        setId(name.replaceAll("[^A-Za-z0-9]", "_"));
         groupNameLabel.setText(name);
     }
 

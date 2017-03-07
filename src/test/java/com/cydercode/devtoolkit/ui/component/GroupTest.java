@@ -3,6 +3,7 @@ package com.cydercode.devtoolkit.ui.component;
 import com.cydercode.devtoolkit.category.UiTest;
 import com.cydercode.devtoolkit.ui.JavaFXComponentsTest;
 import javafx.scene.control.Label;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -47,5 +48,19 @@ public class GroupTest extends JavaFXComponentsTest {
 
         // then
         assertThat(isEmpty).isFalse();
+    }
+
+    @Test
+    public void shouldSetWeirdText() {
+        // given
+        Group group = new Group();
+        String text = " ASDq87 yeasd as @! #!@$ / ";
+
+        // when
+        group.setText(text);
+
+        // then
+        Assertions.assertThat(group.getId()).isEqualTo("_ASDq87_yeasd_as___________");
+        assertThat(group.getText()).isEqualTo(text);
     }
 }
