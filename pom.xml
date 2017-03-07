@@ -22,6 +22,7 @@
         <mockito-all.version>1.10.19</mockito-all.version>
         <commons-io.version>2.5</commons-io.version>
         <Enzo.version>0.3.6</Enzo.version>
+        <testfx-core.version>4.0.1-alpha</testfx-core.version>
     </properties>
 
     <dependencies>
@@ -74,6 +75,18 @@
             <groupId>eu.hansolo.enzo</groupId>
             <artifactId>Enzo</artifactId>
             <version>${Enzo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-core</artifactId>
+            <version>${testfx-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit</artifactId>
+            <version>${testfx-core.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

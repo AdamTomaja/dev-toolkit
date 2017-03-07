@@ -18,8 +18,8 @@
                             <children>
                                 <ToolBar prefHeight="40.0" prefWidth="200.0">
                                     <items>
-                                        <Button mnemonicParsing="false" onAction="#encodeBase64" text="Encode" />
-                                        <Button mnemonicParsing="false" onAction="#decodeBase64" text="Decode" />
+                                        <Button mnemonicParsing="false" onAction="#encodeBase64" text="Encode" fx:id="encodeBase64Button" />
+                                        <Button mnemonicParsing="false" onAction="#decodeBase64" text="Decode" fx:id="decodeBase64Button" />
                                     </items>
                                 </ToolBar>
                         <TextArea fx:id="base64ContentTextArea" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">

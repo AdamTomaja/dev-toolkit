@@ -33,6 +33,8 @@ public class Group extends VBox {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        this.getStyleClass().add("group");
     }
 
     public boolean isEmpty() {
@@ -40,6 +42,7 @@ public class Group extends VBox {
     }
 
     public void setText(String name) {
+        setId(name.replaceAll(" ", "_") + "-group");
         groupNameLabel.setText(name);
     }
 
