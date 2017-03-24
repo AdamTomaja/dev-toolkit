@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToolBar?>
@@ -14,7 +15,7 @@
    <children>
       <MenuBar>
         <menus>
-          <Menu mnemonicParsing="false" text="Plugins" fx:id="pluginsMenu" />
+          <Menu fx:id="pluginsMenu" mnemonicParsing="false" text="Plugins" />
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
@@ -35,7 +36,11 @@
       </ToolBar>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES">
          <items>
-            <VBox fx:id="groupsBox" prefHeight="200.0" prefWidth="100.0" />
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
+               <content>
+                  <VBox fx:id="groupsBox" prefHeight="200.0" prefWidth="100.0" />
+               </content>
+            </ScrollPane>
             <TabPane fx:id="runTabs" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="ALL_TABS">
             </TabPane>
          </items>
