@@ -14,7 +14,9 @@ addons:
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file: "app/target/dev-toolkit-jar-with-dependencies.jar"
+  file:
+    - "app/target/dev-toolkit-jar-with-dependencies.jar"
+    - "plugin-example/target/plugin-example.jar"
   skip_cleanup: true
   on:
     tags: true

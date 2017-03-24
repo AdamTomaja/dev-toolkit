@@ -32,4 +32,8 @@
             <artifactId>slf4j-simple</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>plugin-example</finalName>
+    </build>
 </project>
