@@ -17,6 +17,7 @@ deploy:
   file:
     - "app/target/dev-toolkit-jar-with-dependencies.jar"
     - "plugin-example/target/plugin-example.jar"
+    - "plugin-teamcity-warning/target/plugin-teamcity-warning-jar-with-dependencies.jar"
   skip_cleanup: true
   on:
     tags: true

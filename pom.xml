@@ -10,6 +10,7 @@
         <module>plugins</module>
         <module>plugin-example</module>
         <module>app</module>
+        <module>plugin-teamcity-warning</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -1,0 +1,4 @@
+{
+  "mainClass": "com.cydercode.devtoolkit.plugin.teamcitywarning.TeamcityWarning",
+  "name": "TeamCity Warning"
+}
