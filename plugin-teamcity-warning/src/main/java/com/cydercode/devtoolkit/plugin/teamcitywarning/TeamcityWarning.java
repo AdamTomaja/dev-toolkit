@@ -63,7 +63,7 @@ public class TeamcityWarning implements Plugin {
         String username = properties.getProperty("username");
         String password = properties.getProperty("password");
         String host = properties.getProperty("teamcity");
-        String buildTypeId = properties.getProperty("buildTypeId");
+        String buildLocator = properties.getProperty("buildsLocator");
 
         RestTemplate rest = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -72,7 +72,7 @@ public class TeamcityWarning implements Plugin {
         httpHeaders.add(HttpHeaders.AUTHORIZATION, createAuthorizationHeader(username, password));
         HttpEntity<String> entity = new HttpEntity<>("asd", httpHeaders);
 
-        ResponseEntity<Map> response = rest.exchange(host + "/httpAuth/app/rest/builds?locator=buildType:(id:" + buildTypeId + ")", HttpMethod.GET, entity, Map.class);
+        ResponseEntity<Map> response = rest.exchange(host + "/httpAuth/app/rest/builds?locator=" + buildLocator, HttpMethod.GET, entity, Map.class);
         return (Map) ((List) response.getBody().get("build")).get(0);
     }
 
