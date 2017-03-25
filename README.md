@@ -46,6 +46,12 @@ Preset defines an application connected with command line and parameters. Each p
 
 will be executed
 
+# Plugins
+CyderCode Dev-Toolkit is universal application so it is possible to write plugins for it. 
+Example plugin for dev-toolkit can be found in **plugin-example** directory.
+## How to install plugin
+The only thing You have to do to run plugin is to place .jar file next to dev-toolkit in the same directory or child directories.
+
 ```javascript
 {
   "applications": {
