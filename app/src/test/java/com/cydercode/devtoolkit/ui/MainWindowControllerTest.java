@@ -88,4 +88,13 @@ public class MainWindowControllerTest extends JavaFXComponentsTest {
         verify(pluginsController).initialize();
     }
 
+    @Test
+    public void shouldStopPlugins() {
+        // when
+        mainWindowController.stop();
+
+        // then
+        verify(pluginsController).stop();
+    }
+
 }

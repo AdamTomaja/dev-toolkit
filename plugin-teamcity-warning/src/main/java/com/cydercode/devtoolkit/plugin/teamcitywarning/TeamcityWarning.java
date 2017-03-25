@@ -33,32 +33,27 @@ public class TeamcityWarning implements Plugin {
     private static final Logger LOGGER = LoggerFactory.getLogger(TeamcityWarning.class);
 
     private Properties properties;
+    private ScheduledExecutorService scheduledExecutorService;
+
+    private volatile MainWindowController controller;
 
     @Override
     public void onStart() {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getClassLoader().getResource("plugin_window.fxml"));
-        MainWindowController controller = new MainWindowController();
-        loader.setController(controller);
-        Parent root = null;
-        try {
-            root = (Parent) loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-            stage.setTitle("Dev-toolkit Example Plugin");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         properties = loadProperties();
-        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+        scheduledExecutorService = Executors.newScheduledThreadPool(1);
         scheduledExecutorService.scheduleAtFixedRate(() -> {
             try {
                 Map lastBuild = getLastBuild();
                 LOGGER.info("Last build: {}", lastBuild);
-                controller.setStatus(lastBuild);
+                if (controller != null) {
+                    controller.setStatus(lastBuild);
+                }
             } catch (Exception e) {
                 LOGGER.error("Unable to fetch or set build status", e);
+
+                if(controller != null) {
+                    controller.setError();
+                }
             }
 
         }, 0, parseLong(properties.getProperty("interval", "10")), TimeUnit.SECONDS);
@@ -97,12 +92,24 @@ public class TeamcityWarning implements Plugin {
 
     @Override
     public void onAction() {
-
+        FXMLLoader loader = new FXMLLoader(this.getClass().getClassLoader().getResource("plugin_window.fxml"));
+        controller = new MainWindowController();
+        loader.setController(controller);
+        Parent root = null;
+        try {
+            root = (Parent) loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+            stage.setTitle("Dev-toolkit Example Plugin");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onStop() {
-
+        scheduledExecutorService.shutdown();
     }
 
     public static void main(String[] args) {

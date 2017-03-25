@@ -48,4 +48,14 @@ public class PluginsController {
     public List<PluginDescriptor> getLoadedPlugins() {
         return plugins;
     }
+
+    public void stop() {
+        for(PluginDescriptor pluginDescriptor : plugins) {
+            try {
+                pluginDescriptor.getPlugin().onStop();
+            } catch (Exception e) {
+                LOGGER.error("Unable to stop plugin: {}", pluginDescriptor.getName(), e);
+            }
+        }
+    }
 }

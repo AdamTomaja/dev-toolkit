@@ -17,7 +17,9 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
+import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -44,7 +46,7 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         Plugin plugin = mock(Plugin.class);
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
-        when(pluginLoader.loadPlugins()).thenReturn(Arrays.asList(pluginDescriptor));
+        when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
 
         // when
         pluginsController.initialize();
@@ -72,9 +74,64 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         doThrow(new RuntimeException("Mocked exception")).when(plugin).onStart();
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
-        when(pluginLoader.loadPlugins()).thenReturn(Arrays.asList(pluginDescriptor));
+        when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
 
         // when
         pluginsController.initialize();
+    }
+
+    @Test
+    public void shouldStopPlugins() {
+        // given
+        when(mainWindowController.getPluginsMenu()).thenReturn(new Menu());
+        PluginDescriptor pluginDescriptor = new PluginDescriptor();
+        String pluginName = "My Plugin";
+        Plugin plugin = mock(Plugin.class);
+        pluginDescriptor.setName(pluginName);
+        pluginDescriptor.setPlugin(plugin);
+        when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
+        pluginsController.initialize();
+
+        // when
+        pluginsController.stop();
+
+        // then
+        verify(plugin).onStop();
+    }
+
+    @Test
+    public void shouldNonFailOnExceptionWhenStoppingPlugin() {
+        // given
+        when(mainWindowController.getPluginsMenu()).thenReturn(new Menu());
+        PluginDescriptor pluginDescriptor = new PluginDescriptor();
+        String pluginName = "My Plugin";
+        Plugin plugin = mock(Plugin.class);
+        doThrow(new RuntimeException("Mocked exception")).when(plugin).onStop();
+        pluginDescriptor.setName(pluginName);
+        pluginDescriptor.setPlugin(plugin);
+        when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
+        pluginsController.initialize();
+
+        // when
+        pluginsController.stop();
+    }
+
+    @Test
+    public void shouldReturnLoadedPlugins() {
+        // given
+        when(mainWindowController.getPluginsMenu()).thenReturn(new Menu());
+        PluginDescriptor pluginDescriptor = new PluginDescriptor();
+        String pluginName = "My Plugin";
+        Plugin plugin = mock(Plugin.class);
+        pluginDescriptor.setName(pluginName);
+        pluginDescriptor.setPlugin(plugin);
+        when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
+        pluginsController.initialize();
+
+        // when
+        List<PluginDescriptor> loadedPlugins = pluginsController.getLoadedPlugins();
+
+        // then
+        assertThat(loadedPlugins).containsOnly(pluginDescriptor);
     }
 }

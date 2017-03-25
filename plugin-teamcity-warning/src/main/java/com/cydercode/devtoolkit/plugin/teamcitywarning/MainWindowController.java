@@ -14,6 +14,10 @@ public class MainWindowController {
     @FXML
     TextArea statusArea;
 
+    public void setError() {
+        mainBox.setStyle("-fx-background-color: orange;");
+    }
+
     public void setStatus(Map status) {
         if(status.get("status").equals("SUCCESS")) {
             mainBox.setStyle("-fx-background-color: green;");

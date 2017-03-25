@@ -76,6 +76,11 @@ public class MainWindowController {
         reloadConfiguration();
     }
 
+
+    public void stop() {
+        pluginsController.stop();
+    }
+
     @FXML
     protected void reloadConfiguration() throws IOException {
         Optional<Configuration> configuration = configurationHolder.loadLastConfiguration();
