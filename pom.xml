@@ -30,6 +30,7 @@
         <Enzo.version>0.3.6</Enzo.version>
         <testfx-core.version>4.0.1-alpha</testfx-core.version>
         <fluent-json.version>2.0.3</fluent-json.version>
+        <junit-dataprovider.version>1.10.0</junit-dataprovider.version>
     </properties>
 
     <name>dev-toolkit</name>
@@ -103,6 +104,11 @@
                 <groupId>org.jglue.fluent-json</groupId>
                 <artifactId>fluent-json</artifactId>
                 <version>${fluent-json.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tngtech.java</groupId>
+                <artifactId>junit-dataprovider</artifactId>
+                <version>${junit-dataprovider.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

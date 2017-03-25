@@ -1,5 +1,6 @@
 package com.cydercode.devtoolkit.ui;
 
+import com.cydercode.devtoolkit.ui.window.WindowTitleCreator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,8 +17,7 @@ public class App extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("main_window.fxml"));
 
         Scene scene = new Scene(root, 600, 800);
-
-        stage.setTitle("CyderCode dev-toolkit " + getVersion());
+        stage.setTitle(new WindowTitleCreator().create(getVersion()));
         stage.setScene(scene);
         stage.getIcons().add(new Image(getResource("com/cydercode/devtoolkit/ui/icon.png").openStream()));
         stage.show();

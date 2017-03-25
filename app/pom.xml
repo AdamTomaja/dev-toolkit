@@ -78,6 +78,11 @@
             <groupId>org.jglue.fluent-json</groupId>
             <artifactId>fluent-json</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.tngtech.java</groupId>
+            <artifactId>junit-dataprovider</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
