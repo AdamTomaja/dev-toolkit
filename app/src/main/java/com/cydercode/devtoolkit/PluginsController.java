@@ -37,7 +37,11 @@ public class PluginsController {
 
             mainWindowController.getPluginsMenu().getItems().add(menuItem);
 
-            plugin.onStart();
+            try {
+                plugin.onStart();
+            } catch (Exception e) {
+                LOGGER.error("Cannot start plugin: {}", pluginDescriptor.getName(), e);
+            }
         }
     }
 

@@ -73,7 +73,95 @@ public class PluginLoaderTest {
                 .isExactlyInstanceOf(JarsFinder.class);
     }
 
+    @Test
+    public void shouldNotFailWhenPluginConstructorThrowsException() throws ClassNotFoundException {
+        // given
+        String mainClass = "com.cydercode.plugin.Plugin";
+        String name = "testPlugin";
+        File file1 = new File("plugin1.jar");
+
+        JarsFinder jarsFinder = mock(JarsFinder.class);
+        when(jarsFinder.searchForJars(any(File.class))).thenReturn(asList(file1));
+        ClassLoader classLoader = mock(ClassLoader.class);
+        String descriptor = buildObject()
+                .add("mainClass", mainClass)
+                .add("name", name).toString();
+
+        when(classLoader.getResourceAsStream(DESCRIPTOR_FILENAME))
+                .thenReturn(new ByteArrayInputStream(descriptor.getBytes(UTF_8)));
+
+        Plugin plugin = mock(Plugin.class);
+
+        when(classLoader.loadClass(mainClass)).thenReturn((Class) TestPluginException.class);
+
+        PluginLoader loader = new PluginLoader();
+
+        Function<File, ClassLoader> classLoaderFunction = mock(Function.class);
+        when(classLoaderFunction.apply(file1)).thenReturn(classLoader);
+
+        loader.setClassLoaderFactory(classLoaderFunction);
+        loader.setJarsFinder(jarsFinder);
+
+        // when
+        List<PluginDescriptor> pluginDescriptors = loader.loadPlugins();
+    }
+
+    @Test
+    public void shouldNotFailWhenLinkageError() throws ClassNotFoundException {
+        // given
+        String mainClass = "com.cydercode.plugin.Plugin";
+        String name = "testPlugin";
+        File file1 = new File("plugin1.jar");
+
+        JarsFinder jarsFinder = mock(JarsFinder.class);
+        when(jarsFinder.searchForJars(any(File.class))).thenReturn(asList(file1));
+        ClassLoader classLoader = mock(ClassLoader.class);
+        String descriptor = buildObject()
+                .add("mainClass", mainClass)
+                .add("name", name).toString();
+
+        when(classLoader.getResourceAsStream(DESCRIPTOR_FILENAME))
+                .thenReturn(new ByteArrayInputStream(descriptor.getBytes(UTF_8)));
+
+        Plugin plugin = mock(Plugin.class);
+
+        when(classLoader.loadClass(mainClass)).thenThrow(NoClassDefFoundError.class);
+
+        PluginLoader loader = new PluginLoader();
+
+        Function<File, ClassLoader> classLoaderFunction = mock(Function.class);
+        when(classLoaderFunction.apply(file1)).thenReturn(classLoader);
+
+        loader.setClassLoaderFactory(classLoaderFunction);
+        loader.setJarsFinder(jarsFinder);
+
+        // when
+        List<PluginDescriptor> pluginDescriptors = loader.loadPlugins();
+    }
+
     public static class TestPlugin implements Plugin {
+
+        @Override
+        public void onStart() {
+
+        }
+
+        @Override
+        public void onAction() {
+
+        }
+
+        @Override
+        public void onStop() {
+
+        }
+    }
+
+    public static class TestPluginException implements Plugin {
+
+        public TestPluginException() {
+            throw new RuntimeException("Exception from Plugin constructor");
+        }
 
         @Override
         public void onStart() {

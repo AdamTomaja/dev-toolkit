@@ -62,4 +62,19 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         // then
         verify(plugin, times(1)).onAction();
     }
+
+    @Test
+    public void shouldNotFailWhenPluginThrowsExceptionOnStart() {
+        when(mainWindowController.getPluginsMenu()).thenReturn(new Menu());
+        PluginDescriptor pluginDescriptor = new PluginDescriptor();
+        String pluginName = "My Plugin";
+        Plugin plugin = mock(Plugin.class);
+        doThrow(new RuntimeException("Mocked exception")).when(plugin).onStart();
+        pluginDescriptor.setName(pluginName);
+        pluginDescriptor.setPlugin(plugin);
+        when(pluginLoader.loadPlugins()).thenReturn(Arrays.asList(pluginDescriptor));
+
+        // when
+        pluginsController.initialize();
+    }
 }

@@ -53,7 +53,7 @@ public class PluginLoader {
                 } else {
                     LOGGER.info("No descriptor in jar file: {}", jarFile);
                 }
-            } catch (Exception e) {
+            } catch (Exception | LinkageError e) {
                 LOGGER.error("Cannot load plugin: {}", jarFile, e);
             }
         }
