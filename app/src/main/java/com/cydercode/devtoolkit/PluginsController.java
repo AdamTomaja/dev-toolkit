@@ -8,6 +8,7 @@ import javafx.scene.control.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PluginsController {
@@ -15,6 +16,7 @@ public class PluginsController {
     static final Logger LOGGER = LoggerFactory.getLogger(PluginsController.class);
 
     private PluginLoader pluginLoader = new PluginLoader();
+    private List<PluginDescriptor> plugins = new ArrayList<>();
 
     private MainWindowController mainWindowController;
 
@@ -23,7 +25,7 @@ public class PluginsController {
     }
 
     public void initialize() {
-        List<PluginDescriptor> plugins = pluginLoader.loadPlugins();
+        plugins = pluginLoader.loadPlugins();
         LOGGER.info("Loaded plugins: {}", plugins);
         for (PluginDescriptor pluginDescriptor : plugins) {
             MenuItem menuItem = new MenuItem(pluginDescriptor.getName());
@@ -37,5 +39,9 @@ public class PluginsController {
 
             plugin.onStart();
         }
+    }
+
+    public List<PluginDescriptor> getLoadedPlugins() {
+        return plugins;
     }
 }

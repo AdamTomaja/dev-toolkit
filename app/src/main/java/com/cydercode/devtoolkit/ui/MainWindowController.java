@@ -116,6 +116,19 @@ public class MainWindowController {
         }
     }
 
+    @FXML
+    protected void openHelpWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("about_window.fxml"));
+        Parent root = (Parent) loader.load();
+        AboutWindowController aboutWindowController = loader.getController();
+        aboutWindowController.setLoadedPlugins(pluginsController.getLoadedPlugins());
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+        stage.getIcons().add(new Image(getResource("com/cydercode/devtoolkit/ui/icon.png").openStream()));
+        stage.setTitle("Dev-toolkit Help");
+    }
+
     void loadConfiguration(Configuration configuration) throws IOException {
         clearConfiguration();
 
