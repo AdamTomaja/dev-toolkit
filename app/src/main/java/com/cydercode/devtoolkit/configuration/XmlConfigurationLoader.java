@@ -48,8 +48,12 @@ public class XmlConfigurationLoader extends AbstractFileConfigurationLoader {
                     Map<String, Object> properties = new HashMap<>();
                     properties.put(Configuration.TYPE, parameter.getType().value());
                     properties.put(Configuration.GROUP, parameter.getGroup());
+                    properties.put(Configuration.DEFAULT, parameter.getDefault());
                     properties.put(Configuration.HIDDEN, String.valueOf(parameter.isHidden()));
-                    properties.put(Configuration.VALUES, parameter.getValues().getValue());
+                    Values values = parameter.getValues();
+                    if (values != null) {
+                        properties.put(Configuration.VALUES, values.getValue());
+                    }
                     configuration.getParameters().put(parameter.getName(), properties);
                 });
             }

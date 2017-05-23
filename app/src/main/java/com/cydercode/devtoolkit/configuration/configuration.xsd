@@ -77,7 +77,7 @@
     <xs:element name="preset">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="application" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="application" type="xs:string" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="cmd" type="xs:string" minOccurs="0" maxOccurs="1"/>
                 <xs:element name="group" type="xs:string" minOccurs="0" maxOccurs="1"/>
                 <xs:element ref="child-presets" minOccurs="0" maxOccurs="1"/>

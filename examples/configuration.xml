@@ -1,41 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dev-toolkit xmlns="https://cydercode.com/dev-toolkit/">
     <applications>
+        <application name="mvn">
+            <path>mvn</path>
+        </application>
         <application name="git">
             <path>git</path>
         </application>
     </applications>
 
     <parameters>
-        <parameter name="parameter-name">
+        <parameter name="project-dir">
             <type>string</type>
-            <default>default-value</default>
+            <default>/home/mint/work/git/dev-toolkit/</default>
             <values>
-                <value>value-a</value>
-                <value>value-b</value>
+                <value>/home/mint/work/git/dev-toolkit/</value>
+                <value>/home/mint/work/git/project-2/</value>
+                <value>/home/mint/work/git/project-3</value>
             </values>
-            <hidden>true</hidden>
-            <group>utils</group>
+            <group>Maven</group>
+        </parameter>
+        <parameter name="repo-dir">
+            <type>string</type>
+            <default>/home/mint/work/git/dev-toolkit/</default>
+            <group>Git</group>
+        </parameter>
+        <parameter name="branch">
+            <type>string</type>
+            <default>master</default>
+            <group>Git</group>
         </parameter>
     </parameters>
 
     <presets>
-        <preset name="preset-name">
+        <preset name="Clean">
+            <application>mvn</application>
+            <cmd>-f ${project-dir} clean</cmd>
+            <group>Maven</group>
+        </preset>
+        <preset name="Install">
+            <application>mvn</application>
+            <cmd>-f ${project-dir} install</cmd>
+            <group>Maven</group>
+        </preset>
+        <preset name="Package">
+            <application>mvn</application>
+            <cmd>-f ${project-dir} package</cmd>
+            <group>Maven</group>
+        </preset>
+        <preset name="Test">
+            <application>mvn</application>
+            <cmd>-f ${project-dir} test</cmd>
+            <group>Maven</group>
+        </preset>
+        <preset name="Deploy">
+            <application>mvn</application>
+            <cmd>-f ${project-dir} deploy</cmd>
+            <group>Maven</group>
+        </preset>
+        <preset name="Pull">
             <application>git</application>
-            <cmd>pull</cmd>
-            <group>utils</group>
-            <child-presets>
+            <cmd>-C ${repo-dir} pull</cmd>
+            <group>Git</group>
+        </preset>
+        <preset name="Push">
+            <application>git</application>
+            <cmd>-C ${repo-dir} push</cmd>
+            <group>Git</group>
+        </preset>
+        <preset name="Show remotes">
+            <application>git</application>
+            <cmd>-C ${repo-dir} remote -v</cmd>
+            <group>Git</group>
+        </preset>
+        <preset name="Status">
+            <application>git</application>
+            <cmd>-C ${repo-dir} status</cmd>
+            <group>Git</group>
+        </preset>
+        <preset name="All-Git-With-Ignorable">
+             <child-presets>
                 <child-preset>
-                    <preset>preset-a</preset>
+                    <preset>Show remotes</preset>
                     <ignorable>false</ignorable>
                 </child-preset>
-                <child-preset>
-                    <preset>preset-b</preset>
-                    <ignorable>true</ignorable>
-                </child-preset>
+                 <child-preset>
+                     <preset>Status</preset>
+                     <ignorable>false</ignorable>
+                 </child-preset>
+                 <child-preset>
+                     <preset>Pull</preset>
+                     <ignorable>false</ignorable>
+                 </child-preset>
             </child-presets>
-            <description>Description of a preset</description>
-            <qtoolbox>true</qtoolbox>
         </preset>
     </presets>
 </dev-toolkit>

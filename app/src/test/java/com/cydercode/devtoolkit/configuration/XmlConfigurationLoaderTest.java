@@ -34,6 +34,7 @@ public class XmlConfigurationLoaderTest {
                 .put(Configuration.VALUES, asList("value-a", "value-b"))
                 .put(Configuration.HIDDEN, "true")
                 .put(Configuration.GROUP, "utils")
+                .put(Configuration.DEFAULT, "default-value")
                 .build());
 
         assertThat(configuration.getPresets()).isNotNull();
