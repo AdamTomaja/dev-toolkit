@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dev-toolkit xmlns="https://cydercode.com/dev-toolkit/">
+    <applications>
+        <application name="git">
+            <path>git</path>
+        </application>
+    </applications>
+
+    <parameters>
+        <parameter name="parameter-name">
+            <type>string</type>
+            <default>default-value</default>
+            <values>
+                <value>value-a</value>
+                <value>value-b</value>
+            </values>
+            <hidden>true</hidden>
+            <group>utils</group>
+        </parameter>
+    </parameters>
+
+    <presets>
+        <preset name="preset-name">
+            <application>git</application>
+            <cmd>pull</cmd>
+            <group>utils</group>
+            <child-presets>
+                <child-preset>
+                    <preset>preset-a</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
+                <child-preset>
+                    <preset>preset-b</preset>
+                    <ignorable>true</ignorable>
+                </child-preset>
+            </child-presets>
+            <description>Description of a preset</description>
+            <qtoolbox>true</qtoolbox>
+        </preset>
+    </presets>
+</dev-toolkit>

@@ -15,6 +15,8 @@ In dev-toolkit You can create presets to easily execute commands from UI.
 # Configuration file
 The configuration file contains three sections: applications, parameters and presets.
 Each one is a map of name of item and its properties.
+Both **JSON** and **XML** configuration formats are supported.
+XSD file for configuration can be found in [configuration.xsd](app/src/main/java/com/cydercode/devtoolkit/configuration/configuration.xsd) file. 
 
 **Important !** Configuration examples are ready to download and testing up in examples/ directory  
 
@@ -52,60 +54,6 @@ Example plugin for dev-toolkit can be found in **plugin-example** directory.
 ## How to install plugin
 The only thing You have to do to run plugin is to place .jar file next to dev-toolkit in the same directory or child directories.
 
-```javascript
-{
-  "applications": {
-    "Maven": {
-      "path": "mvn"
-    }
-  },
-  "parameters": {
-    "project-home": {
-      "type": "string",
-      "default": "/home/mint/work/git/dev-toolkit/"
-    },
-    "distribution": {
-      "type": "string",
-      "default": "C",
-      "values": [
-        "A",
-        "B",
-        "C"
-      ]
-    },
-    "profile": {
-      "type": "string",
-      "default": "local",
-      "values": [
-        "dev",
-        "local",
-        "test"
-      ]
-    }
-  },
-  "presets": {
-    "build": {
-      "application": "Maven",
-      "cmd": "-f ${project-home} clean install"
-    },
-    "clean": {
-      "application": "Maven",
-      "cmd": "-f ${project-home} clean",
-      "description": "Clean maven working directory",
-      "qtoolbox": true
-    },
-    "Build and clean": {
-        "presets": [
-          {
-            "preset":"clean", 
-            "ignorable": true
-            }, 
-          "build"
-        ]
-    }
-  }
-}
-```
 # Examples
 ![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/git-example.png)
 ![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/maven-example.png)

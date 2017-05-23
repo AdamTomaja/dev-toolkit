@@ -18,6 +18,9 @@ public class Configuration {
             IGNORABLE = "ignorable",
             Q_TOOLBOX = "qtoolbox",
             DESCRIPTION = "description",
+            PATH = "path",
+            TYPE = "type",
+            CMD = "cmd",
             DEFAULT_GROUP = null;
 
 

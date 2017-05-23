@@ -1,23 +1,20 @@
-package com.cydercode.devtoolkit.ui;
+package com.cydercode.devtoolkit.configuration;
 
 import com.cydercode.devtoolkit.Configuration;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.awt.X11.XAtom;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Optional;
-import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 public class ConfigurationHolder {
 
     static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationHolder.class);
     static final String FILE_PREF_KEY = "file";
+
+    private ConfigurationLoaderFactory configurationLoaderFactory = new ConfigurationLoaderFactory();
 
     final Preferences preferences;
 
@@ -34,22 +31,22 @@ public class ConfigurationHolder {
             if (file != null) {
                 load(new File(file));
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOGGER.warn("It was impossible to load last configuration", e);
         }
 
         return Optional.ofNullable(configuration);
     }
 
-    public Optional<Configuration> loadConfiguration(File file) throws BackingStoreException, FileNotFoundException {
+    public Optional<Configuration> loadConfiguration(File file) throws Exception {
         load(file);
         preferences.put(FILE_PREF_KEY, file.getAbsolutePath());
         preferences.sync();
         return Optional.of(configuration);
     }
 
-    private void load(File file) throws FileNotFoundException {
-        configuration = new Gson().fromJson(new FileReader(file), Configuration.class);
+    private void load(File file) throws Exception {
+        configuration = configurationLoaderFactory.produceForFile(file).load();
         LOGGER.info("Loaded configuration: {}", configuration);
     }
 
