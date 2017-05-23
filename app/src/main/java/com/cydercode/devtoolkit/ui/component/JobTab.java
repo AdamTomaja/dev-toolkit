@@ -16,7 +16,7 @@ import static com.google.common.io.Resources.getResource;
 
 public class JobTab extends HBox {
 
-    public static final int LIMIT = 2 * 1000;
+    public static final int LIMIT = 6 * 1000;
 
     @FXML
     TextArea logsArea;
