@@ -73,7 +73,7 @@ public class MainWindowController {
     @FXML
     protected void initialize() throws IOException {
         pluginsController.initialize();
-        reloadConfiguration();
+        doConfigurationReload();
     }
 
 
@@ -83,6 +83,11 @@ public class MainWindowController {
 
     @FXML
     protected void reloadConfiguration() throws IOException {
+        doConfigurationReload();
+        notificationFacade.showInformation("Configuration reloaded", "Configuration reloaded sucessfully");
+    }
+
+    protected void doConfigurationReload() throws IOException {
         Optional<Configuration> configuration = configurationHolder.loadLastConfiguration();
         if (configuration.isPresent()) {
             loadConfiguration(configuration.get());
@@ -91,6 +96,7 @@ public class MainWindowController {
         quickToolBoxFacade.get().setOnAction((presetName) -> {
             runPreset(presetName);
         });
+
     }
 
     @FXML
@@ -106,6 +112,7 @@ public class MainWindowController {
 
         try {
             loadConfiguration(configurationHolder.loadConfiguration(file).get());
+            notificationFacade.showInformation("Configuration loaded", "Configuration loaded sucessfully");
         } catch (Exception e) {
             LOGGER.error("Unable to load configuration", e);
             dialogHelper.createExceptionAlert("Error when loading configuration", e)
