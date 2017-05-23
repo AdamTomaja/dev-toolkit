@@ -4,7 +4,7 @@ import org.apache.commons.lang.text.StrBuilder;
 
 import java.util.Map;
 
-import static com.cydercode.devtoolkit.Configuration.APPLICATION;
+import static com.cydercode.devtoolkit.Configuration.*;
 
 public class CommandBuilder {
 
@@ -21,7 +21,7 @@ public class CommandBuilder {
             throw new IllegalArgumentException("Cannot find application with name: " + applicationName);
         }
 
-        StrBuilder strBuilder = new StrBuilder(String.format("%s %s", applicationConfiguration.get("path"), presetConfiguration.get("cmd")));
+        StrBuilder strBuilder = new StrBuilder(String.format("%s %s", applicationConfiguration.get(PATH), presetConfiguration.get(CMD)));
         parameters.forEach((k, v) -> {
             strBuilder.replaceAll(String.format("${%s}", k), v.toString());
         });

@@ -1,6 +1,7 @@
 package com.cydercode.devtoolkit.ui;
 
 import com.cydercode.devtoolkit.*;
+import com.cydercode.devtoolkit.configuration.ConfigurationHolder;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
 import com.cydercode.devtoolkit.ui.component.Group;
 import com.cydercode.devtoolkit.ui.component.JobTab;
