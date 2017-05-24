@@ -63,5 +63,12 @@ public class XmlConfigurationLoaderTest {
                         .put("preset", "preset-b")
                         .put("ignorable", true).build()))
                 .build());
+
+        assertThat(configuration.getGroups().get(0).getName()).isEqualTo("group-a");
+        assertThat(configuration.getGroups().get(0).getDescription()).isEqualTo("Description A");
+
+        assertThat(configuration.getGroups().get(1).getName()).isEqualTo("group-b");
+        assertThat(configuration.getGroups().get(1).getDescription()).isEqualTo("Description B");
+
     }
 }

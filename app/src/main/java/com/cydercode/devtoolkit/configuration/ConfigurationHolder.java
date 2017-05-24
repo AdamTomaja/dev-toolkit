@@ -48,6 +48,7 @@ public class ConfigurationHolder {
     private void load(File file) throws Exception {
         configuration = configurationLoaderFactory.produceForFile(file).load();
         LOGGER.info("Loaded configuration: {}", configuration);
+        LOGGER.info("From file: {}", file);
     }
 
     public Optional<Configuration> getCurrentConfiguration() {

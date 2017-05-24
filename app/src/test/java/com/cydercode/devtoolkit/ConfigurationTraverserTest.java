@@ -1,10 +1,12 @@
 package com.cydercode.devtoolkit;
 
+import com.cydercode.devtoolkit.configuration.model.Group;
 import com.google.gson.Gson;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConfigurationTraverserTest {
 
     @Test
-    public void shouldCreateGroupsSet() throws IOException {
+    public void shouldObtainGroupListWithDescriptions() throws IOException {
         // given
         Configuration configuration = new Gson().fromJson(new InputStreamReader(
                         getResource("com/cydercode/devtoolkit/ConfigurationTraverserTest/configuration.json")
@@ -24,10 +26,11 @@ public class ConfigurationTraverserTest {
         ConfigurationTraverser traverser = new ConfigurationTraverser();
 
         // when
-        Set<String> groups = traverser.getGroups(configuration);
+        List<Group> groups = traverser.getGroups(configuration);
 
         // then
-        assertThat(groups).containsOnly("group1", "group2");
+        assertThat(groups.get(0).getName()).isEqualTo("group1");
+        assertThat(groups.get(1).getName()).isEqualTo("group2");
     }
 
     @Test

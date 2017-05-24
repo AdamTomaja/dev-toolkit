@@ -131,21 +131,23 @@ public class MainWindowController {
 
     void loadConfiguration(Configuration configuration) throws IOException {
         clearConfiguration();
+        List<com.cydercode.devtoolkit.configuration.model.Group> groups = configurationTraverser.getGroups(configuration);
+        groups.add(0, new com.cydercode.devtoolkit.configuration.model.Group() {{
+            setName(DEFAULT_GROUP);  // default group
+            setDescription("Default group");
+        }});
 
-        Set<String> groups = configurationTraverser.getGroups(configuration);
-        groups.add(DEFAULT_GROUP); // default group
-
-        for (String groupName : groups) {
+        for (com.cydercode.devtoolkit.configuration.model.Group groupItem : groups) {
             Group group = new Group();
-            group.setText(Objects.equals(groupName, DEFAULT_GROUP) ? "Default group" : groupName);
+            group.setText(createGroupText(groupItem));
 
-            Set<String> presets = configurationTraverser.findObjectsWithGroup(groupName, configuration.getPresets()).keySet();
+            Set<String> presets = configurationTraverser.findObjectsWithGroup(groupItem.getName(), configuration.getPresets()).keySet();
 
             for (String presetName : presets) {
                 group.addPreset(createPresetButton(presetName, configuration.getPresets().get(presetName)));
             }
 
-            Set<String> parameters = configurationTraverser.findObjectsWithGroup(groupName, configuration.getParameters()).keySet();
+            Set<String> parameters = configurationTraverser.findObjectsWithGroup(groupItem.getName(), configuration.getParameters()).keySet();
             for (String parameterName : parameters) {
                 Map<String, Object> parameterConfiguration = configuration.getParameters().get(parameterName);
                 Control control = parameterControlFactory.produceControl(parameterConfiguration);
@@ -161,6 +163,11 @@ public class MainWindowController {
         }
 
         quickToolBoxFacade.get().loadConfiguration(configuration);
+    }
+
+    private String createGroupText(com.cydercode.devtoolkit.configuration.model.Group group) {
+        return (Objects.equals(DEFAULT_GROUP, group.getName()) ? "Default group" : group.getName()) +
+                (group.getDescription() != null ? " - " + group.getDescription() : "");
     }
 
     private VBox buildParameter(String parameterName, Control control) {

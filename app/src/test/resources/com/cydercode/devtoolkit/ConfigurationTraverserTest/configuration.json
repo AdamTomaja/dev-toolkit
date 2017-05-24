@@ -1,4 +1,14 @@
 {
+  "groups": [
+    {
+      "name": "group1",
+      "description": "Group1 desc"
+    },
+    {
+      "name": "group2",
+      "description": "Group2 desc"
+    }
+  ],
   "applications": {
     "Maven": {
       "path": "${maven-path}/mvn"

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dev-toolkit xmlns="https://cydercode.com/dev-toolkit/">
+    <groups>
+        <group name="Git">
+            <description>Version Control Operations</description>
+        </group>
+        <group name="Maven"/>
+    </groups>
     <applications>
         <application name="mvn">
             <path>mvn</path>
@@ -83,19 +89,19 @@
             <qtoolbox>true</qtoolbox>
         </preset>
         <preset name="All-Git-With-Ignorable">
-             <child-presets>
+            <child-presets>
                 <child-preset>
                     <preset>Show remotes</preset>
                     <ignorable>false</ignorable>
                 </child-preset>
-                 <child-preset>
-                     <preset>Status</preset>
-                     <ignorable>false</ignorable>
-                 </child-preset>
-                 <child-preset>
-                     <preset>Pull</preset>
-                     <ignorable>false</ignorable>
-                 </child-preset>
+                <child-preset>
+                    <preset>Status</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
+                <child-preset>
+                    <preset>Pull</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
             </child-presets>
         </preset>
         <preset name="Environment variable echo">

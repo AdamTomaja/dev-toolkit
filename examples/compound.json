@@ -1,4 +1,14 @@
 {
+  "groups": [
+    {
+      "name": "Maven",
+      "description": "Maven group"
+    },
+    {
+      "name": "Git",
+      "description": "Git group"
+    }
+  ],
   "applications": {
     "Maven": {
       "path": "mvn"

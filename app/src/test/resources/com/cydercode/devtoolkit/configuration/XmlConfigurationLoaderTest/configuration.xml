@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dev-toolkit xmlns="https://cydercode.com/dev-toolkit/">
+    <groups>
+        <group name="group-a">
+            <description>Description A</description>
+        </group>
+        <group name="group-b">
+            <description>Description B</description>
+        </group>
+    </groups>
+
     <applications>
         <application name="git">
             <path>git</path>

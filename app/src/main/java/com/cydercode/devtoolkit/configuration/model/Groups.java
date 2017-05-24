@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{https://cydercode.com/dev-toolkit/}preset" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{https://cydercode.com/dev-toolkit/}group" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,41 +31,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "preset"
+    "group"
 })
-@XmlRootElement(name = "presets", namespace = "https://cydercode.com/dev-toolkit/")
-public class Presets {
+@XmlRootElement(name = "groups", namespace = "https://cydercode.com/dev-toolkit/")
+public class Groups {
 
     @XmlElement(namespace = "https://cydercode.com/dev-toolkit/")
-    protected List<Preset> preset;
+    protected List<Group> group;
 
     /**
-     * Gets the value of the preset property.
+     * Gets the value of the group property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the preset property.
+     * This is why there is not a <CODE>set</CODE> method for the group property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getPreset().add(newItem);
+     *    getGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Preset }
+     * {@link Group }
      * 
      * 
      */
-    public List<Preset> getPreset() {
-        if (preset == null) {
-            preset = new ArrayList<Preset>();
+    public List<Group> getGroup() {
+        if (group == null) {
+            group = new ArrayList<Group>();
         }
-        return this.preset;
+        return this.group;
     }
 
 }

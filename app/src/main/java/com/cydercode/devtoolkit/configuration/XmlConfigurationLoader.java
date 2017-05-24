@@ -29,6 +29,10 @@ public class XmlConfigurationLoader extends AbstractFileConfigurationLoader {
 
             Configuration configuration = new Configuration();
 
+            if (devToolkit.getGroups() != null) {
+                configuration.setGroups(devToolkit.getGroups().getGroup());
+            }
+
             Applications applications = devToolkit.getApplications();
 
             if (applications != null) {
