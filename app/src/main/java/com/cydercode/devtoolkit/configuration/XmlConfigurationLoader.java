@@ -66,6 +66,7 @@ public class XmlConfigurationLoader extends AbstractFileConfigurationLoader {
                     properties.put(Configuration.APPLICATION, preset.getApplication());
                     properties.put(Configuration.GROUP, preset.getGroup());
                     properties.put(Configuration.CMD, preset.getCmd());
+                    properties.put(Configuration.Q_TOOLBOX, preset.isQtoolbox());
                     ChildPresets childPresets = preset.getChildPresets();
                     if (childPresets != null) {
                         List<Map<String, Object>> childPresetsList = new ArrayList<>();

@@ -77,6 +77,7 @@
             <application>git</application>
             <cmd>-C ${repo-dir} status</cmd>
             <group>Git</group>
+            <qtoolbox>true</qtoolbox>
         </preset>
         <preset name="All-Git-With-Ignorable">
              <child-presets>
