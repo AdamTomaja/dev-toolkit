@@ -4,12 +4,12 @@
     <parent>
         <artifactId>dev-toolkit</artifactId>
         <groupId>com.cydercode.devtoolkit</groupId>
-        <version>2.1-SNAPSHOT</version>
+        <version>2.2-SNAPSHOT</version>
     </parent>
 
     <groupId>com.cydercode.devtoolkit</groupId>
     <artifactId>app</artifactId>
-    <version>2.1-SNAPSHOT</version>
+    <version>2.2-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
