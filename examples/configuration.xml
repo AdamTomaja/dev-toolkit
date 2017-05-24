@@ -6,6 +6,7 @@
         </group>
         <group name="Maven"/>
     </groups>
+
     <applications>
         <application name="mvn">
             <path>mvn</path>

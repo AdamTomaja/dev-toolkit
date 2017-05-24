@@ -9,8 +9,7 @@ In dev-toolkit You can create presets to easily execute commands from UI.
 * [Download](https://github.com/AdamTomaja/dev-toolkit/releases/latest)
 
 # Screenshot
-![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/groups.png)
-
+![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/dev-toolkit-2.png)
 
 # Configuration file
 The configuration file contains three sections: applications, parameters and presets.
@@ -23,6 +22,9 @@ XSD file for configuration can be found in [configuration.xsd](app/src/main/java
 ## Application
 Application defines a binary file on Your computer. 
 * path - path to binary file localized on Your hdd, You can also use ${parameter-name} syntax here
+
+## Group
+It`s possible to define list of groups with descriptions. For example when You need to order Your groups. 
 
 ## Parameter
 Parameter defines some kind of variable which can be used later in preset. 
@@ -53,9 +55,3 @@ CyderCode Dev-Toolkit is universal application so it is possible to write plugin
 Example plugin for dev-toolkit can be found in **plugin-example** directory.
 ## How to install plugin
 The only thing You have to do to run plugin is to place .jar file next to dev-toolkit in the same directory or child directories.
-
-# Examples
-![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/git-example.png)
-![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/maven-example.png)
-![Main Window screenshot](https://raw.githubusercontent.com/AdamTomaja/dev-toolkit/master/screenshots/main-window.png)
-
