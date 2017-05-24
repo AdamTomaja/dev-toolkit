@@ -29,6 +29,10 @@
       "application": "Maven",
       "cmd": "clean install -d ${distribution} -p ${profile}"
     },
+    "env-variable": {
+      "application": "Maven",
+      "cmd": "clean install -X ${SHELL}"
+    },
     "application-error": {
       "application": "dummy-application",
       "cmd": "clean install -d ${distribution} -p ${profile}"

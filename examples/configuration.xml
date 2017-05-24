@@ -7,6 +7,9 @@
         <application name="git">
             <path>git</path>
         </application>
+        <application name="echo">
+            <path>echo</path>
+        </application>
     </applications>
 
     <parameters>
@@ -94,6 +97,10 @@
                      <ignorable>false</ignorable>
                  </child-preset>
             </child-presets>
+        </preset>
+        <preset name="Environment variable echo">
+            <application>echo</application>
+            <cmd>SHELL value: ${SHELL}</cmd>
         </preset>
     </presets>
 </dev-toolkit>
