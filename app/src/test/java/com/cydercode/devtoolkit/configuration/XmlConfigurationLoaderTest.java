@@ -1,15 +1,18 @@
 package com.cydercode.devtoolkit.configuration;
 
 import com.cydercode.devtoolkit.Configuration;
+import com.cydercode.devtoolkit.configuration.model.Application;
+import com.cydercode.devtoolkit.configuration.model.Parameter;
+import com.cydercode.devtoolkit.configuration.model.ParameterType;
+import com.cydercode.devtoolkit.configuration.model.Preset;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Optional;
 
-import static com.google.common.collect.ImmutableMap.of;
 import static com.google.common.io.Resources.getResource;
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -25,19 +28,19 @@ public class XmlConfigurationLoaderTest {
         Configuration configuration = loader.load();
 
         // then
-        assertThat(configuration.getApplications().get("git")).isNotNull();
-        assertThat(configuration.getApplications().get("git")).isEqualTo(of("path", "git"));
+        Optional<Application> application = configuration.getApplication("git");
+        assertThat(application).isPresent();
+        assertThat(application.get().getPath()).isEqualTo("git");
 
-        assertThat(configuration.getParameters()).isNotNull();
-        assertThat(configuration.getParameters().get("parameter-name")).isEqualTo(ImmutableMap.builder()
-                .put(Configuration.TYPE, "string")
-                .put(Configuration.VALUES, asList("value-a", "value-b"))
-                .put(Configuration.HIDDEN, "true")
-                .put(Configuration.GROUP, "utils")
-                .put(Configuration.DEFAULT, "default-value")
-                .build());
+        Optional<Parameter> parameter = configuration.getParameter("parameter-name");
+        assertThat(parameter).isPresent();
+        Parameter parameterObj = parameter.get();
 
-        assertThat(configuration.getPresets()).isNotNull();
+        assertThat(parameterObj.getType()).isEqualTo(ParameterType.STRING);
+        assertThat(parameterObj.getValues().getValue()).containsExactly("value-a", "value-b");
+        assertThat(parameterObj.isHidden()).isTrue();
+        assertThat(parameterObj.getGroup()).isEqualTo("utils");
+        assertThat(parameterObj.getDefault()).isEqualTo("default-value");
 
         /**
          * preset name="preset-name">
@@ -52,18 +55,11 @@ public class XmlConfigurationLoaderTest {
          <qtoolbox>true</qtoolbox>
          </preset>
          */
-        assertThat(configuration.getPresets().get("preset-name")).isEqualTo(ImmutableMap.builder()
-                .put(Configuration.APPLICATION, "git")
-                .put(Configuration.CMD, "pull")
-                .put(Configuration.GROUP, "utils")
-                .put(Configuration.Q_TOOLBOX, true)
-                .put(Configuration.DESCRIPTION, "Description of a preset")
-                .put(Configuration.PRESETS, Arrays.asList(ImmutableMap.builder()
-                        .put("preset", "preset-a")
-                        .put("ignorable", false).build(), ImmutableMap.builder()
-                        .put("preset", "preset-b")
-                        .put("ignorable", true).build()))
-                .build());
+        Optional<Preset> preset = configuration.getPreset("preset-name");
+        assertThat(preset).isPresent();
+        Preset presetObj = preset.get();
+        assertThat(presetObj.getApplication()).isEqualTo("git");
+        assertThat(presetObj.getCmd()).isEqualTo("pull");
 
         assertThat(configuration.getGroups().get(0).getName()).isEqualTo("group-a");
         assertThat(configuration.getGroups().get(0).getDescription()).isEqualTo("Description A");

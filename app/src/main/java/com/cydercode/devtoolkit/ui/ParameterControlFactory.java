@@ -1,25 +1,27 @@
 package com.cydercode.devtoolkit.ui;
 
 
+import com.cydercode.devtoolkit.configuration.model.Parameter;
+import com.cydercode.devtoolkit.configuration.model.Values;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 
-import java.util.List;
 import java.util.Map;
 
-import static com.cydercode.devtoolkit.Configuration.*;
+import static com.cydercode.devtoolkit.Configuration.HIDDEN;
+import static com.cydercode.devtoolkit.Configuration.TRUE;
 import static javafx.collections.FXCollections.observableArrayList;
 
 public class ParameterControlFactory {
 
-    public Control produceControl(Map<String, Object> parameter) {
-        Object defaultValue = parameter.get(DEFAULT);
-        List<String> values = (List<String>) parameter.get(VALUES);
+    public Control produceControl(Parameter parameter) {
+        Object defaultValue = parameter.getDefault();
+        Values values = parameter.getValues();
 
         Control control;
         if (values != null) {
-            control = new ComboBox(observableArrayList(values));
+            control = new ComboBox(observableArrayList(values.getValue()));
             ((ComboBox) control).setValue(defaultValue);
         } else {
             control = new TextField();

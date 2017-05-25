@@ -1,28 +1,29 @@
 package com.cydercode.devtoolkit;
 
+import com.cydercode.devtoolkit.configuration.model.Application;
+import com.cydercode.devtoolkit.configuration.model.Preset;
 import org.apache.commons.lang.text.StrBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.cydercode.devtoolkit.Configuration.*;
+import java.util.Optional;
 
 public class CommandBuilder {
 
-    public String buildCommand(Configuration configuration, String preset, Map<String, Object> parameters) {
-        Map<String, Object> presetConfiguration = configuration.getPresets().get(preset);
-        if (presetConfiguration == null) {
-            throw new IllegalArgumentException("Cannot find preset with name: " + preset);
+    public String buildCommand(Configuration configuration, String presetName, Map<String, Object> parameters) {
+        Optional<Preset> preset = configuration.getPreset(presetName);
+        if (!preset.isPresent()) {
+            throw new IllegalArgumentException("Cannot find preset with name: " + presetName);
         }
 
-        String applicationName = (String) presetConfiguration.get(APPLICATION);
-        Map<String, String> applicationConfiguration = configuration.getApplications()
-                .get(applicationName);
-        if (applicationConfiguration == null) {
-            throw new IllegalArgumentException("Cannot find application with name: " + applicationName);
+        Preset presetObject = preset.get();
+
+        Optional<Application> application = configuration.getApplication(presetObject.getApplication());
+        if (!application.isPresent()) {
+            throw new IllegalArgumentException("Cannot find application with name: " + presetObject.getApplication());
         }
 
-        StrBuilder strBuilder = new StrBuilder(String.format("%s %s", applicationConfiguration.get(PATH), presetConfiguration.get(CMD)));
+        StrBuilder strBuilder = new StrBuilder(String.format("%s %s", application.get().getPath(), presetObject.getCmd()));
         Map<String, Object> effectiveParameters = new HashMap<>();
         effectiveParameters.putAll(System.getenv());
         effectiveParameters.putAll(parameters);

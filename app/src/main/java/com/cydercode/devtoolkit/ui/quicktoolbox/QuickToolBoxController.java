@@ -1,20 +1,17 @@
 package com.cydercode.devtoolkit.ui.quicktoolbox;
 
 import com.cydercode.devtoolkit.Configuration;
-import com.cydercode.devtoolkit.ConfigurationTraverser;
+import com.cydercode.devtoolkit.configuration.model.Preset;
 import com.cydercode.devtoolkit.ui.PresetButtonFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
-import java.util.Set;
+import java.util.List;
 import java.util.function.Consumer;
-
-import static com.cydercode.devtoolkit.Configuration.Q_TOOLBOX;
 
 public class QuickToolBoxController {
 
-    ConfigurationTraverser configurationTraverser = new ConfigurationTraverser();
     PresetButtonFactory presetButtonFactory = new PresetButtonFactory();
 
     @FXML
@@ -25,13 +22,13 @@ public class QuickToolBoxController {
     public void loadConfiguration(Configuration configuration) {
         presetsBox.getChildren().clear();
 
-        Set<String> presets = configurationTraverser.getWithAttribute(configuration.getPresets(), Q_TOOLBOX, true);
+        List<Preset> presets = configuration.getPresetsWithPredicate(p -> p.isQtoolbox() != null && p.isQtoolbox());
 
-        for (String preset : presets) {
-            Button btn = presetButtonFactory.produce(preset, configuration.getPresets().get(preset));
+        for (Preset preset : presets) {
+            Button btn = presetButtonFactory.produce(preset);
             btn.setOnAction(ev -> {
                 if (onAction != null) {
-                    onAction.accept(preset);
+                    onAction.accept(preset.getName());
                 }
             });
 

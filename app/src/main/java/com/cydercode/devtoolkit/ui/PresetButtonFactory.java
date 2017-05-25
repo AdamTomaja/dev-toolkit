@@ -1,22 +1,21 @@
 package com.cydercode.devtoolkit.ui;
 
-import com.cydercode.devtoolkit.Configuration;
+import com.cydercode.devtoolkit.configuration.model.Preset;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 
-import java.util.Map;
-
 public class PresetButtonFactory {
 
-    public Button produce(String presetName, Map<String, Object> presetConfiguration) {
+    public Button produce(Preset preset) {
         Button presetButton = new Button();
 
-        String description = (String) presetConfiguration.get(Configuration.DESCRIPTION);
+        String description = preset.getDescription();
+
         if (description != null && (!description.isEmpty())) {
             presetButton.setTooltip(new Tooltip(description));
         }
 
-        presetButton.setText(presetName);
+        presetButton.setText(preset.getName());
 
         return presetButton;
     }

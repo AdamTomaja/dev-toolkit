@@ -1,15 +1,11 @@
 package com.cydercode.devtoolkit.ui;
 
-import com.cydercode.devtoolkit.Configuration;
 import com.cydercode.devtoolkit.category.UiTest;
-import com.google.common.collect.ImmutableMap;
+import com.cydercode.devtoolkit.configuration.model.Preset;
 import javafx.scene.control.Button;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.util.Map;
-
-import static com.google.common.collect.ImmutableMap.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -22,10 +18,11 @@ public class PresetButtonFactoryTest extends JavaFXComponentsTest {
         String description = "This is preset button";
         String presetName = "PresetName";
         PresetButtonFactory factory = new PresetButtonFactory();
-        Map<String, Object> presetConfiguration = of(Configuration.DESCRIPTION, description);
-
+        Preset preset = new Preset();
+        preset.setName(presetName);
+        preset.setDescription(description);
         // when
-        Button button = factory.produce(presetName, presetConfiguration);
+        Button button = factory.produce(preset);
 
         // then
         assertThat(button.getText()).isEqualTo(presetName);
@@ -36,10 +33,12 @@ public class PresetButtonFactoryTest extends JavaFXComponentsTest {
     public void shouldProduceButtonWithoutTooltip() {
         // given
         String presetName = "PresetName";
+        Preset preset = new Preset();
+        preset.setName(presetName);
         PresetButtonFactory factory = new PresetButtonFactory();
 
         // when
-        Button button = factory.produce(presetName, of());
+        Button button = factory.produce(preset);
 
         // then
         assertThat(button.getText()).isEqualTo(presetName);

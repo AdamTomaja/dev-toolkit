@@ -1,7 +1,12 @@
 package com.cydercode.devtoolkit.ui;
 
-import com.cydercode.devtoolkit.*;
+import com.cydercode.devtoolkit.CommandBuilder;
+import com.cydercode.devtoolkit.Configuration;
+import com.cydercode.devtoolkit.PluginsController;
+import com.cydercode.devtoolkit.PresetRunner;
 import com.cydercode.devtoolkit.configuration.ConfigurationHolder;
+import com.cydercode.devtoolkit.configuration.model.Parameter;
+import com.cydercode.devtoolkit.configuration.model.Preset;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
 import com.cydercode.devtoolkit.ui.component.Group;
 import com.cydercode.devtoolkit.ui.component.JobTab;
@@ -36,7 +41,6 @@ public class MainWindowController {
     ParameterControlFactory parameterControlFactory = new ParameterControlFactory();
     ParametersExtractor parametersExtractor = new ParametersExtractor();
     DialogHelper dialogHelper = new DialogHelper();
-    ConfigurationTraverser configurationTraverser = new ConfigurationTraverser();
     PresetRunner presetRunner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
     QuickToolBoxFacade quickToolBoxFacade = new QuickToolBoxFacade();
     PresetButtonFactory presetButtonFactory = new PresetButtonFactory();
@@ -131,7 +135,7 @@ public class MainWindowController {
 
     void loadConfiguration(Configuration configuration) throws IOException {
         clearConfiguration();
-        List<com.cydercode.devtoolkit.configuration.model.Group> groups = configurationTraverser.getGroups(configuration);
+        List<com.cydercode.devtoolkit.configuration.model.Group> groups = configuration.getGroups();
         groups.add(0, new com.cydercode.devtoolkit.configuration.model.Group() {{
             setName(DEFAULT_GROUP);  // default group
             setDescription("Default group");
@@ -141,19 +145,17 @@ public class MainWindowController {
             Group group = new Group();
             group.setText(createGroupText(groupItem));
 
-            Set<String> presets = configurationTraverser.findObjectsWithGroup(groupItem.getName(), configuration.getPresets()).keySet();
+            List<Preset> presets = configuration.findPresetsWithGroup(groupItem.getName());
 
-            for (String presetName : presets) {
-                group.addPreset(createPresetButton(presetName, configuration.getPresets().get(presetName)));
-            }
+            presets.forEach(preset -> group.addPreset(createPresetButton(preset)));
 
-            Set<String> parameters = configurationTraverser.findObjectsWithGroup(groupItem.getName(), configuration.getParameters()).keySet();
-            for (String parameterName : parameters) {
-                Map<String, Object> parameterConfiguration = configuration.getParameters().get(parameterName);
-                Control control = parameterControlFactory.produceControl(parameterConfiguration);
-                parametersControls.put(parameterName, control);
-                if (!parameterControlFactory.isHidden(parameterConfiguration)) {
-                    group.addParameter(buildParameter(parameterName, control));
+            List<Parameter> parameters = configuration.findParametersWithGroup(groupItem.getName());
+
+            for (Parameter parameter : parameters) {
+                Control control = parameterControlFactory.produceControl(parameter);
+                parametersControls.put(parameter.getName(), control);
+                if (parameter.isHidden() != null && !parameter.isHidden()) {
+                    group.addParameter(buildParameter(parameter, control));
                 }
             }
 
@@ -170,19 +172,19 @@ public class MainWindowController {
                 (group.getDescription() != null ? " - " + group.getDescription() : "");
     }
 
-    private VBox buildParameter(String parameterName, Control control) {
+    private VBox buildParameter(Parameter parameter, Control control) {
         VBox vBox = new VBox();
         Label label = new Label();
-        label.setText(parameterName);
+        label.setText(parameter.getName());
         vBox.getChildren().add(label);
         vBox.getChildren().add(control);
         return vBox;
     }
 
-    private Button createPresetButton(String presetName, Map<String, Object> preset) {
-        Button presetButton = presetButtonFactory.produce(presetName, preset);
+    private Button createPresetButton(Preset preset) {
+        Button presetButton = presetButtonFactory.produce(preset);
         presetButton.setOnAction(ev -> {
-            runPreset(presetName);
+            runPreset(preset.getName());
         });
         return presetButton;
     }
