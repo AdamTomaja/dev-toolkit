@@ -14,8 +14,8 @@ In dev-toolkit You can create presets to easily execute commands from UI.
 # Configuration file
 The configuration file contains three sections: applications, parameters and presets.
 Each one is a map of name of item and its properties.
-Both **JSON** and **XML** configuration formats are supported.
-XSD file for configuration can be found in [configuration.xsd](app/src/main/java/com/cydercode/devtoolkit/configuration/configuration.xsd) file. 
+**Only XML configuration format is supported !** 
+XSD file for configuration can be found in [configuration.xsd](app/src/main/xsd/configuration.xsd) file. 
 
 **Important !** Configuration examples are ready to download and testing up in examples/ directory  
 
