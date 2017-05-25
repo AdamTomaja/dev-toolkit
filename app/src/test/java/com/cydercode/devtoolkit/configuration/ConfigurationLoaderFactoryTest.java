@@ -10,7 +10,7 @@ public class ConfigurationLoaderFactoryTest {
 
     private final ConfigurationLoaderFactory factory = new ConfigurationLoaderFactory();
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void shouldProduceJsonLoader() throws Exception {
         // given
         File file = new File("path/configuration.json");
@@ -19,7 +19,7 @@ public class ConfigurationLoaderFactoryTest {
         ConfigurationLoader loader = factory.produceForFile(file);
 
         // then
-        assertThat(loader).isInstanceOf(JsonConfigurationLoader.class);
+        // throw IllegalArgumentException
     }
 
     @Test

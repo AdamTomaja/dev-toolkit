@@ -2,8 +2,9 @@ package com.cydercode.devtoolkit.ui.quicktoolbox;
 
 import com.cydercode.devtoolkit.Configuration;
 import com.cydercode.devtoolkit.category.UiTest;
+import com.cydercode.devtoolkit.configuration.XmlConfigurationLoader;
 import com.cydercode.devtoolkit.ui.JavaFXComponentsTest;
-import com.google.gson.Gson;
+import com.google.common.io.Resources;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -16,11 +17,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.util.stream.Collectors;
 
-import static com.google.common.io.Resources.getResource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 
@@ -35,14 +34,12 @@ public class QuickToolBoxControllerTest extends JavaFXComponentsTest {
     QuickToolBoxController controller;
 
     @Test
-    public void shouldAddOnlyWithQToolBoxAttribute() throws IOException {
+    public void shouldAddOnlyWithQToolBoxAttribute() throws Exception {
         // given
         ObservableList<Node> nodeList = FXCollections.observableArrayList();
 
-        Configuration configuration = new Gson().fromJson(new InputStreamReader(
-                        getResource("com/cydercode/devtoolkit/ui/quicktoolbox/QuickToolBoxControllerTest/configuration.json")
-                                .openStream()),
-                Configuration.class);
+        Configuration configuration = new XmlConfigurationLoader(new File(Resources.getResource("com/cydercode/devtoolkit/ui/quicktoolbox/QuickToolBoxControllerTest/configuration.xml").getFile())).load();
+
 
         doReturn(nodeList).when(presetsBox).getChildren();
 
@@ -55,14 +52,11 @@ public class QuickToolBoxControllerTest extends JavaFXComponentsTest {
     }
 
     @Test
-    public void shouldAddTooltip() throws IOException {
+    public void shouldAddTooltip() throws Exception {
         // given
         ObservableList<Node> nodeList = FXCollections.observableArrayList();
 
-        Configuration configuration = new Gson().fromJson(new InputStreamReader(
-                        getResource("com/cydercode/devtoolkit/ui/quicktoolbox/QuickToolBoxControllerTest/configuration.json")
-                                .openStream()),
-                Configuration.class);
+        Configuration configuration = new XmlConfigurationLoader(new File(Resources.getResource("com/cydercode/devtoolkit/ui/quicktoolbox/QuickToolBoxControllerTest/configuration.xml").getFile())).load();
 
         doReturn(nodeList).when(presetsBox).getChildren();
 
@@ -70,7 +64,7 @@ public class QuickToolBoxControllerTest extends JavaFXComponentsTest {
         controller.loadConfiguration(configuration);
 
         // then
-        Button cleanButton = (Button) nodeList.stream().filter(b -> ((Button)b).getText().equals("clean"))
+        Button cleanButton = (Button) nodeList.stream().filter(b -> ((Button) b).getText().equals("clean"))
                 .findFirst().get();
 
         assertThat(cleanButton.getTooltip().getText()).isEqualTo("Clean working directory");

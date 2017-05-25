@@ -2,6 +2,8 @@ package com.cydercode.devtoolkit.ui.quicktoolbox;
 
 import com.cydercode.devtoolkit.Configuration;
 import com.cydercode.devtoolkit.category.UiTest;
+import com.cydercode.devtoolkit.configuration.XmlConfigurationLoader;
+import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +13,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.testfx.framework.junit.ApplicationTest;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -35,12 +38,10 @@ public class QuickToolBoxTest extends ApplicationTest {
     }
 
     @Test
-    public void shouldLoadConfiguration() throws IOException, InterruptedException {
+    public void shouldLoadConfiguration() throws Exception {
         // given
-        Configuration configuration = new Gson().fromJson(new InputStreamReader(
-                        getResource("com/cydercode/devtoolkit/ui/quicktoolbox/QuickToolBoxTest/configuration.json")
-                                .openStream()),
-                Configuration.class);
+        Configuration configuration = new XmlConfigurationLoader(new File(Resources.getResource("com/cydercode/devtoolkit/ui/quicktoolbox/QuickToolBoxTest/configuration.xml").getFile())).load();
+
         Object lock = new Object();
 
         // when

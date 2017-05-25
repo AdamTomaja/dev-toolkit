@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dev-toolkit xmlns="https://cydercode.com/dev-toolkit/">
+    <applications>
+        <application name="echo">
+            <path>echo</path>
+        </application>
+        <application name="mvn">
+            <path>mvn</path>
+        </application>
+    </applications>
+
+    <parameters>
+    </parameters>
+
+    <presets>
+        <preset name="first-preset">
+            <application>echo</application>
+            <cmd>1test1</cmd>
+        </preset>
+        <preset name="second-preset">
+            <application>echo</application>
+            <cmd>2test2</cmd>
+        </preset>
+        <preset name="error-preset">
+            <application>mvn</application>
+            <cmd>error-command</cmd>
+        </preset>
+        <preset name="compound-preset">
+            <child-presets>
+                <child-preset>
+                    <preset>first-preset</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
+                <child-preset>
+                    <preset>second-preset</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
+            </child-presets>
+        </preset>
+        <preset name="error-compound-preset">
+            <child-presets>
+                <child-preset>
+                    <preset>error-preset</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
+                <child-preset>
+                    <preset>first-preset</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
+            </child-presets>
+        </preset>
+        <preset name="ignorable-preset">
+            <child-presets>
+                <child-preset>
+                    <preset>first-preset</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
+                <child-preset>
+                    <preset>error-preset</preset>
+                    <ignorable>true</ignorable>
+                </child-preset>
+                <child-preset>
+                    <preset>second-preset</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
+            </child-presets>
+        </preset>
+        <preset name="invalid-preset">
+            <child-presets>
+                <child-preset>
+                    <preset>first-preset</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
+                <child-preset>
+                    <preset>123456</preset>
+                    <ignorable>false</ignorable>
+                </child-preset>
+            </child-presets>
+        </preset>
+    </presets>
+</dev-toolkit>

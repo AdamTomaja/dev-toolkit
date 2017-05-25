@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dev-toolkit xmlns="https://cydercode.com/dev-toolkit/">
+    <groups>
+        <group name="Git">
+            <description>Version Control Operations</description>
+        </group>
+        <group name="Maven"/>
+    </groups>
+
+    <applications>
+        <application name="Maven">
+            <path>${maven-path}/mvn</path>
+        </application>
+    </applications>
+
+    <parameters>
+        <parameter name="distribution">
+            <type>string</type>
+            <default>C</default>
+            <values>
+                <value>A</value>
+                <value>B</value>
+                <value>C</value>
+            </values>
+        </parameter>
+        <parameter name="profile">
+            <type>string</type>
+            <default>local</default>
+            <values>
+                <value>dev</value>
+                <value>local</value>
+                <value>test</value>
+            </values>
+        </parameter>
+    </parameters>
+
+    <presets>
+        <preset name="build">
+            <application>Maven</application>
+            <cmd>clean install -d ${distribution} -p ${profile}</cmd>
+        </preset>
+        <preset name="env-variable">
+            <application>Maven</application>
+            <cmd>clean install -X ${SHELL}</cmd>
+        </preset>
+        <preset name="application-error">
+            <application>dummy-application</application>
+            <cmd>clean install -d ${distribution} -p ${profile}</cmd>
+        </preset>
+        <preset name="clean">
+            <application>Maven</application>
+            <cmd>clean</cmd>
+        </preset>
+    </presets>
+</dev-toolkit>

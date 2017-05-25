@@ -41,7 +41,7 @@ public class ConfigurationHolderTest {
 
         // when
         Optional<Configuration> oldConfiguration = holder.loadConfiguration(new File(
-                getResource("com/cydercode/devtoolkit/ui/ConfigurationHolderTest/configuration.json")
+                getResource("com/cydercode/devtoolkit/ui/ConfigurationHolderTest/configuration.xml")
                         .getFile()));
 
         Optional<Configuration> configuration = newHolder.loadLastConfiguration();
@@ -60,7 +60,7 @@ public class ConfigurationHolderTest {
 
         // when
         try {
-            holder.loadConfiguration(new File("/not/existing/path/to/file.json"));
+            holder.loadConfiguration(new File("/not/existing/path/to/file.xml"));
         } catch (FileNotFoundException e) {
             LoggerFactory.getLogger(ConfigurationHolderTest.class).error("Unable to load config", e);
         }
@@ -77,8 +77,8 @@ public class ConfigurationHolderTest {
         String holderId = randomAlphabetic(10);
         ConfigurationHolder oldHolder = new ConfigurationHolder(holderId);
         ConfigurationHolder newHolder = new ConfigurationHolder(holderId);
-        File file = File.createTempFile("ConfigurationHolderTest", holderId+".json");
-        Files.copy(getResource("com/cydercode/devtoolkit/ui/ConfigurationHolderTest/configuration.json")
+        File file = File.createTempFile("ConfigurationHolderTest", holderId+".xml");
+        Files.copy(getResource("com/cydercode/devtoolkit/ui/ConfigurationHolderTest/configuration.xml")
                 .openStream(), file.toPath(), REPLACE_EXISTING);
 
         // when

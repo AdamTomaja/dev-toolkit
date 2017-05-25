@@ -1,11 +1,10 @@
 package com.cydercode.devtoolkit;
 
-import com.google.gson.Gson;
+import com.cydercode.devtoolkit.configuration.XmlConfigurationLoader;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.File;
 
 import static com.google.common.collect.ImmutableMap.of;
 import static com.google.common.io.Resources.getResource;
@@ -75,10 +74,8 @@ public class CommandBuilderTest {
         commandBuilder.buildCommand(configuration, "not-existing-preset", of());
     }
 
-    private Configuration loadConfiguration() throws IOException {
-        return new Gson()
-                .fromJson(new InputStreamReader(
-                        getResource("com/cydercode/devtoolkit/CommandBuilderTest/configuration.json")
-                                .openStream()), Configuration.class);
+    private Configuration loadConfiguration() throws Exception {
+        return new XmlConfigurationLoader(new File(getResource("com/cydercode/devtoolkit/CommandBuilderTest/configuration.xml").getFile())).load();
+
     }
 }

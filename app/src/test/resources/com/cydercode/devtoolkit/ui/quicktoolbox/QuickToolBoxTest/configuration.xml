@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dev-toolkit xmlns="https://cydercode.com/dev-toolkit/">
+    <applications>
+    </applications>
+
+    <parameters>
+    </parameters>
+
+    <presets>
+        <preset name="build">
+            <application>Maven</application>
+            <cmd>clean install -d ${distribution} -p ${profile}</cmd>
+            <qtoolbox>true</qtoolbox>
+        </preset>
+        <preset name="application-error">
+            <application>dummy-application</application>
+            <cmd>clean install -d ${distribution} -p ${profile}</cmd>
+            <group>group2</group>
+        </preset>
+        <preset name="clean">
+            <application>Maven</application>
+            <cmd>clean</cmd>
+            <description>Clean working directory</description>
+            <qtoolbox>true</qtoolbox>
+        </preset>
+    </presets>
+</dev-toolkit>

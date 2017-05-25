@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class XmlConfigurationLoader extends AbstractFileConfigurationLoader {
 
-    protected XmlConfigurationLoader(File file) throws FileNotFoundException {
+    public XmlConfigurationLoader(File file) throws FileNotFoundException {
         super(file);
     }
 
@@ -71,6 +71,7 @@ public class XmlConfigurationLoader extends AbstractFileConfigurationLoader {
                     properties.put(Configuration.GROUP, preset.getGroup());
                     properties.put(Configuration.CMD, preset.getCmd());
                     properties.put(Configuration.Q_TOOLBOX, preset.isQtoolbox());
+                    properties.put(Configuration.DESCRIPTION, preset.getDescription());
                     ChildPresets childPresets = preset.getChildPresets();
                     if (childPresets != null) {
                         List<Map<String, Object>> childPresetsList = new ArrayList<>();

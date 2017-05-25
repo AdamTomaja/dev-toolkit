@@ -57,6 +57,7 @@ public class XmlConfigurationLoaderTest {
                 .put(Configuration.CMD, "pull")
                 .put(Configuration.GROUP, "utils")
                 .put(Configuration.Q_TOOLBOX, true)
+                .put(Configuration.DESCRIPTION, "Description of a preset")
                 .put(Configuration.PRESETS, Arrays.asList(ImmutableMap.builder()
                         .put("preset", "preset-a")
                         .put("ignorable", false).build(), ImmutableMap.builder()

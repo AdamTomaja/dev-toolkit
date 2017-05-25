@@ -16,7 +16,7 @@ public class ConfigurationLoaderFactory {
         }
 
         if (extension.equals("json")) {
-            return new JsonConfigurationLoader(file);
+            throw new IllegalArgumentException("JSON format is no longer supported!");
         }
 
         throw new IllegalArgumentException("Unknown file type: " + extension);

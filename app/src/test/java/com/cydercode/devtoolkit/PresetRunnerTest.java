@@ -1,31 +1,28 @@
 package com.cydercode.devtoolkit;
 
+import com.cydercode.devtoolkit.configuration.XmlConfigurationLoader;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
 import com.cydercode.devtoolkit.ui.JobListener;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
+import com.google.common.io.Resources;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.util.Map;
 
-import static com.google.common.io.Resources.getResource;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 public class PresetRunnerTest {
 
     @Test
-    public void shouldExecuteCompound() throws IOException, InterruptedException {
+    public void shouldExecuteCompound() throws Exception {
         // given
         PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
 
         Map<String, Object> parameters = ImmutableMap.of();
-        Configuration configuration = new Gson().fromJson(
-                new InputStreamReader(getResource(
-                        "com/cydercode/devtoolkit/PresetRunnerTest/configuration.json").openStream()), Configuration.class);
+        Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/PresetRunnerTest/configuration.xml");
         JobListener jobListener = mock(JobListener.class);
 
         // when
@@ -42,14 +39,12 @@ public class PresetRunnerTest {
     }
 
     @Test
-    public void shouldExecuteSingle() throws IOException, InterruptedException {
+    public void shouldExecuteSingle() throws Exception {
         // given
         PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
 
         Map<String, Object> parameters = ImmutableMap.of();
-        Configuration configuration = new Gson().fromJson(
-                new InputStreamReader(getResource(
-                        "com/cydercode/devtoolkit/PresetRunnerTest/configuration.json").openStream()), Configuration.class);
+        Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/PresetRunnerTest/configuration.xml");
         JobListener jobListener = mock(JobListener.class);
 
         // when
@@ -64,14 +59,12 @@ public class PresetRunnerTest {
     }
 
     @Test
-    public void shouldStopAfterError() throws IOException, InterruptedException {
+    public void shouldStopAfterError() throws Exception {
         // given
         PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
 
         Map<String, Object> parameters = ImmutableMap.of();
-        Configuration configuration = new Gson().fromJson(
-                new InputStreamReader(getResource(
-                        "com/cydercode/devtoolkit/PresetRunnerTest/configuration.json").openStream()), Configuration.class);
+        Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/PresetRunnerTest/configuration.xml");
         JobListener jobListener = mock(JobListener.class);
 
         // when
@@ -87,15 +80,13 @@ public class PresetRunnerTest {
     }
 
     @Test
-    public void shouldIgnoreErrorPronePreset() throws IOException, InterruptedException {
+    public void shouldIgnoreErrorPronePreset() throws Exception {
         // given
         // given
         PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
 
         Map<String, Object> parameters = ImmutableMap.of();
-        Configuration configuration = new Gson().fromJson(
-                new InputStreamReader(getResource(
-                        "com/cydercode/devtoolkit/PresetRunnerTest/configuration.json").openStream()), Configuration.class);
+        Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/PresetRunnerTest/configuration.xml");
         JobListener jobListener = mock(JobListener.class);
 
         // when
@@ -112,16 +103,18 @@ public class PresetRunnerTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowIllegalArgumentExceptionWhenInvalidPreset() throws IOException, InterruptedException {
+    public void shouldThrowIllegalArgumentExceptionWhenInvalidPreset() throws Exception {
         PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
 
         Map<String, Object> parameters = ImmutableMap.of();
-        Configuration configuration = new Gson().fromJson(
-                new InputStreamReader(getResource(
-                        "com/cydercode/devtoolkit/PresetRunnerTest/configuration.json").openStream()), Configuration.class);
+        Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/PresetRunnerTest/configuration.xml");
         JobListener jobListener = mock(JobListener.class);
 
         // when
         int exitValue = runner.run("invalid-preset", configuration, parameters, jobListener);
+    }
+
+    private Configuration loadConfiguration(String file) throws Exception {
+        return new XmlConfigurationLoader(new File(Resources.getResource(file).getFile())).load();
     }
 }

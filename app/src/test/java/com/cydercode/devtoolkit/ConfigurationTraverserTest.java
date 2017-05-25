@@ -1,28 +1,24 @@
 package com.cydercode.devtoolkit;
 
+import com.cydercode.devtoolkit.configuration.XmlConfigurationLoader;
 import com.cydercode.devtoolkit.configuration.model.Group;
-import com.google.gson.Gson;
+import com.google.common.io.Resources;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static com.cydercode.devtoolkit.Configuration.DEFAULT_GROUP;
-import static com.google.common.io.Resources.getResource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ConfigurationTraverserTest {
 
     @Test
-    public void shouldObtainGroupListWithDescriptions() throws IOException {
+    public void shouldObtainGroupListWithDescriptions() throws Exception {
         // given
-        Configuration configuration = new Gson().fromJson(new InputStreamReader(
-                        getResource("com/cydercode/devtoolkit/ConfigurationTraverserTest/configuration.json")
-                                .openStream()),
-                Configuration.class);
+        Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/ConfigurationTraverserTest/configuration.xml");
         ConfigurationTraverser traverser = new ConfigurationTraverser();
 
         // when
@@ -34,12 +30,9 @@ public class ConfigurationTraverserTest {
     }
 
     @Test
-    public void shouldFindObjectsFromGroup() throws IOException {
+    public void shouldFindObjectsFromGroup() throws Exception {
         // given
-        Configuration configuration = new Gson().fromJson(new InputStreamReader(
-                        getResource("com/cydercode/devtoolkit/ConfigurationTraverserTest/configuration.json")
-                                .openStream()),
-                Configuration.class);
+        Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/ConfigurationTraverserTest/configuration.xml");
         ConfigurationTraverser traverser = new ConfigurationTraverser();
 
         // when
@@ -51,12 +44,9 @@ public class ConfigurationTraverserTest {
     }
 
     @Test
-    public void shouldFindObjectsWithoutGroup() throws IOException {
+    public void shouldFindObjectsWithoutGroup() throws Exception {
         // given
-        Configuration configuration = new Gson().fromJson(new InputStreamReader(
-                        getResource("com/cydercode/devtoolkit/ConfigurationTraverserTest/configuration.json")
-                                .openStream()),
-                Configuration.class);
+        Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/ConfigurationTraverserTest/configuration.xml");
         ConfigurationTraverser traverser = new ConfigurationTraverser();
 
         // when
@@ -67,36 +57,34 @@ public class ConfigurationTraverserTest {
     }
 
     @Test
-    public void shouldFindObjectWithAttribute() throws IOException {
+    public void shouldFindObjectWithAttribute() throws Exception {
         // given
-        Configuration configuration = new Gson().fromJson(new InputStreamReader(
-                        getResource("com/cydercode/devtoolkit/ConfigurationTraverserTest/shouldFindWithAttribute.json")
-                                .openStream()),
-                Configuration.class);
+        Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/ConfigurationTraverserTest/shouldFindWithAttribute.xml");
 
         ConfigurationTraverser traverser = new ConfigurationTraverser();
 
         // when
-        Set<String> presets = traverser.getWithAttribute(configuration.getPresets(), "booleanAttribute", true);
+        Set<String> presets = traverser.getWithAttribute(configuration.getPresets(), Configuration.Q_TOOLBOX, true);
 
         // then
         assertThat(presets).containsOnly("application-error");
     }
 
     @Test
-    public void shouldFindObjectsWithAttribute() throws IOException {
+    public void shouldFindObjectsWithAttribute() throws Exception {
         // given
-        Configuration configuration = new Gson().fromJson(new InputStreamReader(
-                        getResource("com/cydercode/devtoolkit/ConfigurationTraverserTest/shouldFindWithAttribute.json")
-                                .openStream()),
-                Configuration.class);
+        Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/ConfigurationTraverserTest/shouldFindWithAttribute.xml");
 
         ConfigurationTraverser traverser = new ConfigurationTraverser();
 
         // when
-        Set<String> presets = traverser.getWithAttribute(configuration.getPresets(), "attr", "attrValue");
+        Set<String> presets = traverser.getWithAttribute(configuration.getPresets(), Configuration.APPLICATION, "Maven");
 
         // then
-        assertThat(presets).containsOnly("clean-2", "clean-3");
+        assertThat(presets).containsOnly("build", "clean");
+    }
+
+    private Configuration loadConfiguration(String file) throws Exception {
+        return new XmlConfigurationLoader(new File(Resources.getResource(file).getFile())).load();
     }
 }

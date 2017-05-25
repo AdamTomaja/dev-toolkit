@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dev-toolkit xmlns="https://cydercode.com/dev-toolkit/">
+    <groups>
+        <group name="group1">
+            <description>Group1 desc</description>
+        </group>
+        <group name="group2">
+            <description>Group2 desc</description>
+        </group>
+    </groups>
+
+    <applications>
+        <application name="Maven">
+            <path>${maven-path}/mvn</path>
+        </application>
+    </applications>
+
+    <parameters>
+        <parameter name="distribution">
+            <type>string</type>
+            <default>C</default>
+            <values>
+                <value>A</value>
+                <value>B</value>
+                <value>C</value>
+            </values>
+            <group>group1</group>
+        </parameter>
+        <parameter name="profile">
+            <type>string</type>
+            <default>local</default>
+            <values>
+                <value>dev</value>
+                <value>local</value>
+                <value>test</value>
+            </values>
+        </parameter>
+    </parameters>
+
+    <presets>
+        <preset name="build">
+            <application>Maven</application>
+            <cmd>clean install -d ${distribution} -p ${profile}</cmd>
+        </preset>
+        <preset name="application-error">
+            <application>dummy-application</application>
+            <cmd>clean install -d ${distribution} -p ${profile}</cmd>
+            <group>group2</group>
+        </preset>
+        <preset name="clean">
+            <application>Maven</application>
+            <cmd>clean</cmd>
+        </preset>
+    </presets>
+</dev-toolkit>

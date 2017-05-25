@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dev-toolkit xmlns="https://cydercode.com/dev-toolkit/">
+    <applications>
+        <application name="Maven">
+            <path>mvn</path>
+        </application>
+        <application name="Git">
+            <path>git</path>
+        </application>
+    </applications>
+
+    <parameters>
+
+    </parameters>
+
+    <presets>
+         <preset name="preset1">
+             <group>Maven</group>
+         </preset>
+        <preset name="preset2">
+            <group>Git</group>
+        </preset>
+    </presets>
+</dev-toolkit>

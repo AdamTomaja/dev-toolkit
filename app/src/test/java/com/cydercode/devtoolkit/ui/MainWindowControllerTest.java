@@ -3,11 +3,11 @@ package com.cydercode.devtoolkit.ui;
 import com.cydercode.devtoolkit.Configuration;
 import com.cydercode.devtoolkit.PluginsController;
 import com.cydercode.devtoolkit.category.UiTest;
+import com.cydercode.devtoolkit.configuration.XmlConfigurationLoader;
 import com.cydercode.devtoolkit.ui.component.Group;
 import com.cydercode.devtoolkit.ui.quicktoolbox.QuickToolBox;
 import com.cydercode.devtoolkit.ui.quicktoolbox.QuickToolBoxController;
 import com.cydercode.devtoolkit.ui.quicktoolbox.QuickToolBoxFacade;
-import com.google.gson.Gson;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -22,8 +22,8 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,12 +53,9 @@ public class MainWindowControllerTest extends JavaFXComponentsTest {
     }
 
     @Test
-    public void shouldNotAddEmptyGroup() throws IOException {
+    public void shouldNotAddEmptyGroup() throws Exception {
         // given
-        Configuration configuration = new Gson().fromJson(new InputStreamReader(
-                getResource("com/cydercode/devtoolkit/ui/MainWindowControllerTest/configuration.json")
-
-                        .openStream()), Configuration.class);
+        Configuration configuration = new XmlConfigurationLoader(new File(getResource("com/cydercode/devtoolkit/ui/MainWindowControllerTest/configuration.xml").getFile())).load();
 
         QuickToolBox quickToolBox = spy(new QuickToolBox(mock(Stage.class), mock(QuickToolBoxController.class)));
 

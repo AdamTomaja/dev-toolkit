@@ -1,6 +1,8 @@
 
 package com.cydercode.devtoolkit.configuration.model;
 
+import com.google.common.base.Objects;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -89,4 +91,17 @@ public class Group {
         this.name = value;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return Objects.equal(description, group.description) &&
+                Objects.equal(name, group.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(description, name);
+    }
 }
