@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -82,6 +83,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jvnet.jaxb2_commons/jaxb2-commons-lang -->
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-runtime</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -152,6 +158,61 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>1.5</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.java.dev.jaxb2-commons</groupId>
+                        <artifactId>jaxb-fluent-api</artifactId>
+                        <version>2.0.1</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>com.sun.xml</groupId>
+                                <artifactId>jaxb-xjc</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-basics</artifactId>
+                        <version>0.6.4</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>com.sun.xml</groupId>
+                                <artifactId>jaxb-xjc</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-default-value</artifactId>
+                        <version>1.1</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>com.sun.xml</groupId>
+                                <artifactId>jaxb-xjc</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <schemaDirectory>src/main/xsd</schemaDirectory>
+                    <packageName>com.cydercode.devtoolkit.configuration.model</packageName>
+                    <outputDirectory>src/main/java</outputDirectory>
+                    <extension>true</extension>
+                    <arguments>-Xfluent-api -Xequals -XhashCode -XtoString -Xdefault-value</arguments>
+                    <clearOutputDir>false</clearOutputDir>
+                </configuration>
             </plugin>
         </plugins>
     </build>

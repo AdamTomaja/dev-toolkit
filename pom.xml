@@ -32,6 +32,7 @@
         <fluent-json.version>2.0.3</fluent-json.version>
         <junit-dataprovider.version>1.10.0</junit-dataprovider.version>
         <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
+        <jaxb2-basics-runtime.version>0.6.4</jaxb2-basics-runtime.version>
     </properties>
 
     <name>dev-toolkit</name>
@@ -115,6 +116,11 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j-log4j12.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jvnet.jaxb2_commons</groupId>
+                <artifactId>jaxb2-basics-runtime</artifactId>
+                <version>${jaxb2-basics-runtime.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
