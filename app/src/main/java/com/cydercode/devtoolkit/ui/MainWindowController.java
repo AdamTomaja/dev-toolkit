@@ -203,6 +203,7 @@ public class MainWindowController {
         Tab tab = new Tab();
         tab.setText(jobName);
         tab.setContent(jobTab);
+        tab.setContextMenu(createTabContextMenu(tab));
 
         JobListener jobListener = new JobListener(jobName, jobTab, notificationFacade);
 
@@ -226,6 +227,27 @@ public class MainWindowController {
                 });
             }
         }).start();
+    }
+
+    private ContextMenu createTabContextMenu(Tab tab) {
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem closeAllItem = new MenuItem("Close all tabs");
+        MenuItem closeAllButThisItem = new MenuItem("Close all tabs but this");
+
+        closeAllItem.setOnAction(ev -> {
+            runTabs.getTabs().clear();
+        });
+
+
+        closeAllButThisItem.setOnAction(ev -> {
+            runTabs.getTabs().clear();
+            runTabs.getTabs().add(tab);
+            runTabs.getSelectionModel().select(tab);
+        });
+
+        contextMenu.getItems().add(closeAllItem);
+        contextMenu.getItems().add(closeAllButThisItem);
+        return contextMenu;
     }
 
     public Menu getPluginsMenu() {
