@@ -40,7 +40,7 @@ public class PluginsController {
 
             try {
                 plugin.onStart(context);
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 LOGGER.error("Cannot start plugin: {}", pluginDescriptor.getName(), e);
             }
         }

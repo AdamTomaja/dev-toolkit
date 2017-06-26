@@ -31,9 +31,34 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-core</artifactId>
+            <version>2.6.0</version>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>plugin-http-api</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>

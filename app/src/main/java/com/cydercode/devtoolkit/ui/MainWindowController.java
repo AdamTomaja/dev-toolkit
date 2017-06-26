@@ -4,6 +4,7 @@ import com.cydercode.devtoolkit.CommandBuilder;
 import com.cydercode.devtoolkit.Configuration;
 import com.cydercode.devtoolkit.PluginsController;
 import com.cydercode.devtoolkit.PresetRunner;
+import com.cydercode.devtoolkit.configuration.ConfigurationHolder;
 import com.cydercode.devtoolkit.configuration.PreferencesConfigurationHolder;
 import com.cydercode.devtoolkit.configuration.model.Parameter;
 import com.cydercode.devtoolkit.configuration.model.Preset;
@@ -32,7 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.cydercode.devtoolkit.Configuration.DEFAULT_GROUP;
 
-public class MainWindowController {
+public class MainWindowController implements DevToolkitContext {
 
     static final Logger LOGGER = LoggerFactory.getLogger(MainWindowController.class);
 
@@ -78,8 +79,7 @@ public class MainWindowController {
 
     @FXML
     protected void initialize() throws IOException {
-        DevToolkitContext context = new DevToolkitContext();
-        pluginsController.initialize(context);
+        pluginsController.initialize(this);
         doConfigurationReload();
     }
 
@@ -101,9 +101,8 @@ public class MainWindowController {
         }
 
         quickToolBoxFacade.get().setOnAction((presetName) -> {
-            runPreset(presetName);
+            runPreset(presetName, parametersExtractor.extractParameters(parametersControls));
         });
-
     }
 
     @FXML
@@ -186,7 +185,7 @@ public class MainWindowController {
     private Button createPresetButton(Preset preset) {
         Button presetButton = presetButtonFactory.produce(preset);
         presetButton.setOnAction(ev -> {
-            runPreset(preset.getName());
+            runPreset(preset.getName(), parametersExtractor.extractParameters(parametersControls));
         });
         return presetButton;
     }
@@ -196,7 +195,7 @@ public class MainWindowController {
         parametersControls.clear();
     }
 
-    private void runPreset(String presetName) {
+    private void runPreset(String presetName, Map<String, Object> parameters) {
         LOGGER.info("Executing preset: {}", presetName);
         String jobName = String.format("#%d - %s", jobsCounter.incrementAndGet(), presetName);
 
@@ -219,7 +218,7 @@ public class MainWindowController {
         new Thread(() -> {
             try {
                 presetRunner.run(presetName, configurationHolder.getCurrentConfiguration().get(),
-                        parametersExtractor.extractParameters(parametersControls),
+                        parameters,
                         jobListener);
             } catch (InterruptedException | IOException e) {
                 LOGGER.error("Error during command execution", e);
@@ -254,5 +253,17 @@ public class MainWindowController {
 
     public Menu getPluginsMenu() {
         return pluginsMenu;
+    }
+
+    @Override
+    public ConfigurationHolder getConfigurationHolder() {
+        return configurationHolder;
+    }
+
+    @Override
+    public void executePreset(String preset, Map<String, Object> parameters) {
+        Platform.runLater(() -> {
+            runPreset(preset, parameters);
+        });
     }
 }

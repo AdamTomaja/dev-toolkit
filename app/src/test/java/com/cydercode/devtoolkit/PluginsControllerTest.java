@@ -2,6 +2,7 @@ package com.cydercode.devtoolkit;
 
 import com.cydercode.devtoolkit.category.UiTest;
 import com.cydercode.devtoolkit.plugin.DevToolkitContext;
+import com.cydercode.devtoolkit.plugin.DummyDevToolkitContext;
 import com.cydercode.devtoolkit.plugin.Plugin;
 import com.cydercode.devtoolkit.plugin.PluginDescriptor;
 import com.cydercode.devtoolkit.pluginloader.PluginLoader;
@@ -48,7 +49,7 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
         when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
-        DevToolkitContext context = new DevToolkitContext();
+        DevToolkitContext context = new DummyDevToolkitContext();
 
         // when
         pluginsController.initialize(context);
@@ -79,7 +80,7 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
 
         // when
-        pluginsController.initialize(new DevToolkitContext());
+        pluginsController.initialize(new DummyDevToolkitContext());
     }
 
     @Test
@@ -92,7 +93,7 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
         when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
-        pluginsController.initialize(new DevToolkitContext());
+        pluginsController.initialize(new DummyDevToolkitContext());
 
         // when
         pluginsController.stop();
@@ -112,7 +113,7 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
         when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
-        pluginsController.initialize(new DevToolkitContext());
+        pluginsController.initialize(new DummyDevToolkitContext());
 
         // when
         pluginsController.stop();
@@ -128,7 +129,7 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
         when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
-        pluginsController.initialize(new DevToolkitContext());
+        pluginsController.initialize(new DummyDevToolkitContext());
 
         // when
         List<PluginDescriptor> loadedPlugins = pluginsController.getLoadedPlugins();

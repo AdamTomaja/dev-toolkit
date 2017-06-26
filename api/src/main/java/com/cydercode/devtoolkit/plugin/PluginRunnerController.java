@@ -17,7 +17,7 @@ public class PluginRunnerController {
 
     @FXML
     public void initialize() {
-        DevToolkitContext context = new DevToolkitContext();
+        DevToolkitContext context = new DummyDevToolkitContext();
         pluginDescriptor = new Gson().fromJson(new InputStreamReader(this.getClass()
                 .getClassLoader().getResourceAsStream(DESCRIPTOR_FILENAME)), PluginDescriptor.class);
         if (pluginDescriptor.getMainClass() == null) {
