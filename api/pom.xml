@@ -76,10 +76,9 @@
                 <configuration>
                     <schemaDirectory>src/main/xsd</schemaDirectory>
                     <packageName>com.cydercode.devtoolkit.configuration.model</packageName>
-                    <outputDirectory>src/main/java</outputDirectory>
+                    <outputDirectory>target/classes</outputDirectory>
                     <extension>true</extension>
                     <arguments>-Xfluent-api -Xequals -XhashCode -XtoString -Xdefault-value</arguments>
-                    <clearOutputDir>false</clearOutputDir>
                 </configuration>
             </plugin>
         </plugins>
