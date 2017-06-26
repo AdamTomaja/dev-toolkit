@@ -1,8 +1,7 @@
-package com.cydercode.devtoolkit.plugin;
+package com.cydercode.devtoolkit;
 
 import com.cydercode.devtoolkit.configuration.ConfigurationHolder;
-
-import java.util.Map;
+import com.cydercode.devtoolkit.plugin.DevToolkitContext;
 
 public class DummyDevToolkitContext implements DevToolkitContext {
 
@@ -13,7 +12,8 @@ public class DummyDevToolkitContext implements DevToolkitContext {
     }
 
     @Override
-    public void executePreset(String preset, Map<String, Object> parameters) {
-
+    public Job enqueueJob(Job job) {
+        return job;
     }
+
 }

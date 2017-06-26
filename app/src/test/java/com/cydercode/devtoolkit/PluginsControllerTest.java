@@ -2,7 +2,6 @@ package com.cydercode.devtoolkit;
 
 import com.cydercode.devtoolkit.category.UiTest;
 import com.cydercode.devtoolkit.plugin.DevToolkitContext;
-import com.cydercode.devtoolkit.plugin.DummyDevToolkitContext;
 import com.cydercode.devtoolkit.plugin.Plugin;
 import com.cydercode.devtoolkit.plugin.PluginDescriptor;
 import com.cydercode.devtoolkit.pluginloader.PluginLoader;

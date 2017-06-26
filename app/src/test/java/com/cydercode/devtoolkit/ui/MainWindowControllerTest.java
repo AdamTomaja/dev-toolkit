@@ -4,7 +4,7 @@ import com.cydercode.devtoolkit.Configuration;
 import com.cydercode.devtoolkit.PluginsController;
 import com.cydercode.devtoolkit.category.UiTest;
 import com.cydercode.devtoolkit.configuration.XmlConfigurationLoader;
-import com.cydercode.devtoolkit.plugin.DummyDevToolkitContext;
+import com.cydercode.devtoolkit.DummyDevToolkitContext;
 import com.cydercode.devtoolkit.ui.component.Group;
 import com.cydercode.devtoolkit.ui.quicktoolbox.QuickToolBox;
 import com.cydercode.devtoolkit.ui.quicktoolbox.QuickToolBoxController;

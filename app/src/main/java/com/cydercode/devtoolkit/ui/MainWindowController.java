@@ -1,14 +1,12 @@
 package com.cydercode.devtoolkit.ui;
 
-import com.cydercode.devtoolkit.CommandBuilder;
-import com.cydercode.devtoolkit.Configuration;
-import com.cydercode.devtoolkit.PluginsController;
-import com.cydercode.devtoolkit.PresetRunner;
+import com.cydercode.devtoolkit.*;
 import com.cydercode.devtoolkit.configuration.ConfigurationHolder;
 import com.cydercode.devtoolkit.configuration.PreferencesConfigurationHolder;
 import com.cydercode.devtoolkit.configuration.model.Parameter;
 import com.cydercode.devtoolkit.configuration.model.Preset;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
+import com.cydercode.devtoolkit.executor.StandardJob;
 import com.cydercode.devtoolkit.plugin.DevToolkitContext;
 import com.cydercode.devtoolkit.ui.component.Group;
 import com.cydercode.devtoolkit.ui.component.JobTab;
@@ -101,8 +99,16 @@ public class MainWindowController implements DevToolkitContext {
         }
 
         quickToolBoxFacade.get().setOnAction((presetName) -> {
-            runPreset(presetName, parametersExtractor.extractParameters(parametersControls));
+            executeJob(createJobFromGUI(presetName));
         });
+    }
+
+    private Job createJobFromGUI(String preset) {
+        StandardJob job = new StandardJob();
+        job.setPreset(preset);
+        job.setId(jobsCounter.incrementAndGet());
+        job.setParameters(parametersExtractor.extractParameters(parametersControls));
+        return job;
     }
 
     @FXML
@@ -185,7 +191,7 @@ public class MainWindowController implements DevToolkitContext {
     private Button createPresetButton(Preset preset) {
         Button presetButton = presetButtonFactory.produce(preset);
         presetButton.setOnAction(ev -> {
-            runPreset(preset.getName(), parametersExtractor.extractParameters(parametersControls));
+            executeJob(createJobFromGUI(preset.getName()));
         });
         return presetButton;
     }
@@ -195,9 +201,9 @@ public class MainWindowController implements DevToolkitContext {
         parametersControls.clear();
     }
 
-    private void runPreset(String presetName, Map<String, Object> parameters) {
-        LOGGER.info("Executing preset: {}", presetName);
-        String jobName = String.format("#%d - %s", jobsCounter.incrementAndGet(), presetName);
+    private void executeJob(Job job) {
+        LOGGER.info("Executing preset: {}", job.getPreset());
+        String jobName = String.format("#%d - %s", job.getID(), job.getPreset());
 
 
         JobTab jobTab = new JobTab();
@@ -217,8 +223,8 @@ public class MainWindowController implements DevToolkitContext {
 
         new Thread(() -> {
             try {
-                presetRunner.run(presetName, configurationHolder.getCurrentConfiguration().get(),
-                        parameters,
+                presetRunner.run(job.getPreset(), configurationHolder.getCurrentConfiguration().get(),
+                        job.getParameters(),
                         jobListener);
             } catch (InterruptedException | IOException e) {
                 LOGGER.error("Error during command execution", e);
@@ -261,9 +267,14 @@ public class MainWindowController implements DevToolkitContext {
     }
 
     @Override
-    public void executePreset(String preset, Map<String, Object> parameters) {
+    public Job enqueueJob(Job job) {
+        StandardJob standardJob = new StandardJob(job);
+        standardJob.setId(jobsCounter.incrementAndGet());
+
         Platform.runLater(() -> {
-            runPreset(preset, parameters);
+            executeJob(standardJob);
         });
+
+        return standardJob;
     }
 }

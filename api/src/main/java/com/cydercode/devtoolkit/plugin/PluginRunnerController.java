@@ -1,5 +1,6 @@
 package com.cydercode.devtoolkit.plugin;
 
+import com.cydercode.devtoolkit.DummyDevToolkitContext;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

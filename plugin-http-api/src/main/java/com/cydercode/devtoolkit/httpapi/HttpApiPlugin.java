@@ -37,10 +37,7 @@ public class HttpApiPlugin implements Plugin {
                         .findParametersWithGroup(req.params(":group")),
                 gson::toJson);
 
-        Spark.post("/execute/:preset", (req, res) -> {
-            context.executePreset(req.params(":preset"), ImmutableMap.of());
-            return ImmutableMap.of("result", "ok");
-        }, gson::toJson);
+        Spark.post("/execute/:preset", (req, res) -> context.enqueueJob(new JobRequest(req.params(":preset"), ImmutableMap.of())), gson::toJson);
     }
 
     @Override
