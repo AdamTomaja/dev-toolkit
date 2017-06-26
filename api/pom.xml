@@ -8,7 +8,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>api</artifactId>
-    <name>dev-toolkit :: plugin</name>
+    <name>dev-toolkit :: api</name>
 
     <dependencies>
         <dependency>
@@ -76,7 +76,7 @@
                 <configuration>
                     <schemaDirectory>src/main/xsd</schemaDirectory>
                     <packageName>com.cydercode.devtoolkit.configuration.model</packageName>
-                    <outputDirectory>target/classes</outputDirectory>
+                    <!--<outputDirectory>target/classes</outputDirectory>-->
                     <extension>true</extension>
                     <arguments>-Xfluent-api -Xequals -XhashCode -XtoString -Xdefault-value</arguments>
                 </configuration>
