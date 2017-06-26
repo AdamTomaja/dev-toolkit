@@ -1,6 +1,7 @@
 package com.cydercode.devtoolkit;
 
 import com.cydercode.devtoolkit.category.UiTest;
+import com.cydercode.devtoolkit.plugin.DevToolkitContext;
 import com.cydercode.devtoolkit.plugin.Plugin;
 import com.cydercode.devtoolkit.plugin.PluginDescriptor;
 import com.cydercode.devtoolkit.pluginloader.PluginLoader;
@@ -16,11 +17,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -47,14 +48,15 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
         when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
+        DevToolkitContext context = new DevToolkitContext();
 
         // when
-        pluginsController.initialize();
+        pluginsController.initialize(context);
 
         // then
         MenuItem menuItem = menu.getItems().get(0);
         assertThat(menuItem.getText()).isEqualTo(pluginName);
-        Mockito.verify(plugin).onStart();
+        Mockito.verify(plugin).onStart(context);
         verify(plugin, times(0)).onAction();
 
         // and
@@ -71,13 +73,13 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         PluginDescriptor pluginDescriptor = new PluginDescriptor();
         String pluginName = "My Plugin";
         Plugin plugin = mock(Plugin.class);
-        doThrow(new RuntimeException("Mocked exception")).when(plugin).onStart();
+        doThrow(new RuntimeException("Mocked exception")).when(plugin).onStart(any());
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
         when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
 
         // when
-        pluginsController.initialize();
+        pluginsController.initialize(new DevToolkitContext());
     }
 
     @Test
@@ -90,7 +92,7 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
         when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
-        pluginsController.initialize();
+        pluginsController.initialize(new DevToolkitContext());
 
         // when
         pluginsController.stop();
@@ -110,7 +112,7 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
         when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
-        pluginsController.initialize();
+        pluginsController.initialize(new DevToolkitContext());
 
         // when
         pluginsController.stop();
@@ -126,7 +128,7 @@ public class PluginsControllerTest extends JavaFXComponentsTest {
         pluginDescriptor.setName(pluginName);
         pluginDescriptor.setPlugin(plugin);
         when(pluginLoader.loadPlugins()).thenReturn(asList(pluginDescriptor));
-        pluginsController.initialize();
+        pluginsController.initialize(new DevToolkitContext());
 
         // when
         List<PluginDescriptor> loadedPlugins = pluginsController.getLoadedPlugins();

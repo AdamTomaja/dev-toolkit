@@ -1,5 +1,6 @@
 package com.cydercode.devtoolkit;
 
+import com.cydercode.devtoolkit.plugin.DevToolkitContext;
 import com.cydercode.devtoolkit.plugin.Plugin;
 import com.cydercode.devtoolkit.plugin.PluginDescriptor;
 import com.cydercode.devtoolkit.pluginloader.PluginLoader;
@@ -24,7 +25,7 @@ public class PluginsController {
         this.mainWindowController = mainWindowController;
     }
 
-    public void initialize() {
+    public void initialize(DevToolkitContext context) {
         plugins = pluginLoader.loadPlugins();
         LOGGER.info("Loaded plugins: {}", plugins);
         for (PluginDescriptor pluginDescriptor : plugins) {
@@ -38,7 +39,7 @@ public class PluginsController {
             mainWindowController.getPluginsMenu().getItems().add(menuItem);
 
             try {
-                plugin.onStart();
+                plugin.onStart(context);
             } catch (Exception e) {
                 LOGGER.error("Cannot start plugin: {}", pluginDescriptor.getName(), e);
             }
@@ -50,7 +51,7 @@ public class PluginsController {
     }
 
     public void stop() {
-        for(PluginDescriptor pluginDescriptor : plugins) {
+        for (PluginDescriptor pluginDescriptor : plugins) {
             try {
                 pluginDescriptor.getPlugin().onStop();
             } catch (Exception e) {

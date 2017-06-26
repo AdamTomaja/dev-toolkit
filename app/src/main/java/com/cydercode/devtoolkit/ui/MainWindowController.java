@@ -8,6 +8,7 @@ import com.cydercode.devtoolkit.configuration.ConfigurationHolder;
 import com.cydercode.devtoolkit.configuration.model.Parameter;
 import com.cydercode.devtoolkit.configuration.model.Preset;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
+import com.cydercode.devtoolkit.plugin.DevToolkitContext;
 import com.cydercode.devtoolkit.ui.component.Group;
 import com.cydercode.devtoolkit.ui.component.JobTab;
 import com.cydercode.devtoolkit.ui.quicktoolbox.QuickToolBox;
@@ -77,7 +78,8 @@ public class MainWindowController {
 
     @FXML
     protected void initialize() throws IOException {
-        pluginsController.initialize();
+        DevToolkitContext context = new DevToolkitContext();
+        pluginsController.initialize(context);
         doConfigurationReload();
     }
 

@@ -1,5 +1,6 @@
 package com.cydercode.devtoolkit.plugin.teamcitywarning;
 
+import com.cydercode.devtoolkit.plugin.DevToolkitContext;
 import com.cydercode.devtoolkit.plugin.Plugin;
 import com.cydercode.devtoolkit.plugin.PluginRunner;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +39,7 @@ public class TeamcityWarning implements Plugin {
     private volatile MainWindowController controller;
 
     @Override
-    public void onStart() {
+    public void onStart(DevToolkitContext context) {
         properties = loadProperties();
         scheduledExecutorService = Executors.newScheduledThreadPool(1);
         scheduledExecutorService.scheduleAtFixedRate(() -> {
@@ -51,7 +52,7 @@ public class TeamcityWarning implements Plugin {
             } catch (Exception e) {
                 LOGGER.error("Unable to fetch or set build status", e);
 
-                if(controller != null) {
+                if (controller != null) {
                     controller.setError();
                 }
             }

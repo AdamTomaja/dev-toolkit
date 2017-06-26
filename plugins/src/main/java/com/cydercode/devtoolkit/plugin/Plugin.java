@@ -1,7 +1,7 @@
 package com.cydercode.devtoolkit.plugin;
 
 public interface Plugin {
-    void onStart();
+    void onStart(DevToolkitContext context);
     void onAction();
     void onStop();
 }

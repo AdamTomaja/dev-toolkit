@@ -1,5 +1,6 @@
 package com.cydercode.devtoolkit.pluginloader;
 
+import com.cydercode.devtoolkit.plugin.DevToolkitContext;
 import com.cydercode.devtoolkit.plugin.Plugin;
 import com.cydercode.devtoolkit.plugin.PluginDescriptor;
 import org.junit.Test;
@@ -142,7 +143,7 @@ public class PluginLoaderTest {
     public static class TestPlugin implements Plugin {
 
         @Override
-        public void onStart() {
+        public void onStart(DevToolkitContext context) {
 
         }
 
@@ -164,7 +165,7 @@ public class PluginLoaderTest {
         }
 
         @Override
-        public void onStart() {
+        public void onStart(DevToolkitContext context) {
 
         }
 

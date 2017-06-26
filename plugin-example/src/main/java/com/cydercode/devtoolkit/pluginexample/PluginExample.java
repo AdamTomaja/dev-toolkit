@@ -1,5 +1,6 @@
 package com.cydercode.devtoolkit.pluginexample;
 
+import com.cydercode.devtoolkit.plugin.DevToolkitContext;
 import com.cydercode.devtoolkit.plugin.Plugin;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +16,7 @@ public class PluginExample implements Plugin {
     static final Logger LOGGER = LoggerFactory.getLogger(PluginExample.class);
 
     @Override
-    public void onStart() {
+    public void onStart(DevToolkitContext context) {
         LOGGER.info("Starting plugin...");
     }
 

@@ -4,6 +4,7 @@ import com.cydercode.devtoolkit.Configuration;
 import com.cydercode.devtoolkit.PluginsController;
 import com.cydercode.devtoolkit.category.UiTest;
 import com.cydercode.devtoolkit.configuration.XmlConfigurationLoader;
+import com.cydercode.devtoolkit.plugin.DevToolkitContext;
 import com.cydercode.devtoolkit.ui.component.Group;
 import com.cydercode.devtoolkit.ui.quicktoolbox.QuickToolBox;
 import com.cydercode.devtoolkit.ui.quicktoolbox.QuickToolBoxController;
@@ -19,6 +20,7 @@ import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -82,7 +84,7 @@ public class MainWindowControllerTest extends JavaFXComponentsTest {
         mainWindowController.initialize();
 
         // then
-        verify(pluginsController).initialize();
+        verify(pluginsController).initialize(Mockito.any(DevToolkitContext.class));
     }
 
     @Test

@@ -17,6 +17,7 @@ public class PluginRunnerController {
 
     @FXML
     public void initialize() {
+        DevToolkitContext context = new DevToolkitContext();
         pluginDescriptor = new Gson().fromJson(new InputStreamReader(this.getClass()
                 .getClassLoader().getResourceAsStream(DESCRIPTOR_FILENAME)), PluginDescriptor.class);
         if (pluginDescriptor.getMainClass() == null) {
@@ -26,7 +27,7 @@ public class PluginRunnerController {
         try {
             Class pluginClass = Class.forName(pluginDescriptor.getMainClass());
             Plugin plugin = (Plugin) pluginClass.newInstance();
-            plugin.onStart();
+            plugin.onStart(context);
             pluginDescriptor.setPlugin(plugin);
             actionButton.setText(pluginDescriptor.getName());
         } catch (Exception e) {
