@@ -1,7 +1,7 @@
 package com.cydercode.devtoolkit.ui;
 
 import com.cydercode.devtoolkit.Configuration;
-import com.cydercode.devtoolkit.configuration.ConfigurationHolder;
+import com.cydercode.devtoolkit.configuration.PreferencesConfigurationHolder;
 import org.apache.commons.io.FileUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class ConfigurationHolderTest {
     @Test
     public void shouldBeEmptyAfterStart() throws Exception {
         // given
-        ConfigurationHolder holder = new ConfigurationHolder(randomAlphabetic(10));
+        PreferencesConfigurationHolder holder = new PreferencesConfigurationHolder(randomAlphabetic(10));
 
         // when
         Optional<Configuration> configuration = holder.loadLastConfiguration();
@@ -36,8 +36,8 @@ public class ConfigurationHolderTest {
         // given
         String holderId = randomAlphabetic(10);
 
-        ConfigurationHolder holder = new ConfigurationHolder(holderId);
-        ConfigurationHolder newHolder = new ConfigurationHolder(holderId);
+        PreferencesConfigurationHolder holder = new PreferencesConfigurationHolder(holderId);
+        PreferencesConfigurationHolder newHolder = new PreferencesConfigurationHolder(holderId);
 
         // when
         Optional<Configuration> oldConfiguration = holder.loadConfiguration(new File(
@@ -55,8 +55,8 @@ public class ConfigurationHolderTest {
     public void shouldNotLoadAfterPreviousError() throws Exception {
         // given
         String holderId = randomAlphabetic(10);
-        ConfigurationHolder holder = new ConfigurationHolder(holderId);
-        ConfigurationHolder newHolder = new ConfigurationHolder(holderId);
+        PreferencesConfigurationHolder holder = new PreferencesConfigurationHolder(holderId);
+        PreferencesConfigurationHolder newHolder = new PreferencesConfigurationHolder(holderId);
 
         // when
         try {
@@ -75,8 +75,8 @@ public class ConfigurationHolderTest {
     public void shouldNotFileWhenLastConfigurationFileNotFound() throws Exception {
         // given
         String holderId = randomAlphabetic(10);
-        ConfigurationHolder oldHolder = new ConfigurationHolder(holderId);
-        ConfigurationHolder newHolder = new ConfigurationHolder(holderId);
+        PreferencesConfigurationHolder oldHolder = new PreferencesConfigurationHolder(holderId);
+        PreferencesConfigurationHolder newHolder = new PreferencesConfigurationHolder(holderId);
         File file = File.createTempFile("ConfigurationHolderTest", holderId+".xml");
         Files.copy(getResource("com/cydercode/devtoolkit/ui/ConfigurationHolderTest/configuration.xml")
                 .openStream(), file.toPath(), REPLACE_EXISTING);

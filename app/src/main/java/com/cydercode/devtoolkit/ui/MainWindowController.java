@@ -4,7 +4,7 @@ import com.cydercode.devtoolkit.CommandBuilder;
 import com.cydercode.devtoolkit.Configuration;
 import com.cydercode.devtoolkit.PluginsController;
 import com.cydercode.devtoolkit.PresetRunner;
-import com.cydercode.devtoolkit.configuration.ConfigurationHolder;
+import com.cydercode.devtoolkit.configuration.PreferencesConfigurationHolder;
 import com.cydercode.devtoolkit.configuration.model.Parameter;
 import com.cydercode.devtoolkit.configuration.model.Preset;
 import com.cydercode.devtoolkit.executor.CommandExecutor;
@@ -36,7 +36,7 @@ public class MainWindowController {
 
     static final Logger LOGGER = LoggerFactory.getLogger(MainWindowController.class);
 
-    ConfigurationHolder configurationHolder = new ConfigurationHolder(MainWindowController.class.getName());
+    PreferencesConfigurationHolder configurationHolder = new PreferencesConfigurationHolder(MainWindowController.class.getName());
 
     NotificationFacade notificationFacade = new NotificationFacade();
     ParameterControlFactory parameterControlFactory = new ParameterControlFactory();

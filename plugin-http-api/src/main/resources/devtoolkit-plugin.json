@@ -1,0 +1,4 @@
+{
+  "mainClass": "com.cydercode.devtoolkit.httpapi.HttpApiPlugin",
+  "name": "Plugin example"
+}
