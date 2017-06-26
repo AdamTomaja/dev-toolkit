@@ -2,11 +2,12 @@ package com.cydercode.devtoolkit.httpapi;
 
 import com.cydercode.devtoolkit.plugin.DevToolkitContext;
 import com.cydercode.devtoolkit.plugin.Plugin;
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Spark;
+
+import java.util.Map;
 
 public class HttpApiPlugin implements Plugin {
 
@@ -37,7 +38,11 @@ public class HttpApiPlugin implements Plugin {
                         .findParametersWithGroup(req.params(":group")),
                 gson::toJson);
 
-        Spark.post("/execute/:preset", (req, res) -> context.enqueueJob(new JobRequest(req.params(":preset"), ImmutableMap.of())), gson::toJson);
+        Spark.post("/execute/:preset", (req, res) -> {
+                    Map parameters = gson.fromJson(req.body(), Map.class);
+                    return context.enqueueJob(new JobRequest(req.params(":preset"), parameters));
+                }
+                , gson::toJson);
     }
 
     @Override
