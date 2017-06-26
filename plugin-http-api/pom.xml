@@ -11,6 +11,7 @@
 
     <artifactId>plugin-http-api</artifactId>
 
+    <name>dev-toolkit :: plugin-http-api</name>
 
     <dependencies>
         <dependency>

@@ -14,6 +14,8 @@
         <module>plugin-http-api</module>
     </modules>
 
+    <name>dev-toolkit :: parent</name>
+
     <packaging>pom</packaging>
 
     <properties>
@@ -37,7 +39,6 @@
         <jaxb2-basics-runtime.version>0.6.4</jaxb2-basics-runtime.version>
     </properties>
 
-    <name>dev-toolkit</name>
     <url>http://cydercode.pl</url>
 
     <dependencyManagement>

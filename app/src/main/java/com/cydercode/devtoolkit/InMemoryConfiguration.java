@@ -9,24 +9,21 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class Configuration {
-
-    public static final String
-            HIDDEN = "hidden",
-            TRUE = "true",
-            DEFAULT_GROUP = null;
+public class InMemoryConfiguration implements Configuration {
 
 
     private final DevToolkit devToolkitConfiguration;
 
-    public Configuration(DevToolkit devToolkitConfiguration) {
+    public InMemoryConfiguration(DevToolkit devToolkitConfiguration) {
         this.devToolkitConfiguration = devToolkitConfiguration;
     }
 
+    @Override
     public List<Preset> getPresetsWithPredicate(Predicate<Preset> predicate) {
         return getWithPredicate(devToolkitConfiguration.getPresets().getPreset(), predicate);
     }
 
+    @Override
     public Optional<Application> getApplication(String application) {
         return devToolkitConfiguration.getApplications().getApplication()
                 .stream()
@@ -34,6 +31,7 @@ public class Configuration {
                 .findFirst();
     }
 
+    @Override
     public Optional<Parameter> getParameter(String parameterName) {
         return devToolkitConfiguration.getParameters().getParameter()
                 .stream()
@@ -41,28 +39,32 @@ public class Configuration {
                 .findFirst();
     }
 
+    @Override
     public Optional<Preset> getPreset(String name) {
         return devToolkitConfiguration.getPresets().getPreset().stream()
                 .filter(p -> name.equals(p.getName()))
                 .findFirst();
     }
 
+    @Override
     public <T> List<T> getWithPredicate(List<T> objects, Predicate<T> predicate) {
         return objects.stream()
                 .filter(predicate)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<Parameter> findParametersWithGroup(String group) {
         return findObjectsWithGroup(group, devToolkitConfiguration.getParameters().getParameter());
 
     }
 
+    @Override
     public List<Preset> findPresetsWithGroup(String group) {
         return findObjectsWithGroup(group, devToolkitConfiguration.getPresets().getPreset());
     }
 
-    public <T> List<T> findObjectsWithGroup(String group, List<T> objects) {
+    private <T> List<T> findObjectsWithGroup(String group, List<T> objects) {
         List<T> result = new ArrayList<>();
 
         objects.forEach(object -> {
@@ -74,6 +76,7 @@ public class Configuration {
         return result;
     }
 
+    @Override
     public List<Group> getGroups() {
         List<Group> groups = new ArrayList<>();
         if (devToolkitConfiguration.getGroups() != null) {
@@ -118,7 +121,7 @@ public class Configuration {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Configuration that = (Configuration) o;
+        InMemoryConfiguration that = (InMemoryConfiguration) o;
         return com.google.common.base.Objects.equal(devToolkitConfiguration, that.devToolkitConfiguration);
     }
 

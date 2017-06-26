@@ -1,6 +1,7 @@
 package com.cydercode.devtoolkit.configuration;
 
 import com.cydercode.devtoolkit.Configuration;
+import com.cydercode.devtoolkit.InMemoryConfiguration;
 import com.cydercode.devtoolkit.configuration.model.DevToolkit;
 
 import javax.xml.bind.JAXBContext;
@@ -20,7 +21,7 @@ public class XmlConfigurationLoader extends AbstractFileConfigurationLoader {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(DevToolkit.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return new Configuration((DevToolkit) unmarshaller.unmarshal(getReader()));
+            return new InMemoryConfiguration((DevToolkit) unmarshaller.unmarshal(getReader()));
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }
