@@ -114,6 +114,7 @@
         <script name="my-script">
             <code><![CDATA[
     api.setParameter("my-custom-calculated-parameter", "parameter-value");
+    api.println("Hello World!");
 ]]></code>
         </script>
     </scripts>

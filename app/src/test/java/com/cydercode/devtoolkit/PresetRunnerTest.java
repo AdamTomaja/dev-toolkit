@@ -19,7 +19,7 @@ public class PresetRunnerTest {
     @Test
     public void shouldExecuteCompound() throws Exception {
         // given
-        PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
+        PresetRunner runner = new PresetRunner(new CommandExecutor());
 
         Map<String, Object> parameters = ImmutableMap.of();
         Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/PresetRunnerTest/configuration.xml");
@@ -41,7 +41,7 @@ public class PresetRunnerTest {
     @Test
     public void shouldExecuteSingle() throws Exception {
         // given
-        PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
+        PresetRunner runner = new PresetRunner(new CommandExecutor());
 
         Map<String, Object> parameters = ImmutableMap.of();
         Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/PresetRunnerTest/configuration.xml");
@@ -61,7 +61,7 @@ public class PresetRunnerTest {
     @Test
     public void shouldStopAfterError() throws Exception {
         // given
-        PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
+        PresetRunner runner = new PresetRunner(new CommandExecutor());
 
         Map<String, Object> parameters = ImmutableMap.of();
         Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/PresetRunnerTest/configuration.xml");
@@ -83,7 +83,7 @@ public class PresetRunnerTest {
     public void shouldIgnoreErrorPronePreset() throws Exception {
         // given
         // given
-        PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
+        PresetRunner runner = new PresetRunner(new CommandExecutor());
 
         Map<String, Object> parameters = ImmutableMap.of();
         Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/PresetRunnerTest/configuration.xml");
@@ -104,7 +104,7 @@ public class PresetRunnerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionWhenInvalidPreset() throws Exception {
-        PresetRunner runner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
+        PresetRunner runner = new PresetRunner(new CommandExecutor());
 
         Map<String, Object> parameters = ImmutableMap.of();
         Configuration configuration = loadConfiguration("com/cydercode/devtoolkit/PresetRunnerTest/configuration.xml");

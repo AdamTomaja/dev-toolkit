@@ -1,7 +1,7 @@
 package com.cydercode.devtoolkit.ui;
 
-import com.cydercode.devtoolkit.CommandBuilder;
 import com.cydercode.devtoolkit.Configuration;
+import com.cydercode.devtoolkit.ParametersResolver;
 import com.cydercode.devtoolkit.PluginsController;
 import com.cydercode.devtoolkit.PresetRunner;
 import com.cydercode.devtoolkit.configuration.ConfigurationHolder;
@@ -41,7 +41,7 @@ public class MainWindowController {
     ParameterControlFactory parameterControlFactory = new ParameterControlFactory();
     ParametersExtractor parametersExtractor = new ParametersExtractor();
     DialogHelper dialogHelper = new DialogHelper();
-    PresetRunner presetRunner = new PresetRunner(new CommandExecutor(), new CommandBuilder());
+    PresetRunner presetRunner = new PresetRunner(new CommandExecutor());
     QuickToolBoxFacade quickToolBoxFacade = new QuickToolBoxFacade();
     PresetButtonFactory presetButtonFactory = new PresetButtonFactory();
     Map<String, Control> parametersControls = new HashMap<>();
@@ -216,10 +216,17 @@ public class MainWindowController {
 
         new Thread(() -> {
             try {
-                presetRunner.run(presetName, configurationHolder.getCurrentConfiguration().get(),
-                        parametersExtractor.extractParameters(parametersControls),
+                Configuration configuration = configurationHolder.getCurrentConfiguration().get();
+
+                Map<String, Object> resolvedParameters = new ParametersResolver()
+                        .resolve(parametersExtractor.extractParameters(parametersControls),
+                                configuration.getScripts(),
+                                jobListener);
+
+                presetRunner.run(presetName, configuration,
+                        resolvedParameters,
                         jobListener);
-            } catch (InterruptedException | IOException e) {
+            } catch (Exception e) {
                 LOGGER.error("Error during command execution", e);
                 Platform.runLater(() -> {
                     dialogHelper.createExceptionAlert("Error during command execution", e)

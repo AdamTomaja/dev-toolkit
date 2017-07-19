@@ -13,15 +13,15 @@ import java.util.Optional;
 
 public class PresetRunner {
 
+    private final CommandBuilder commandBuilder = new CommandBuilder();
     private final CommandExecutor executor;
-    private final CommandBuilder commandBuilder;
 
-    public PresetRunner(CommandExecutor executor, CommandBuilder commandBuilder) {
+    public PresetRunner(CommandExecutor executor) {
         this.executor = executor;
-        this.commandBuilder = commandBuilder;
     }
 
     public int run(String presetName, Configuration configuration, Map<String, Object> parameters, JobListener jobListener) throws IOException, InterruptedException {
+
         Optional<Preset> preset = configuration.getPreset(presetName);
         if (!preset.isPresent()) {
             throw new IllegalArgumentException("Preset " + presetName + " not found!");

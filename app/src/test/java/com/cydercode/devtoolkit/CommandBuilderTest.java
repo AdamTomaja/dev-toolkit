@@ -27,32 +27,6 @@ public class CommandBuilderTest {
         Assertions.assertThat(command).isEqualTo("/bin/mvn/mvn clean install -d A -p dev");
     }
 
-    @Test
-    public void shouldResolveEnvironmentVariable() throws Exception {
-        // given
-        Configuration configuration = loadConfiguration();
-
-        // when
-        String command = new CommandBuilder()
-                .buildCommand(configuration, "env-variable", of());
-
-        // then
-        Assertions.assertThat(command).isEqualTo("${maven-path}/mvn clean install -X " + System.getenv("SHELL"));
-    }
-
-    @Test
-    public void environmentVariableShouldBeReplacedWithParameter() throws Exception {
-        // given
-        Configuration configuration = loadConfiguration();
-
-        // when
-        String command = new CommandBuilder()
-                .buildCommand(configuration, "env-variable", of("SHELL", "custom-value-of-shell-var"));
-
-        // then
-        Assertions.assertThat(command).isEqualTo("${maven-path}/mvn clean install -X custom-value-of-shell-var");
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentWhenNoApplication() throws Exception {
         // given
