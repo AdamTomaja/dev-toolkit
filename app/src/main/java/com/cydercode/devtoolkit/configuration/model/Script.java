@@ -37,7 +37,7 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="path" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="code" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
@@ -49,40 +49,40 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "path"
+    "code"
 })
-@XmlRootElement(name = "application")
-public class Application
+@XmlRootElement(name = "script")
+public class Script
     implements Equals, HashCode, ToString
 {
 
     @XmlElement(required = true)
-    protected String path;
+    protected String code;
     @XmlAttribute(name = "name")
     protected String name;
 
     /**
-     * Gets the value of the path property.
+     * Gets the value of the code property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getPath() {
-        return path;
+    public String getCode() {
+        return code;
     }
 
     /**
-     * Sets the value of the path property.
+     * Sets the value of the code property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPath(String value) {
-        this.path = value;
+    public void setCode(String value) {
+        this.code = value;
     }
 
     /**
@@ -109,30 +109,30 @@ public class Application
         this.name = value;
     }
 
-    public Application withPath(String value) {
-        setPath(value);
+    public Script withCode(String value) {
+        setCode(value);
         return this;
     }
 
-    public Application withName(String value) {
+    public Script withName(String value) {
         setName(value);
         return this;
     }
 
     public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
-        if (!(object instanceof Application)) {
+        if (!(object instanceof Script)) {
             return false;
         }
         if (this == object) {
             return true;
         }
-        final Application that = ((Application) object);
+        final Script that = ((Script) object);
         {
-            String lhsPath;
-            lhsPath = this.getPath();
-            String rhsPath;
-            rhsPath = that.getPath();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "path", lhsPath), LocatorUtils.property(thatLocator, "path", rhsPath), lhsPath, rhsPath)) {
+            String lhsCode;
+            lhsCode = this.getCode();
+            String rhsCode;
+            rhsCode = that.getCode();
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "code", lhsCode), LocatorUtils.property(thatLocator, "code", rhsCode), lhsCode, rhsCode)) {
                 return false;
             }
         }
@@ -156,9 +156,9 @@ public class Application
     public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
         int currentHashCode = 1;
         {
-            String thePath;
-            thePath = this.getPath();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "path", thePath), currentHashCode, thePath);
+            String theCode;
+            theCode = this.getCode();
+            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "code", theCode), currentHashCode, theCode);
         }
         {
             String theName;
@@ -189,9 +189,9 @@ public class Application
 
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
         {
-            String thePath;
-            thePath = this.getPath();
-            strategy.appendField(locator, this, "path", buffer, thePath);
+            String theCode;
+            theCode = this.getCode();
+            strategy.appendField(locator, this, "code", buffer, theCode);
         }
         {
             String theName;

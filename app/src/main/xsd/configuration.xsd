@@ -4,6 +4,23 @@
            xmlns="https://cydercode.com/dev-toolkit/"
            elementFormDefault="qualified">
 
+    <xs:element name="script">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="code" minOccurs="1" maxOccurs="1" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="scripts">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="script" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="group">
         <xs:complexType>
             <xs:sequence>
@@ -119,6 +136,7 @@
                 <xs:element ref="applications" maxOccurs="1" minOccurs="0"/>
                 <xs:element ref="parameters" maxOccurs="1" minOccurs="0"/>
                 <xs:element ref="presets" maxOccurs="1" minOccurs="0"/>
+                <xs:element ref="scripts" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

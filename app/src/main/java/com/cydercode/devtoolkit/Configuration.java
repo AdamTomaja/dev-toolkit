@@ -2,12 +2,11 @@ package com.cydercode.devtoolkit;
 
 import com.cydercode.devtoolkit.configuration.model.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 public class Configuration {
 
@@ -112,6 +111,17 @@ public class Configuration {
                 .filter(group -> groupName.equals(group.getName()))
                 .findAny()
                 .isPresent();
+    }
+
+    public Map<String, String> getScripts() {
+        Scripts scripts = devToolkitConfiguration.getScripts();
+        if (scripts == null) {
+            return Collections.emptyMap();
+        }
+
+        return scripts.getScript()
+                .stream()
+                .collect(toMap(s -> s.getName(), s -> s.getCode()));
     }
 
     @Override

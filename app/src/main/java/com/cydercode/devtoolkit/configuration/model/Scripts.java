@@ -8,10 +8,10 @@
 
 package com.cydercode.devtoolkit.configuration.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.jvnet.jaxb2_commons.lang.Equals;
@@ -37,9 +37,8 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="path" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element ref="{https://cydercode.com/dev-toolkit/}script" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
- *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -49,99 +48,65 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "path"
+    "script"
 })
-@XmlRootElement(name = "application")
-public class Application
+@XmlRootElement(name = "scripts")
+public class Scripts
     implements Equals, HashCode, ToString
 {
 
-    @XmlElement(required = true)
-    protected String path;
-    @XmlAttribute(name = "name")
-    protected String name;
+    protected List<Script> script;
 
     /**
-     * Gets the value of the path property.
+     * Gets the value of the script property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPath() {
-        return path;
-    }
-
-    /**
-     * Sets the value of the path property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the script property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPath(String value) {
-        this.path = value;
-    }
-
-    /**
-     * Gets the value of the name property.
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getScript().add(newItem);
+     * </pre>
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the value of the name property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link Script }
+     * 
+     * 
      */
-    public void setName(String value) {
-        this.name = value;
+    public List<Script> getScript() {
+        if (script == null) {
+            script = new ArrayList<Script>();
+        }
+        return this.script;
     }
 
-    public Application withPath(String value) {
-        setPath(value);
-        return this;
-    }
-
-    public Application withName(String value) {
-        setName(value);
+    public Scripts withScript(Script... values) {
+        for (Script value: values) {
+            getScript().add(value);
+        }
         return this;
     }
 
     public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
-        if (!(object instanceof Application)) {
+        if (!(object instanceof Scripts)) {
             return false;
         }
         if (this == object) {
             return true;
         }
-        final Application that = ((Application) object);
+        final Scripts that = ((Scripts) object);
         {
-            String lhsPath;
-            lhsPath = this.getPath();
-            String rhsPath;
-            rhsPath = that.getPath();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "path", lhsPath), LocatorUtils.property(thatLocator, "path", rhsPath), lhsPath, rhsPath)) {
-                return false;
-            }
-        }
-        {
-            String lhsName;
-            lhsName = this.getName();
-            String rhsName;
-            rhsName = that.getName();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "name", lhsName), LocatorUtils.property(thatLocator, "name", rhsName), lhsName, rhsName)) {
+            List<Script> lhsScript;
+            lhsScript = (((this.script!= null)&&(!this.script.isEmpty()))?this.getScript():null);
+            List<Script> rhsScript;
+            rhsScript = (((that.script!= null)&&(!that.script.isEmpty()))?that.getScript():null);
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "script", lhsScript), LocatorUtils.property(thatLocator, "script", rhsScript), lhsScript, rhsScript)) {
                 return false;
             }
         }
@@ -156,14 +121,9 @@ public class Application
     public int hashCode(ObjectLocator locator, HashCodeStrategy strategy) {
         int currentHashCode = 1;
         {
-            String thePath;
-            thePath = this.getPath();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "path", thePath), currentHashCode, thePath);
-        }
-        {
-            String theName;
-            theName = this.getName();
-            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "name", theName), currentHashCode, theName);
+            List<Script> theScript;
+            theScript = (((this.script!= null)&&(!this.script.isEmpty()))?this.getScript():null);
+            currentHashCode = strategy.hashCode(LocatorUtils.property(locator, "script", theScript), currentHashCode, theScript);
         }
         return currentHashCode;
     }
@@ -189,14 +149,9 @@ public class Application
 
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
         {
-            String thePath;
-            thePath = this.getPath();
-            strategy.appendField(locator, this, "path", buffer, thePath);
-        }
-        {
-            String theName;
-            theName = this.getName();
-            strategy.appendField(locator, this, "name", buffer, theName);
+            List<Script> theScript;
+            theScript = (((this.script!= null)&&(!this.script.isEmpty()))?this.getScript():null);
+            strategy.appendField(locator, this, "script", buffer, theScript);
         }
         return buffer;
     }

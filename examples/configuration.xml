@@ -107,7 +107,14 @@
         </preset>
         <preset name="Environment variable echo">
             <application>echo</application>
-            <cmd>SHELL value: ${SHELL}</cmd>
+            <cmd>SHELL value: ${SHELL} ${my-custom-calculated-parameter}</cmd>
         </preset>
     </presets>
+    <scripts>
+        <script name="my-script">
+            <code><![CDATA[
+    api.setParameter("my-custom-calculated-parameter", "parameter-value");
+]]></code>
+        </script>
+    </scripts>
 </dev-toolkit>
