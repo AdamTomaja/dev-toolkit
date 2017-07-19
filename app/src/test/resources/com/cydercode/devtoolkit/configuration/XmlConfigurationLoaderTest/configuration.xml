@@ -20,7 +20,7 @@
             <type>string</type>
             <default>default-value</default>
             <values>
-                <value>value-a</value>
+                <value description="Value A">value-a</value>
                 <value>value-b</value>
             </values>
             <hidden>true</hidden>

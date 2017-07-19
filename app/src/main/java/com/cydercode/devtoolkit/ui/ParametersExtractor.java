@@ -18,7 +18,9 @@ public class ParametersExtractor {
             if (tf instanceof TextField) {
                 value = ((TextField) tf).getText();
             } else if (tf instanceof ComboBox) {
-                value = ((ComboBox) tf).getValue().toString();
+                ComboBox comboBox = (ComboBox) tf;
+                ComboValue comboValue = (ComboValue) comboBox.getValue();
+                value = comboValue.getValue().getValue();
             } else {
                 throw new RuntimeException("Unknown control type: " + tf.getClass());
             }

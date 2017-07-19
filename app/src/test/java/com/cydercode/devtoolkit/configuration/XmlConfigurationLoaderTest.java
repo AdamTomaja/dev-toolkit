@@ -1,15 +1,10 @@
 package com.cydercode.devtoolkit.configuration;
 
 import com.cydercode.devtoolkit.Configuration;
-import com.cydercode.devtoolkit.configuration.model.Application;
-import com.cydercode.devtoolkit.configuration.model.Parameter;
-import com.cydercode.devtoolkit.configuration.model.ParameterType;
-import com.cydercode.devtoolkit.configuration.model.Preset;
-import com.google.common.collect.ImmutableMap;
+import com.cydercode.devtoolkit.configuration.model.*;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Optional;
 
 import static com.google.common.io.Resources.getResource;
@@ -37,7 +32,10 @@ public class XmlConfigurationLoaderTest {
         Parameter parameterObj = parameter.get();
 
         assertThat(parameterObj.getType()).isEqualTo(ParameterType.STRING);
-        assertThat(parameterObj.getValues().getValue()).containsExactly("value-a", "value-b");
+        assertThat(parameterObj.getValues().getValue()).containsExactly(
+                new Values.Value().withDescription("Value A").withValue("value-a"),
+                new Values.Value().withValue("value-b"));
+        
         assertThat(parameterObj.isHidden()).isTrue();
         assertThat(parameterObj.getGroup()).isEqualTo("utils");
         assertThat(parameterObj.getDefault()).isEqualTo("default-value");

@@ -21,7 +21,7 @@ public class ParameterControlFactory {
 
         Control control;
         if (values != null) {
-            control = new ComboBox(observableArrayList(values.getValue()));
+            control = new ComboBox(observableArrayList(ComboValue.wrapValues(values)));
             ((ComboBox) control).setValue(defaultValue);
         } else {
             control = new TextField();

@@ -24,8 +24,8 @@
             <type>string</type>
             <default>/home/mint/work/git/dev-toolkit/</default>
             <values>
-                <value>/home/mint/work/git/dev-toolkit/</value>
-                <value>/home/mint/work/git/project-2/</value>
+                <value description="Dev-Toolkit">/home/mint/work/git/dev-toolkit/</value>
+                <value description="Project 2">/home/mint/work/git/project-2/</value>
                 <value>/home/mint/work/git/project-3</value>
             </values>
             <group>Maven</group>

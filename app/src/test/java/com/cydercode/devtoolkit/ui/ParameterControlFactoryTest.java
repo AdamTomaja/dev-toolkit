@@ -55,7 +55,7 @@ public class ParameterControlFactoryTest extends JavaFXComponentsTest {
         parameter.setType(ParameterType.STRING);
         parameter.setDefault(defaultValue);
         Values values = Mockito.mock(Values.class);
-        when(values.getValue()).thenReturn(Arrays.asList("a", "b"));
+        when(values.getValue()).thenReturn(Arrays.asList(new Values.Value().withValue("a"), new Values.Value().withValue("b")));
         parameter.setValues(values);
 
         // when
@@ -63,7 +63,11 @@ public class ParameterControlFactoryTest extends JavaFXComponentsTest {
 
         // then
         assertThat(control).isInstanceOf(ComboBox.class);
-        assertThat(((ComboBox) control).getValue()).isEqualTo(defaultValue);
+        ComboBox comboBox = (ComboBox) control;
+        assertThat(comboBox.getValue()).isEqualTo(defaultValue);
+        assertThat(comboBox.getItems()).containsExactly(
+                new ComboValue(new Values.Value().withValue("a")),
+                new ComboValue(new Values.Value().withValue("b")));
     }
 
     @Test

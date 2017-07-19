@@ -1,6 +1,7 @@
 package com.cydercode.devtoolkit.ui;
 
 import com.cydercode.devtoolkit.category.UiTest;
+import com.cydercode.devtoolkit.configuration.model.Values;
 import com.google.common.collect.ImmutableMap;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
@@ -26,7 +27,7 @@ public class ParametersExtractorTest extends JavaFXComponentsTest {
         textField.setText("textFieldValue");
 
         ComboBox comboBox = new ComboBox();
-        comboBox.setValue("comboBoxValue");
+        comboBox.setValue(new ComboValue(new Values.Value().withValue("comboBoxValue")));
 
         Map<String, Control> controls = ImmutableMap.of("text-field", textField,
                 "combo-box", comboBox);
