@@ -50,6 +50,21 @@ Preset defines an application connected with command line and parameters. Each p
 
 will be executed
 
+## Script
+It`s possible to write scripts in JavaScript. A script is a piece of code executed before 
+command invoke. 
+A full example of script usage is available in examples directory.
+
+```xml
+<script name="script-name">
+    <code>
+        var read = api.getParameter("parameter-name"); // Reads a parameter value
+        api.setParameter("parameter-name", read); // Writes a parameter value
+        api.println("Hello World!"); // Prints line to job console
+    </code>
+</script>
+```
+
 # Plugins
 CyderCode Dev-Toolkit is universal application so it is possible to write plugins for it. 
 Example plugin for dev-toolkit can be found in **plugin-example** directory.
