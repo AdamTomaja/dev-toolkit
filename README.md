@@ -51,8 +51,9 @@ Preset defines an application connected with command line and parameters. Each p
 will be executed
 
 ## Script
-It`s possible to write scripts in JavaScript. A script is a piece of code executed before 
+It`s possible to write scripts in **JavaScript**. A script is a piece of code executed before 
 command invoke. 
+Scripts can be used for **dynamic** parameters generation.
 A full example of script usage is available in examples directory.
 
 ```xml
