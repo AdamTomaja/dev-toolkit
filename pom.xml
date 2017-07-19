@@ -3,7 +3,7 @@
 
     <groupId>com.cydercode.devtoolkit</groupId>
     <artifactId>dev-toolkit</artifactId>
-    <version>3.2-SNAPSHOT</version>
+    <version>3.X-SNAPSHOT</version>
 
     <modules>
         <module>plugins</module>
