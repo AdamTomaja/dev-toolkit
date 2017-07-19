@@ -16,13 +16,15 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class ParameterControlFactory {
 
     public Control produceControl(Parameter parameter) {
-        Object defaultValue = parameter.getDefault();
+        String defaultValue = parameter.getDefault();
         Values values = parameter.getValues();
 
         Control control;
         if (values != null) {
             control = new ComboBox(observableArrayList(ComboValue.wrapValues(values)));
-            ((ComboBox) control).setValue(defaultValue);
+            if (defaultValue != null) {
+                ((ComboBox) control).setValue(new ComboValue(new Values.Value().withValue(defaultValue)));
+            }
         } else {
             control = new TextField();
             if (defaultValue != null) {

@@ -64,7 +64,7 @@ public class ParameterControlFactoryTest extends JavaFXComponentsTest {
         // then
         assertThat(control).isInstanceOf(ComboBox.class);
         ComboBox comboBox = (ComboBox) control;
-        assertThat(comboBox.getValue()).isEqualTo(defaultValue);
+        assertThat(comboBox.getValue()).isEqualTo(new ComboValue(new Values.Value().withValue(defaultValue)));
         assertThat(comboBox.getItems()).containsExactly(
                 new ComboValue(new Values.Value().withValue("a")),
                 new ComboValue(new Values.Value().withValue("b")));
