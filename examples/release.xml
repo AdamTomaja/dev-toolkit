@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dev-toolkit xmlns="https://cydercode.com/dev-toolkit/">
+    <groups>
+        <group name="Git">
+            <description>Version Control Operations</description>
+        </group>
+        <group name="Maven"/>
+    </groups>
+
+    <applications>
+        <application name="mvn">
+            <path>mvn</path>
+        </application>
+        <application name="git">
+            <path>git</path>
+        </application>
+    </applications>
+
+    <parameters>
+        <parameter name="project-dir">
+            <type>string</type>
+            <default>/home/mint/work/git/dev-toolkit/</default>
+        </parameter>
+        <parameter name="release-version">
+            <type>string</type>
+            <default>3.X-SNAPSHOT</default>
+        </parameter>
+        <parameter name="development-version">
+            <type>string</type>
+            <default>3.X-SNAPSHOT</default>
+        </parameter>
+    </parameters>
+
+    <presets>
+        <preset name="change-version-to-release">
+            <application>mvn</application>
+            <cmd>-f ${project-dir} versions:set -DnewVersion=${release-version} -DgenerateBackupPoms=false</cmd>
+        </preset>
+        <preset name="add-poms-to-git">
+            <application>git</application>
+            <cmd>-C ${project-dir} add *pom.xml</cmd>
+        </preset>
+        <preset name="commit-release-version">
+            <application>git</application>
+            <cmd>-C ${project-dir} commit -m Version-changed-to-${release-version}</cmd>
+        </preset>
+        <preset name="tag-release">
+            <application>git</application>
+            <cmd>-C ${project-dir} tag -a ${release-version} -m Version-${release-version}</cmd>
+        </preset>
+        <preset name="change-version-to-development">
+            <application>mvn</application>
+            <cmd>-f ${project-dir} versions:set -DnewVersion=${development-version} -DgenerateBackupPoms=false</cmd>
+        </preset>
+        <preset name="add-poms-to-git">
+            <application>git</application>
+            <cmd>-C ${project-dir} add *pom.xml</cmd>
+        </preset>
+        <preset name="commit-development-version">
+            <application>git</application>
+            <cmd>-C ${project-dir} commit -m Version-changed-to-${development-version}</cmd>
+        </preset>
+        <preset name="push">
+            <application>git</application>
+            <cmd>-C ${project-dir} push</cmd>
+        </preset>
+        <preset name="push-release-tag">
+            <application>git</application>
+            <cmd>-C ${project-dir} push origin ${release-version}</cmd>
+        </preset>
+        <preset name="release">
+            <child-presets>
+                <child-preset>
+                    <preset>change-version-to-release</preset>
+                </child-preset>
+                <child-preset>
+                    <preset>add-poms-to-git</preset>
+                </child-preset>
+                <child-preset>
+                    <preset>commit-release-version</preset>
+                </child-preset>
+                <child-preset>
+                    <preset>tag-release</preset>
+                </child-preset>
+                <child-preset>
+                    <preset>change-version-to-development</preset>
+                </child-preset>
+                <child-preset>
+                    <preset>add-poms-to-git</preset>
+                </child-preset>
+                <child-preset>
+                    <preset>commit-development-version</preset>
+                </child-preset>
+                <child-preset>
+                    <preset>push</preset>
+                </child-preset>
+                <child-preset>
+                    <preset>push-release-tag</preset>
+                </child-preset>
+            </child-presets>
+        </preset>
+    </presets>
+</dev-toolkit>
