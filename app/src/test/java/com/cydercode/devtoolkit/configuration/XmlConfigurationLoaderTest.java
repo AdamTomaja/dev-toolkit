@@ -16,7 +16,8 @@ public class XmlConfigurationLoaderTest {
     @Test
     public void shouldLoadConfigurationFromXml() throws Exception {
         // given
-        String configurationFile = "com/cydercode/devtoolkit/configuration/XmlConfigurationLoaderTest/configuration.xml";
+        String configurationSource = "com/cydercode/devtoolkit/configuration/XmlConfigurationLoaderTest/configuration.xml";
+        String configurationFile = configurationSource;
         ConfigurationLoader loader = new XmlConfigurationLoader(new File(getResource(configurationFile).getFile()));
 
         // when
@@ -35,7 +36,7 @@ public class XmlConfigurationLoaderTest {
         assertThat(parameterObj.getValues().getValue()).containsExactly(
                 new Values.Value().withDescription("Value A").withValue("value-a"),
                 new Values.Value().withValue("value-b"));
-        
+
         assertThat(parameterObj.isHidden()).isTrue();
         assertThat(parameterObj.getGroup()).isEqualTo("utils");
         assertThat(parameterObj.getDefault()).isEqualTo("default-value");
@@ -64,6 +65,6 @@ public class XmlConfigurationLoaderTest {
 
         assertThat(configuration.getGroups().get(1).getName()).isEqualTo("group-b");
         assertThat(configuration.getGroups().get(1).getDescription()).isEqualTo("Description B");
-
+        assertThat(configuration.getSource()).endsWith(configurationSource);
     }
 }

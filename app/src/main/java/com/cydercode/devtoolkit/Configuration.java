@@ -17,9 +17,11 @@ public class Configuration {
 
 
     private final DevToolkit devToolkitConfiguration;
+    private final String source;
 
-    public Configuration(DevToolkit devToolkitConfiguration) {
+    public Configuration(DevToolkit devToolkitConfiguration, String source) {
         this.devToolkitConfiguration = devToolkitConfiguration;
+        this.source = source;
     }
 
     public List<Preset> getPresetsWithPredicate(Predicate<Preset> predicate) {
@@ -122,6 +124,10 @@ public class Configuration {
         return scripts.getScript()
                 .stream()
                 .collect(toMap(s -> s.getName(), s -> s.getCode()));
+    }
+
+    public String getSource() {
+        return source;
     }
 
     @Override

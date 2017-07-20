@@ -20,7 +20,7 @@ public class XmlConfigurationLoader extends AbstractFileConfigurationLoader {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(DevToolkit.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return new Configuration((DevToolkit) unmarshaller.unmarshal(getReader()));
+            return new Configuration((DevToolkit) unmarshaller.unmarshal(getReader()), file.getAbsolutePath());
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }

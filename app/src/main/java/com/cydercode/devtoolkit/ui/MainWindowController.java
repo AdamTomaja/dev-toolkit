@@ -220,7 +220,7 @@ public class MainWindowController {
 
                 Map<String, Object> resolvedParameters = new ParametersResolver()
                         .resolve(parametersExtractor.extractParameters(parametersControls),
-                                configuration.getScripts(),
+                                configuration,
                                 jobListener);
 
                 presetRunner.run(presetName, configuration,

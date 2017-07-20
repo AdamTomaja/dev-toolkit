@@ -7,7 +7,7 @@ import java.io.Reader;
 
 public abstract class AbstractFileConfigurationLoader implements ConfigurationLoader {
 
-    private final File file;
+    protected final File file;
 
     protected AbstractFileConfigurationLoader(File file) {
         this.file = file;

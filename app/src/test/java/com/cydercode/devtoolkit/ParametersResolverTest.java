@@ -3,11 +3,15 @@ package com.cydercode.devtoolkit;
 import com.cydercode.devtoolkit.executor.OutputListener;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.Map;
 
 import static com.google.common.collect.ImmutableMap.of;
+import static java.io.File.separator;
 import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class ParametersResolverTest {
@@ -19,7 +23,7 @@ public class ParametersResolverTest {
 
         // when
         Map<String, Object> resolvedParameters = parametersResolver.resolve(emptyMap(),
-                emptyMap(),
+                createConfigurationMock(),
                 OutputListener.NOOP);
 
         // then
@@ -33,7 +37,7 @@ public class ParametersResolverTest {
 
         // when
         Map<String, Object> resolvedParameters = parametersResolver.resolve(of("SHELL", "custom-value"),
-                emptyMap(),
+                createConfigurationMock(),
                 OutputListener.NOOP);
 
         // then
@@ -44,13 +48,56 @@ public class ParametersResolverTest {
     public void parametersShouldBeReplacedWithScriptGeneratedVariable() {
         // given
         ParametersResolver parametersResolver = new ParametersResolver();
+        Configuration configuration = createConfigurationMock();
+        when(configuration.getScripts()).thenReturn(of("script", "api.setParameter('SHELL', 'script value');"));
 
         // when
         Map<String, Object> resolvedParameters = parametersResolver.resolve(of("SHELL", "custom-value"),
-                of("script", "api.setParameter('SHELL', 'script value');"),
+                configuration,
                 OutputListener.NOOP);
 
         // then
         assertThat(resolvedParameters.get("SHELL")).isEqualTo("script value");
+    }
+
+    @Test
+    public void shouldAddConfigurationSourceParameter() {
+        // given
+        ParametersResolver resolver = new ParametersResolver();
+        Configuration configuration = createConfigurationMock();
+        String source = "mocked configuration source";
+        when(configuration.getSource()).thenReturn(source);
+
+        // when
+        Map<String, Object> resolvedParameters = resolver.resolve(of(), configuration, OutputListener.NOOP);
+
+        // then
+        assertThat(resolvedParameters.get(ParametersResolver.CONFIGURATION_SOURCE))
+                .isEqualTo(source);
+        assertThat(resolvedParameters.get(ParametersResolver.CONFIGURATION_DIRECTORY)).isNull();
+    }
+
+    @Test
+    public void shouldExtractConfigurationDirectoryIfPossible() {
+        // given
+        ParametersResolver resolver = new ParametersResolver();
+        Configuration configuration = createConfigurationMock();
+        String source = "mocked configuration directory" + separator + "a" + separator + "b";
+        when(configuration.getSource()).thenReturn(source);
+
+        // when
+        Map<String, Object> resolvedParameters = resolver.resolve(of(), configuration, OutputListener.NOOP);
+
+        // then
+        assertThat(resolvedParameters.get(ParametersResolver.CONFIGURATION_SOURCE))
+                .isEqualTo(source);
+        assertThat(resolvedParameters.get(ParametersResolver.CONFIGURATION_DIRECTORY))
+                .isEqualTo("mocked configuration directory" + separator + "a");
+    }
+
+    private Configuration createConfigurationMock() {
+        Configuration mock = mock(Configuration.class);
+        when(mock.getScripts()).thenReturn(Collections.emptyMap());
+        return mock;
     }
 }
