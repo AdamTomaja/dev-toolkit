@@ -63,4 +63,13 @@ public class JobListener implements CommandExecutorListener {
     public void kill() {
         process.destroyForcibly();
     }
+
+    @Override
+    public void onProcessErrorOutput(String errLine) {
+        runLater(() -> {
+            jobTab.appendText("ERR: ");
+            jobTab.appendText(errLine);
+            jobTab.appendText(System.lineSeparator());
+        });
+    }
 }
