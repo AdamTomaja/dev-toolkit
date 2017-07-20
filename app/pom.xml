@@ -5,12 +5,12 @@
     <parent>
         <artifactId>dev-toolkit</artifactId>
         <groupId>com.cydercode.devtoolkit</groupId>
-        <version>3.5-SNAPSHOT</version>
+        <version>3.5</version>
     </parent>
 
     <groupId>com.cydercode.devtoolkit</groupId>
     <artifactId>app</artifactId>
-    <version>3.5-SNAPSHOT</version>
+    <version>3.5</version>
 
     <packaging>jar</packaging>
 
