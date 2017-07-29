@@ -22,21 +22,11 @@ public class CommandExecutor {
         outputConsumer.onProcessCreated(process);
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        BufferedReader errReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+        String line;
 
-        String stdLine = null;
-        String errLine = null;
-
-        while (((errLine = errReader.readLine()) != null) || ((stdLine = reader.readLine()) != null)) {
-            if (stdLine != null) {
-                LOGGER.info("P-OUT: {}", stdLine); // Standard process output
-                outputConsumer.onProcessOutput(stdLine);
-            }
-
-            if (errLine != null) {
-                LOGGER.warn("ERR-OUT: {}", errLine);
-                outputConsumer.onProcessErrorOutput(errLine);
-            }
+        while ((line = reader.readLine()) != null) {
+            LOGGER.info("P-OUT: {}", line); // Process out
+            outputConsumer.onProcessOutput(line);
         }
 
         process.waitFor();

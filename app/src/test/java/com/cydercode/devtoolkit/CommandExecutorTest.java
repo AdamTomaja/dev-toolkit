@@ -31,19 +31,4 @@ public class CommandExecutorTest {
         verify(executorListener).onProcessFinished(0);
         verify(executorListener).onProcessCreated(any(Process.class));
     }
-
-    @Test
-    public void shouldExecuteErrorCommand() throws IOException, InterruptedException {
-        // given
-        CommandExecutorListener executorListener = mock(CommandExecutorListener.class);
-        CommandExecutor executor = new CommandExecutor();
-
-        // when
-        int result = executor.execute("git asdasd", executorListener);
-
-        // then
-        assertThat(result).isEqualTo(1);
-        verify(executorListener).onProcessErrorOutput("git: 'asdasd' is not a git command. See 'git --help'.");
-        verify(executorListener).onProcessFinished(1);
-    }
 }
